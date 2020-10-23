@@ -1,4 +1,4 @@
-# contest
+# wenote
 
 ## Project setup
 ```
