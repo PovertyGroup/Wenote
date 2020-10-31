@@ -1,23 +1,35 @@
 <template lang="pug">
-  div
-    LoginCard(:username.sync="this.username" :password.sync="this.password").login-card
+  MainLayout
+    template(v-slot:header)
+        Header
+    LoginCard(@onLoginCreditChanged="loginCreditChanged").login-card
 </template>
 
 <script>
 import Vue from 'vue'
 import LoginCard from '@/components/LoginCard'
+import MainLayout from '@/layouts/MainLayout'
+import Header from '@/layouts/Header'
 
 Vue.use(LoginCard)
 
 export default {
     name: 'Login',
     components: {
-        LoginCard
+        LoginCard,
+        MainLayout,
+        Header
     },
     data: function() {
         return {
             'username': "",
             'password': "",
+        }
+    },
+    methods: {
+        loginCreditChanged(username, password){
+            this.username = username;
+            this.password = password;
         }
     }
 }

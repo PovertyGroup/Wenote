@@ -1,11 +1,11 @@
 <template lang="pug">
   div.login-card
     el-form(ref="form", :model="form", label-width="80px")
-      el-form-item
-        el-input(v-model="form.username" placeholder="用户名或邮箱" @input="emitUsername")
-      el-form-item
-        el-input(v-model="form.password" placeholder="密码" :show-password="true" @input="emitPassword")
-      el-form-item
+      el-form-item(label="用户名")
+        el-input(v-model="form.username" placeholder="用户名或邮箱" @input="notifyCreditChanged()")
+      el-form-item(label="密码")
+        el-input(v-model="form.password" placeholder="密码" :show-password="true" @input="notifyCreditChanged()")
+      el-form-item(lable="用户名或邮箱")
         el-button.login-button(type="primary" @click="this.$emit('onSubmit')") 登陆
 </template>
 
@@ -20,19 +20,17 @@ export default {
       }
     }
   },
-  props: {
-    'username': String,
-    'password': String,
-  },
+  events: [
+    'onLoginCreditChanged',
+    'onSubmit'
+  ],
   methods: {
-    emitUsername(){
-      this.$emit('update:username', this.form.username);
-    },
-    emitPassword(){
-      this.$emit('update:password', this.form.password);
+    notifyCreditChanged(){
+      let u = this.form.username ? this.form.username : '';
+      let p = this.form.password ? this.form.password : '';
+      this.$emit('onLoginCreditChanged', u, p);
     }
   },
-  events: []
 };
 </script>
 
