@@ -6,7 +6,7 @@
       el-form-item(label="密码")
         el-input(v-model="form.password" placeholder="密码" :show-password="true" @input="notifyCreditChanged()")
       el-form-item(lable="用户名或邮箱")
-        el-button.login-button(type="primary" @click="this.$emit('onSubmit')") 登陆
+        el-button.login-button(type="primary" @click="notifySubmit()") 登陆
 </template>
 
 <script>
@@ -29,6 +29,9 @@ export default {
       let u = this.form.username ? this.form.username : '';
       let p = this.form.password ? this.form.password : '';
       this.$emit('onLoginCreditChanged', u, p);
+    },
+    notifySubmit(){
+      this.$emit('onSubmit');
     }
   },
 };

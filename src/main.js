@@ -1,14 +1,31 @@
 import Vue from 'vue'
 import App from './App.vue'
 
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
+// axios configuration and utils
+import axios from 'axios'
 
-import router from './routers/router'
+Vue.$baseUrl = 'http://111.229.239.208:1337/'
+Vue.$axios = axios
+Vue.$composeUrl = function(baseUrl, path){
+  if(baseUrl.endsWith('/') && !path.startsWith('/'))
+    return baseUrl + path
+  else if(baseUrl.endsWith('/') && path.startsWith('/'))
+    return baseUrl.substring(0, baseUrl.length - 1) + path
+  else if(!baseUrl.endsWith('/') && path.startsWith('/'))
+    return baseUrl + path
+  else
+    return baseUrl + '/' + path
+}
 
 Vue.config.productionTip = false
+
+// ElementUI
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI)
 
+// router and vue setup
+import router from './routers/router'
 new Vue({
   router,
   render: h => h(App)
