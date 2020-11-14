@@ -38,9 +38,11 @@ export default {
             })
             .then((response) => {
                 this.$message({
-                    message: response.data.jwt,
+                    message: "登陆成功",
                     type: 'success'
                 })
+                this.$jwt = response.data.jwt;
+                console.log(this.$jwt);
             })
             .catch(error => {
                 this.$message.error(error.response.data.message.message);

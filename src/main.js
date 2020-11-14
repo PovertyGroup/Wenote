@@ -17,6 +17,15 @@ Vue.$composeUrl = function(baseUrl, path){
     return baseUrl + '/' + path
 }
 
+Vue.$jwt = {
+  set: function(value){
+      window.localStorage.setItem('jwt', value)
+  },
+  get: function(){
+      return window.localStorage.getItem('jwt')
+  }
+}
+
 Vue.config.productionTip = false
 
 // ElementUI
