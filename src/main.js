@@ -26,6 +26,12 @@ Vue.$jwt = {
   }
 }
 
+Vue.$getAuthorizedHeader = function() {
+  return {
+    Authorization: 'Bearer ' + Vue.$jwt,
+  }
+}
+
 Vue.config.productionTip = false
 
 // ElementUI
