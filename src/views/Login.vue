@@ -36,11 +36,14 @@ export default {
                 identifier: this.username,
                 password: this.password
             })
-            .then(() => {
-                // success
+            .then((response) => {
+                this.$message({
+                    message: response.data.jwt,
+                    type: 'success'
+                })
             })
             .catch(error => {
-                this.$message.error(error.response.data.message[0].messages[0].message);
+                this.$message.error(error.response.data.message.message);
             })
         }
     }
