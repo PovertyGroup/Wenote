@@ -11,8 +11,6 @@ import LoginCard from '@/components/LoginCard'
 import MainLayout from '@/layouts/MainLayout'
 import Header from '@/layouts/Header'
 
-Vue.use(LoginCard)
-
 export default {
     name: 'Login',
     components: {
