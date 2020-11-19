@@ -1,12 +1,21 @@
 <template lang="pug">
   div.login-card
-    el-form(ref="form", :model="form", label-width="80px")
-      el-form-item(label="用户名")
-        el-input(v-model="form.username" placeholder="用户名或邮箱" @input="notifyCreditChanged()")
-      el-form-item(label="密码")
-        el-input(v-model="form.password" placeholder="密码" :show-password="true" @input="notifyCreditChanged()")
+    el-form(ref="form", :model="form",)
+      el-form-item()
+        el-title().title  Wenote
+      el-form-item()
+        el-input(v-model="form.username"
+                 placeholder="用户名或邮箱"
+                 @input="notifyCreditChanged()")
+      el-form-item()
+        el-input(v-model="form.password"
+                 placeholder="密码"
+                 :show-password="true"
+                 @input="notifyCreditChanged()")
       el-form-item(lable="用户名或邮箱")
-        el-button.login-button(type="primary" @click="notifySubmit()") 登陆
+        el-button.login-button(type="primary"
+                               @click="notifySubmit()") 登陆
+        
 </template>
 
 <script>
@@ -38,10 +47,19 @@ export default {
 </script>
 
 <style scoped>
+
 .login-card{
-  max-width: 400px;
+  margin :auto;
+  padding-top: 20em;
+  max-width: 300px;
+  min-height: 100%;
 }
 .login-button{
-  width: 100%;
+  width: 40%;
 }
+
+.title{
+  font-size: 40px;
+}
+
 </style>
