@@ -1,7 +1,7 @@
 <template lang="pug">
   div.login-card
-    el-form(ref="form", :model="form", class="logincard")
-      <h3 class="logintitle"> WeNote登录 </h3>
+    el-form(ref="form" :model="form")
+      h3.logintitleWeNote 登录
       el-form-item(label="用户名")
         el-input(v-model="form.username" placeholder="用户名或邮箱" @input="notifyCreditChanged()")
       el-form-item(label="密码")
