@@ -1,7 +1,7 @@
 <template lang="pug">
   div.login-card
     el-form(ref="form" :model="form")
-      h3.logintitleWeNote 登录
+      h3.logintitle Wenote
       el-form-item(label="用户名")
         el-input(v-model="form.username" placeholder="用户名或邮箱" @input="notifyCreditChanged()")
       el-form-item(label="密码")
@@ -41,27 +41,25 @@ export default {
 <style scoped>
 
 .login-button{
-  width: 35%;
+  width: 70%;
+  margin: 10px 15px auto 25px;
 }
 .login-card{
     max-width: 400px;
     border-radius: 15px;
-    background-clip: padding-box;
+    background-clip: border-box;
     margin: 50px auto;
     width: 300px;
     padding: 15px 35px;
-    background: rgb(248, 249, 250);
-    border: 1px solid #eaeaea;
-    box-shadow: 0 0 25px #c6c6c6;
+    background: rgb(246, 246, 246);
+    border: 1px solid  #5c9cfd41;
+    box-shadow: 2px 2px 25px #8fbbfd3a;
 }
 .logintitle{
-  margin: 10px 8px 20px auto;
+  margin: 20px 8px 20px auto;
   text-align: center;
-  color: #505050;
+  font-size: 25px;
 }
-.remember{
-  margin: 0px 0px 15px;
-  text-align: left;
-}
+
 
 </style>

@@ -1,5 +1,5 @@
 <template lang="pug">
-    el-container
+    el-container(direction="vertical")
         header
             slot(name="header")
         el-main.main
@@ -8,6 +8,9 @@
             slot(name="footer")
 </template>
 
+
+
+
 <style scoped>
 header {
     padding-bottom: 20px;
@@ -15,6 +18,8 @@ header {
 .el-main{
     min-height: 100%;
     bottom: 0;
+    padding: 10% 20%;
+    margin: 10px;
 }
 .el-footer{
     position: absolute;

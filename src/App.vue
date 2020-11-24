@@ -10,6 +10,8 @@ export default {
 </script>
 
 <style>
+@import "./common/font/font.css";
+
 body{
   background: rgb(246, 246, 246);
 }
@@ -19,7 +21,7 @@ body{
   margin: 0;
 }
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: NewFont, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
