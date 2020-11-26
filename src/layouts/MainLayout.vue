@@ -2,9 +2,9 @@
     el-container(direction="vertical")
         header
             slot(name="header")
-        el-main.main
+        el-main
             slot
-        el-footer.footer
+        el-footer
             slot(name="footer")
 </template>
 
@@ -22,8 +22,13 @@ header {
     margin: 10px;
 }
 .el-footer{
-    position: absolute;
-    width: 100%;
     bottom: 0;
 }
+.el-main{
+    display: flex;
+}
+.el-container{
+    min-height: 100vh;
+}
+
 </style>

@@ -3,6 +3,8 @@ MainLayout
   template(v-slot:header)
     Header
   LoginCard.login-card(@onLoginCreditChanged="loginCreditChanged", @onSubmit="submit")
+  template(v-slot:footer)
+    Footer
 </template>
 
 <script>
@@ -10,6 +12,7 @@ import Vue from "vue";
 import LoginCard from "@/components/LoginCard";
 import MainLayout from "@/layouts/MainLayout";
 import Header from "@/layouts/Header";
+import Footer from "@/layouts/Footer";
 
 export default {
   name: "Login",
@@ -17,6 +20,7 @@ export default {
     LoginCard,
     MainLayout,
     Header,
+    Footer
   },
   data: function () {
     return {
