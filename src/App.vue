@@ -12,8 +12,13 @@ export default {
 <style>
 @import "./common/font/font.css";
 
-body{
+html {
+  height: 100%;
+  overflow: auto;
+}
+body {
   background: rgb(246, 246, 246);
+  min-height: 100%;
 }
 
 * {
@@ -26,5 +31,6 @@ body{
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  min-height: 100%;
 }
 </style>

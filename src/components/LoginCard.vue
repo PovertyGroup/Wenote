@@ -1,13 +1,12 @@
 <template lang="pug">
   div.login-card
-    el-form(ref="form" :model="form")
-      h3.logintitle Wenote
-      el-form-item(label="用户名")
+    el-form(:model="form" label-width="80px" :rules="rules" ref="ruleForm")
+      el-form-item(label="用户名" prop="username")
         el-input(v-model="form.username" placeholder="用户名或邮箱" @input="notifyCreditChanged()")
-      el-form-item(label="密码")
+      el-form-item(label="密码" prop="password")
         el-input(v-model="form.password" placeholder="密码" :show-password="true" @input="notifyCreditChanged()")
-      el-form-item(lable="用户名或邮箱")
-        el-button.login-button(type="primary" @click="notifySubmit()") 登陆
+      el-form-item
+        el-button.login-button(type="primary" @click="notifySubmit()" :disabled="this.submitEnabled") 登陆
 </template>
 
 <script>
@@ -16,9 +15,18 @@ export default {
   data() {
     return {
       form: {
-        username: this.username,
-        password: this.password,
-      }
+        username: "",
+        password: "",
+      },
+      rules: {
+        username: [
+            { required: true, message: '请输入用户名', trigger: 'change' }
+        ],
+        password: [
+            { required: true, message: '请输入密码', trigger: 'change' }
+        ],
+      },
+      submitEnabled: true,
     }
   },
   events: [
@@ -29,6 +37,7 @@ export default {
     notifyCreditChanged(){
       let u = this.form.username ? this.form.username : '';
       let p = this.form.password ? this.form.password : '';
+      this.submitEnabled = !(u !== '' && p !== '');
       this.$emit('onLoginCreditChanged', u, p);
     },
     notifySubmit(){

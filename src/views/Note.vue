@@ -2,25 +2,29 @@
   MainLayout
     template(v-slot:header)
         Header
-    MarkdownCard(:mdSource="this.noteMd")
+    MarkdownCard(:mdSource="this.noteMd" v-if="!this.noSuchNote")
+    NoSuchNoteCard(v-if="this.noSuchNote").not-such-note-card
 </template>
 
 <script>
 import Header from '../layouts/Header'
 import MainLayout from '../layouts/MainLayout'
 import MarkdownCard from '../components/MarkdownCard.vue'
+import NoSuchNoteCard from '../components/NoSuchNoteCard.vue'
 import Vue from 'vue'
 
 export default {
     Name: 'Note',
     components: {
         MarkdownCard,
+        NoSuchNoteCard,
         MainLayout,
         Header
     },
     data() {
         return {
             noteMd: '',
+            noSuchNote: false,
         }
     },
     mounted() {
@@ -28,10 +32,15 @@ export default {
             console.log(res);
             this.noteMd = res.data.content;
         })
-        .catch((error) => {
-            console.log(error);
-            // TODO
+        .catch(() => {
+            this.noSuchNote = true;
         })
     }
 }
 </script>
+
+<style scoped>
+.not-such-note-card{
+    margin: auto;
+}
+</style>
