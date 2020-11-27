@@ -41,7 +41,7 @@
 
 <script>
 export default {
-  name: "Register-Card",
+  name: "RegisterCard",
   data() {
     return {
       form: {
@@ -52,16 +52,27 @@ export default {
       },
       rules: {
         username: [
-            { required: true, message: '请输入用户名', trigger: 'change' }
+            { type: 'string', required: true, message: '请输入用户名', trigger: 'change' },
+            { type: 'string', message: '格式不正确，只能包含字母和数字，长度为 6-16', pattern: /^[A-Za-z0-9]{6,16}$/ }
         ],
         email: [
-            { required: true, message: '请输入邮箱', trigger: 'change' }
+            { type: 'string', required: true, message: '请输入邮箱', trigger: 'change' },
+            { type: 'string', message: '格式不正确', pattern: /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ }
         ],
         password: [
-            { required: true, message: '请输入密码', trigger: 'change' }
+            { required: true, message: '请输入密码', trigger: 'change' },
+            { type: 'string', message: '至少包含一个字母、数字和特殊符号，长度为 6-16位', pattern: /^(?![a-zA-z]+$)(?!\d+$)(?![!@#$%^&*]+$)(?![a-zA-z\d]+$)(?![a-zA-z!@#$%^&*]+$)(?![\d!@#$%^&*]+$)[a-zA-Z\d!@#$%^&*]+$/}
         ],
         passwordagain: [
-            { required: true, message: '请再次输入密码', trigger: 'change' }
+            { required: true, message: '请再次输入密码', trigger: 'change' },
+            { validator(rule, value, cb, source, ) {
+                if(value !== source.form.password)
+                  return [new Error(
+                    "两次输入的密码不一致"
+                  )]
+                cb()
+              },
+            }
         ],
       },
       submitEnabled: true,
