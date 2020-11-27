@@ -14,7 +14,7 @@
 .header {
     height: 50px;
     background: #ffffff;
-    box-shadow: 0 3px 2px #6ba9f0c0;
+    box-shadow: 0 3px 2px #5c9cfd41;
     display: flex;
 }
 
