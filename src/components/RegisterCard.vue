@@ -29,8 +29,10 @@
         @input="notifyAddUser()"
       )
     el-button.register-button(type="primary"
-                              :underline = "false" 
+                              :underline = "false"
                               @click="notifySubmit()") 注册
+    el-form
+      el-link(type="primary", :underline="false", href="/login") 已有账号？前往登录
 </template>
 
 <script>
