@@ -2,31 +2,35 @@
 .register-card
   el-form(:model="form", label-width="80px", :rules="rules", ref="ruleForm")
     .register-title 加入 Wenote
-    el-form-item(label="用户名")
+    el-form-item(label="用户名", prop="username")
       el-input.input(
         v-model="form.username"
         placeholder="请输入用户名"
         @input="notifyAddUser()"
+        @blur="checkUsername(form.username)"
       )
-    el-form-item(label="邮箱")
+    el-form-item(label="邮箱", prop="email")
       el-input.input(
-        v-model="form.username"
+        v-model="form.email"
         placeholder="请输入邮箱"
         @input="notifyAddUser()"
+        @blur="checkEmail"
       )
-    el-form-item(label="密码")
+    el-form-item(label="密码", prop="password")
       el-input.input(
         v-model="form.password"
         placeholder="请输入密码"
         :show-password="true"
         @input="notifyAddUser()"
+        @blur="checkPassword"
       )
-    el-form-item(label="确认密码")
+    el-form-item(label="确认密码", prop="passwordagain")
       el-input.input(
-        v-model="form.password"
+        v-model="form.passwordagain"
         placeholder="请再次输入密码"
         :show-password="true"
         @input="notifyAddUser()"
+        @blur="doubleCheckPassword"
       )
     el-button.register-button(type="primary"
                               :underline = "false"
@@ -42,14 +46,22 @@ export default {
     return {
       form: {
         username : "",
-        password : ""
+        email: "",
+        password : "",
+        passwordagain : "",
       },
       rules: {
         username: [
-            { required: true, message: '请输入用户名', trigger: 'add' }
+            { required: true, message: '请输入用户名', trigger: 'change' }
+        ],
+        email: [
+            { required: true, message: '请输入邮箱', trigger: 'change' }
         ],
         password: [
-            { required: true, message: '请输入密码', trigger: 'add' }
+            { required: true, message: '请输入密码', trigger: 'change' }
+        ],
+        passwordagain: [
+            { required: true, message: '请再次输入密码', trigger: 'change' }
         ],
       },
       submitEnabled: true,
@@ -61,10 +73,54 @@ export default {
   ],
   methods :{
     notifyAddUser(){
-      // TODO
+      let u = this.form.username ? this.form.username : "";
+      let e = this.form.email ? this.form.email : "";
+      let p = this.form.password ? this.form.password : "";
+      let pa = this.form.passwordagain ? this.form.passwordagain : "";
+      this.submitEnabled = !(u !== "" && e !== ""&& p !== ""&& pa !== "");
+      this.$emit("onLoginCreditChanged", u,e,p,pa);
     },
     notifySubmit(){
       // TODO
+    },
+    checkUsername(id){
+      var reg = /^[A-Za-z0-9]{6,16}$/;
+      if(!reg.test(id)){
+        this.$notify({
+            message: '用户名格式不正确：只能包含英文和数字,长度6~16',
+            type: 'error'
+          })
+        this.form.username = '';
+      }
+    },
+    checkEmail() {
+      var regEmail = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+        if (this.form.email != '' && !regEmail.test(this.form.email)) {
+          this.$notify({
+            message: '邮箱格式不正确',
+            type: 'error'
+          })
+          this.form.email = ''
+        }
+    },
+    checkPassword(){
+      var check = /^(?![a-zA-z]+$)(?!\d+$)(?![!@#$%^&*]+$)(?![a-zA-z\d]+$)(?![a-zA-z!@#$%^&*]+$)(?![\d!@#$%^&*]+$)[a-zA-Z\d!@#$%^&*]+$/;
+      if (this.form.password != '' && !check.test(this.form.password)){
+        this.$notify({
+            message: '密码不符合要求：必须包含 字母、数字、特殊符号',
+            type: 'error'
+          })
+        this.form.password = '';
+      }
+    },
+    doubleCheckPassword(){
+      if(this.form.password != this.form.passwordagain){
+        this.$notify({
+            message: '两次输入的密码不一样!',
+            type: 'error'
+          })
+        this.form.passwordagain = '';
+      }
     }
   }
 };
