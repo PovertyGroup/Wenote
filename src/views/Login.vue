@@ -2,6 +2,8 @@
 MainLayout
   template(v-slot:header)
     Header
+  template(v-slot:footer)
+    Footer
   LoginCard.login-card(@onLoginCreditChanged="loginCreditChanged", @onSubmit="submit")
   template(v-slot:footer)
     Footer
@@ -12,7 +14,7 @@ import Vue from "vue";
 import LoginCard from "@/components/LoginCard";
 import MainLayout from "@/layouts/MainLayout";
 import Header from "@/layouts/Header";
-import Footer from "@/layouts/Footer";
+import Footer from "@/layouts/Footer"
 
 export default {
   name: "Login",
@@ -20,7 +22,7 @@ export default {
     LoginCard,
     MainLayout,
     Header,
-    Footer
+    Footer,
   },
   data: function () {
     return {
@@ -51,14 +53,14 @@ export default {
             message: "登陆成功",
             type: "success",
           });
-          Vue.$jwt = response.data.jwt;
-
+          Vue.$jwt.set(response.data.jwt);
+          console.log(response.data);
           Vue.$axios
             .get(Vue.$composeUrl(Vue.$baseUrl, "/notes/mine"), {
               headers: Vue.$getAuthorizedHeader(),
             })
             .then((res) => {
-              console.log("dwawdaw");
+              // TODO
               console.log(res.data);
             });
           this.$router.push("/index");

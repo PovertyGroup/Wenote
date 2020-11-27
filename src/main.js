@@ -6,30 +6,30 @@ import axios from 'axios'
 
 Vue.$baseUrl = 'http://172.21.4.9:1337/'
 Vue.$axios = axios
-Vue.$composeUrl = function(baseUrl, path){
-  if(baseUrl.endsWith('/') && !path.startsWith('/'))
-    return baseUrl + path
-  else if(baseUrl.endsWith('/') && path.startsWith('/'))
-    return baseUrl.substring(0, baseUrl.length - 1) + path
-  else if(!baseUrl.endsWith('/') && path.startsWith('/'))
-    return baseUrl + path
-  else
-    return baseUrl + '/' + path
+Vue.$composeUrl = function(baseUrl, path) {
+    if (baseUrl.endsWith('/') && !path.startsWith('/'))
+        return baseUrl + path
+    else if (baseUrl.endsWith('/') && path.startsWith('/'))
+        return baseUrl.substring(0, baseUrl.length - 1) + path
+    else if (!baseUrl.endsWith('/') && path.startsWith('/'))
+        return baseUrl + path
+    else
+        return baseUrl + '/' + path
 }
 
 Vue.$jwt = {
-  set: function(value){
-      window.localStorage.setItem('jwt', value)
-  },
-  get: function(){
-      return window.localStorage.getItem('jwt')
-  }
+    set: function(value) {
+        window.localStorage.setItem('jwt', value)
+    },
+    get: function() {
+        return window.localStorage.getItem('jwt')
+    }
 }
 
 Vue.$getAuthorizedHeader = function() {
-  return {
-    Authorization: 'Bearer ' + Vue.$jwt,
-  }
+    return {
+        Authorization: 'Bearer ' + Vue.$jwt.get(),
+    }
 }
 
 Vue.config.productionTip = false
@@ -42,6 +42,6 @@ Vue.use(ElementUI)
 // router and vue setup
 import router from './routers/router'
 new Vue({
-  router,
-  render: h => h(App)
+    router,
+    render: h => h(App)
 }).$mount('#app')

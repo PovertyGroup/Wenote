@@ -3,9 +3,9 @@
     el-form(:model="form" label-width="80px" :rules="rules" ref="ruleForm")
       h3.logintitle Wenote
       el-form-item(label="用户名" prop="username")
-        el-input(v-model="form.username" placeholder="用户名或邮箱" @input="notifyCreditChanged()")
+        el-input.input(v-model="form.username" placeholder="用户名或邮箱" @input="notifyCreditChanged()")
       el-form-item(label="密码" prop="password")
-        el-input(v-model="form.password" placeholder="密码" :show-password="true" @input="notifyCreditChanged()")
+        el-input.input(v-model="form.password" placeholder="密码" :show-password="true" @input="notifyCreditChanged()")
       el-form-item
         el-button.login-button(type="primary" @click="notifySubmit()" :disabled="this.submitEnabled") 登陆
 </template>
@@ -49,10 +49,10 @@ export default {
 </script>
 
 <style scoped>
-
-.login-button{
-  width: 70%;
-  margin: 10px 15px auto 25px;
+.logintitle{
+  margin: 20px 8px 20px 8px;
+  text-align: center;
+  font-size: 27px;
 }
 .login-card{
   max-width: 400px;
@@ -66,12 +66,13 @@ export default {
   box-shadow: 2px 2px 25px #8fbbfd3a;
   width: 100vh;
   max-width: 400px;
+  text-align: left;
 }
-.logintitle{
-  margin: 20px 8px 20px auto;
-  text-align: center;
-  font-size: 25px;
+.login-button{
+  width: 60%;
+  margin: 10px 15px auto 25px;
 }
-
-
+.input{
+  max-width: 285px;
+}
 </style>

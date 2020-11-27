@@ -28,9 +28,11 @@ export default {
         }
     },
     mounted() {
+        console.log(Vue.$jwt[0]);
         Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, '/notes/' + this.$route.params.id)).then((res) => {
             console.log(res);
             this.noteMd = res.data.content;
+            console.log(this.noteMd);
         })
         .catch(() => {
             this.noSuchNote = true;
