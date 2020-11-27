@@ -2,14 +2,14 @@
 .login-card
   el-form(:model="form", label-width="80px", :rules="rules", ref="ruleForm")
     .logintitle Wenote
-    el-form-item(label="用户名", prop="username")
-      el-input(
+    el-form-item.label(label="用户名", prop="username")
+      el-input.input(
         v-model="form.username",
         placeholder="用户名或邮箱",
         @input="notifyCreditChanged()"
       )
-    el-form-item(label="密码", prop="password")
-      el-input(
+    el-form-item.label(label="密码", prop="password")
+      el-input.input(
         v-model="form.password",
         placeholder="密码",
         @keyup.enter.native="keydown()",
@@ -25,7 +25,7 @@
       :disabled="this.submitEnabled"
     ) 登陆
     el-form
-    el-link(type="primary", :underline="false", href="/register") 没有账号？注册一个
+      el-link.register(type="primary", :underline="false", href="/register") 没有账号？注册一个
 </template>
 
 <script>
@@ -70,28 +70,29 @@ export default {
 
 <style scoped>
 .logintitle {
-  margin: 20px 8px 20px 8px;
+  margin: 20px 8px 30px 8px;
   text-align: center;
-  font-size: 27px;
+  font-size: 30px;
 }
 .login-card {
-  max-width: 380px;
   border-radius: 15px;
   background-clip: border-box;
   margin: 50px auto;
-  padding: 40px 35px;
+  padding: 30px 35px;
   background: rgb(246, 246, 246);
   border: 1px solid #5c9cfd41;
   box-shadow: 2px 2px 25px #8fbbfd3a;
   width: 100vh;
   max-width: 400px;
-  text-align: left;
 }
 .login-button {
   width: 60%;
+  width: 200px;
   margin: 10px 15px auto 25px;
+  text-align: center;
 }
 .input {
-  max-width: 285px;
+  max-width: 255px;
+  text-align: left;
 }
 </style>
