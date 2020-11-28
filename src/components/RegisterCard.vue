@@ -53,7 +53,6 @@ export default {
             { validator: validatePassword, }
         ],
       },
-      submitEnabled: false,
     }
   },
   events :[
