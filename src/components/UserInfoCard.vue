@@ -2,9 +2,8 @@
 div
   .isLogin(v-if="isLogedIn")
     div.userinfo
-      p.name {{user.Name}}
-      el-avatar.avatar(src='http://172.21.4.9:1337/uploads/20a57fce8b3da61dee8c611699e5a8c8_51df968e15.jpg',shape="square")
-      //- img.avatar(src='http://172.21.4.9:1337/uploads/20a57fce8b3da61dee8c611699e5a8c8_51df968e15.jpg')
+      p.name {{user.name}}
+      img.avatar(:src="user.avatar")
 
   .notLogin(v-else)
     el-link.doc(:underline="false", href="/about") 关于
@@ -18,8 +17,8 @@ export default {
     if (Vue.$jwt.get() != undefined) {
       return {
         user:{
-          Name: '',
-          Avatar: '',
+          name: '',
+          avatar: '',
         },
         isLogedIn: true,
       };
@@ -30,9 +29,12 @@ export default {
     }
   },
   mounted(){
-    Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, '/users/5f92d83ce4c0d97786f5bc73')).then((res) => {
-        this.$set(this.user,"Name",res.data.username)
-        this.$set(this.user,"Avatar",Vue.$baseUrl.substring(0,Vue.$baseUrl.length-1)+res.data.avatar.url)
+    Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, '/users/me'),{
+      headers: Vue.$getAuthorizedHeader(),
+    })
+    .then((res) => {
+        this.$set(this.user,"name",res.data.username)
+        this.$set(this.user,"avatar",Vue.$baseUrl.substring(0,Vue.$baseUrl.length-1)+res.data.avatar.url)
         console.log(this.user.Avatar);
          // 成功
     })
