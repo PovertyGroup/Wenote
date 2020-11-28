@@ -3,46 +3,30 @@
   el-form(:model="form", label-width="80px", :rules="rules", ref="ruleForm")
     .register-title 加入 Wenote
     el-form-item(label="用户名", prop="username")
-      el-input.input(
-        v-model="form.username"
-        placeholder="请输入用户名"
-        @input="notifyAddUser()"
-        @blur="checkUsername(form.username)"
-      )
+      el-input.input(v-model="form.username" placeholder="请输入用户名" @input="notifyUserCreditChanged()")
     el-form-item(label="邮箱", prop="email")
-      el-input.input(
-        v-model="form.email"
-        placeholder="请输入邮箱"
-        @input="notifyAddUser()"
-        @blur="checkEmail"
-      )
+      el-input.input(v-model="form.email" placeholder="请输入邮箱" @input="notifyUserCreditChanged()")
     el-form-item(label="密码", prop="password")
-      el-input.input(
-        v-model="form.password"
-        placeholder="请输入密码"
-        :show-password="true"
-        @input="notifyAddUser()"
-        @blur="checkPassword"
-      )
+      el-input.input(v-model="form.password" placeholder="请输入密码" :show-password="true" @input="notifyUserCreditChanged()")
     el-form-item(label="确认密码", prop="passwordagain")
-      el-input.input(
-        v-model="form.passwordagain"
-        placeholder="请再次输入密码"
-        :show-password="true"
-        @input="notifyAddUser()"
-        @blur="doubleCheckPassword"
-      )
-    el-button.register-button(type="primary"
-                              :underline = "false"
-                              @click="notifySubmit()") 注册
-    el-form
-      el-link(type="primary", :underline="false", href="/login") 已有账号？前往登录
+      el-input.input(v-model="form.passwordagain" placeholder="请再次输入密码" :show-password="true")
+    el-button.register-button(type="primary" :underline = "false" @click="notifySubmit()") 注册
+  el-link.login-link(type="primary", :underline="false", href="/login") 已有账号？前往登录
 </template>
 
 <script>
 export default {
   name: "RegisterCard",
   data() {
+    var validatePassword = (rule, value, cb) => {
+      if (value === '') {
+          cb(new Error('请再次输入密码'));
+        } else if (value !== this.form.password) {
+          cb(new Error('两次输入密码不一致!'));
+        } else {
+          cb();
+        }
+    }
     return {
       form: {
         username : "",
@@ -60,79 +44,36 @@ export default {
             { type: 'string', message: '格式不正确', pattern: /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ }
         ],
         password: [
-            { required: true, message: '请输入密码', trigger: 'change' },
-            { type: 'string', message: '至少包含一个字母、数字和特殊符号，长度为 6-16位', pattern: /^(?![a-zA-z]+$)(?!\d+$)(?![!@#$%^&*]+$)(?![a-zA-z\d]+$)(?![a-zA-z!@#$%^&*]+$)(?![\d!@#$%^&*]+$)[a-zA-Z\d!@#$%^&*]+$/}
+            { type: 'string', required: true, message: '请输入密码', trigger: 'change' },
+            { type: 'string', required: true, message: '密码长度为 6-16 位', trigger: 'change', pattern: /.{6,16}/ },
+            { type: 'string', message: '至少包含一个字母、数字和特殊符号', pattern: /^(?![a-zA-z]+$)(?!\d+$)(?![!@#$%^&*]+$)(?![a-zA-z\d]+$)(?![a-zA-z!@#$%^&*]+$)(?![\d!@#$%^&*]+$)[a-zA-Z\d!@#$%^&*]+$/}
         ],
         passwordagain: [
             { required: true, message: '请再次输入密码', trigger: 'change' },
-            { validator(rule, value, cb, source, ) {
-                if(value !== source.form.password)
-                  return [new Error(
-                    "两次输入的密码不一致"
-                  )]
-                cb()
-              },
-            }
+            { validator: validatePassword, }
         ],
       },
-      submitEnabled: true,
+      submitEnabled: false,
     }
   },
   events :[
-    'onRegiste',
+    'onUserInfoChanged',
     'onSubmit'
   ],
   methods :{
-    notifyAddUser(){
-      let u = this.form.username ? this.form.username : "";
-      let e = this.form.email ? this.form.email : "";
-      let p = this.form.password ? this.form.password : "";
-      let pa = this.form.passwordagain ? this.form.passwordagain : "";
-      this.submitEnabled = !(u !== "" && e !== ""&& p !== ""&& pa !== "");
-      this.$emit("onLoginCreditChanged", u,e,p,pa);
+    notifyUserCreditChanged() {
+      let u = this.form.username
+      let e = this.form.email
+      let p = this.form.password
+      let pa = this.form.passwordagain
+      this.$emit("onLoginCreditChanged", u, e, p, pa)
     },
     notifySubmit(){
-      // TODO
+      this.$refs['ruleForm'].validate((valid) => {
+        if (valid)
+          this.emit('onSubmit')
+      })
     },
-    checkUsername(id){
-      var reg = /^[A-Za-z0-9]{6,16}$/;
-      if(!reg.test(id)){
-        this.$notify({
-            message: '用户名格式不正确：只能包含英文和数字,长度6~16',
-            type: 'error'
-          })
-        this.form.username = '';
-      }
-    },
-    checkEmail() {
-      var regEmail = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
-        if (this.form.email != '' && !regEmail.test(this.form.email)) {
-          this.$notify({
-            message: '邮箱格式不正确',
-            type: 'error'
-          })
-          this.form.email = ''
-        }
-    },
-    checkPassword(){
-      var check = /^(?![a-zA-z]+$)(?!\d+$)(?![!@#$%^&*]+$)(?![a-zA-z\d]+$)(?![a-zA-z!@#$%^&*]+$)(?![\d!@#$%^&*]+$)[a-zA-Z\d!@#$%^&*]+$/;
-      if (this.form.password != '' && !check.test(this.form.password)){
-        this.$notify({
-            message: '密码不符合要求：必须包含 字母、数字、特殊符号',
-            type: 'error'
-          })
-        this.form.password = '';
-      }
-    },
-    doubleCheckPassword(){
-      if(this.form.password != this.form.passwordagain){
-        this.$notify({
-            message: '两次输入的密码不一样!',
-            type: 'error'
-          })
-        this.form.passwordagain = '';
-      }
-    }
   }
 };
 </script>
@@ -163,5 +104,9 @@ export default {
 .input {
   max-width: 255px;
   text-align: left;
+}
+
+.login-link {
+  margin-top: 10px;
 }
 </style>

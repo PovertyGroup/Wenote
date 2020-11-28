@@ -3,29 +3,11 @@
   el-form(:model="form", label-width="80px", :rules="rules", ref="ruleForm")
     .logintitle Wenote
     el-form-item.label(label="用户名", prop="username")
-      el-input.input(
-        v-model="form.username",
-        placeholder="用户名或邮箱",
-        @input="notifyCreditChanged()"
-      )
+      el-input.input(v-model="form.username" placeholder="用户名或邮箱" @input="notifyCreditChanged()")
     el-form-item.label(label="密码", prop="password")
-      el-input.input(
-        v-model="form.password",
-        placeholder="密码",
-        @keyup.enter.native="keydown()",
-        type="submit",
-        :show-password="true",
-        @input="notifyCreditChanged()"
-      )
-    el-button.login-button(
-      type="primary",
-      :underline="false",
-      @click="notifySubmit()",
-      @keyup.enter.native="keydown()",
-      :disabled="this.submitEnabled"
-    ) 登陆
-    el-form
-      el-link.register(type="primary", :underline="false", href="/register") 没有账号？注册一个
+      el-input.input(v-model="form.password" placeholder="密码" @keyup.enter.native="keydown()" type="submit" :show-password="true" @input="notifyCreditChanged()")
+    el-button.login-button(type="primary" :underline="false" @click="notifySubmit()" @keyup.enter.native="keydown()") 登陆
+  el-link.register-link(type="primary" :underline="false", href="/register") 没有账号？注册一个
 </template>
 
 <script>
@@ -45,13 +27,15 @@ export default {
           { required: true, message: "请输入密码", trigger: "change" },
         ],
       },
-      submitEnabled: true,
     };
   },
   events: ["onLoginCreditChanged", "onSubmit"],
   methods: {
     notifySubmit() {
-      this.$emit("onSubmit");
+      this.$refs['ruleForm'].validate((valid) => {
+        if(valid)
+          this.$emit("onSubmit");
+      })
     },
     keydown() {
       if (event.keyCode === 13) {
@@ -94,5 +78,9 @@ export default {
 .input {
   max-width: 255px;
   text-align: left;
+}
+
+.register-link {
+  margin-top: 10px;
 }
 </style>

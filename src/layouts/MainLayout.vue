@@ -8,9 +8,6 @@
             slot(name="footer")
 </template>
 
-
-
-
 <style scoped>
 header {
     padding-bottom: 20px;
