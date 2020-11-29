@@ -3,8 +3,12 @@ div
   .isLogin(v-if="isLogedIn")
     div.userinfo
       p.name {{user.name}}
-      img.avatar(:src="user.avatar")
-
+      el-dropdown(trigger="click" @command="handleCommand")
+          span.el-dropdown-link
+            img.avatar(:src="user.avatar")
+          el-dropdown-menu(slot="dropdown")
+            el-dropdown-item(icon="el-icon-user" command="info") 个人信息
+            el-dropdown-item(icon="el-icon-close" command="loginout") 退出登录
   .notLogin(v-else)
     el-link.doc(:underline="false", href="/about") 关于
     el-link.regist(:underline="false", href="/login") 登录
@@ -28,6 +32,14 @@ export default {
       };
     }
   },
+  methods: {
+      handleCommand(command) {
+        if(command=="loginout"){
+          localStorage.removeItem('jwt')
+          location.reload()
+        }
+      }
+  },
   mounted(){
     Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, '/users/me'),{
       headers: Vue.$getAuthorizedHeader(),
@@ -35,12 +47,16 @@ export default {
     .then((res) => {
         this.$set(this.user,"name",res.data.username)
         this.$set(this.user,"avatar",Vue.$baseUrl.substring(0,Vue.$baseUrl.length-1)+res.data.avatar.url)
-        console.log(this.user.Avatar);
+        console.log(this.user.avatar);
          // 成功
     })
     .catch(() => {
          // 失败
     })
+    // let userInfo = Vue.$getInfo()
+    // console.log(userInfo)
+    // this.$set(this.user,"name",userInfo.data.username)
+    // this.$set(this.user,"avatar",Vue.$baseUrl.substring(0,Vue.$baseUrl.length-1)+userInfo.data.avatar.url)
   }
 };
 </script>
@@ -56,6 +72,7 @@ export default {
 }
 .userinfo{
   height: 50px;
+  width: 150px;
 }
 .avatar{
   margin: 5px;
@@ -68,6 +85,10 @@ export default {
   align-items: center;
   justify-content: center;
   overflow: hidden;
+}
+.dropdown{
+  height: 40px;
+  display: inline-block;
 }
 .name{
   margin: 5px;
