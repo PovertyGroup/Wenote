@@ -15,6 +15,7 @@
     "markdown-it-katex": "^2.0.3",
     "pug": "^3.0.0",
     "pug-plain-loader": "^1.0.0",
+    "v-markdown-editor": "^1.2.6",
     "vue": "^2.6.11",
     "vue-router": "^3.4.7"
   },
