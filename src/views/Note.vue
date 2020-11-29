@@ -4,7 +4,7 @@
         Header
     link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/morioh/dist/css/morioh.min.css")
     div.editor-wrap(v-if="!this.noSuchNote")
-        markdown-editor.editor(:options="editorOptions" v-model="noteMd" theme="primary" )
+        //- markdown-editor.editor(:options="editorOptions" v-model="noteMd" theme="primary" height="auto")
         MarkdownCard.md-card(:mdSource="this.noteMd")
     NoSuchNoteCard(v-if="this.noSuchNote").not-such-note-card
 </template>
@@ -15,9 +15,6 @@ import MainLayout from '../layouts/MainLayout'
 import MarkdownCard from '../components/MarkdownCard.vue'
 import NoSuchNoteCard from '../components/NoSuchNoteCard.vue'
 import Vue from 'vue'
-
-import 'v-markdown-editor/dist/v-markdown-editor.css';
-import '@fortawesome/fontawesome-free/css/all.min.css'
 
 export default {
     Name: 'Note',
