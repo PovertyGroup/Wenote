@@ -32,6 +32,15 @@ Vue.$getAuthorizedHeader = function() {
     }
 }
 
+// Vue.$getInfo = function() {
+//     Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, '/users/me'), {
+//             headers: Vue.$getAuthorizedHeader(),
+//         })
+//         .then((res) => {
+//             console.log(res)
+//             return res
+//         })
+// }
 Vue.config.productionTip = false
 
 // ElementUI
