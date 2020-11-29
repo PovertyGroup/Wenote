@@ -2,7 +2,10 @@
   MainLayout
     template(v-slot:header)
         Header
-    MarkdownCard(:mdSource="this.noteMd" v-if="!this.noSuchNote")
+    link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/morioh/dist/css/morioh.min.css")
+    div.editor-wrap(v-if="!this.noSuchNote")
+        markdown-editor(:options="editorOptions" v-model="noteMd" theme="primary")
+        MarkdownCard(:mdSource="this.noteMd")
     NoSuchNoteCard(v-if="this.noSuchNote").not-such-note-card
 </template>
 
@@ -12,6 +15,9 @@ import MainLayout from '../layouts/MainLayout'
 import MarkdownCard from '../components/MarkdownCard.vue'
 import NoSuchNoteCard from '../components/NoSuchNoteCard.vue'
 import Vue from 'vue'
+
+import 'v-markdown-editor/dist/v-markdown-editor.css';
+import '@fortawesome/fontawesome-free/css/all.min.css'
 
 export default {
     Name: 'Note',
@@ -25,14 +31,23 @@ export default {
         return {
             noteMd: '',
             noSuchNote: false,
+            editorOptions: {
+                lineNumbers: false,
+                styleActiveLine: true,
+                styleSelectedText: true,
+                lineWrapping: true,
+                indentWithTabs: true,
+                tabSize: 2,
+                indentUnit: 2
+            }
         }
     },
     mounted() {
         console.log(Vue.$jwt[0]);
         Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, '/notes/' + this.$route.params.id)).then((res) => {
-            console.log(res);
+            // console.log(res);
             this.noteMd = res.data.content;
-            console.log(this.noteMd);
+            // console.log(this.noteMd);
         })
         .catch(() => {
             this.noSuchNote = true;
@@ -44,5 +59,10 @@ export default {
 <style scoped>
 .not-such-note-card{
     margin: auto;
+}
+
+.editor-wrap{
+    width: 50%;
+    text-align: left;
 }
 </style>

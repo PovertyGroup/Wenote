@@ -46,6 +46,9 @@ Vue.config.productionTip = false
 // ElementUI
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+import Editor from 'v-markdown-editor'
+
+Vue.use(Editor);
 Vue.use(ElementUI)
 
 // router and vue setup
