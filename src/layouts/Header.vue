@@ -34,7 +34,7 @@
   margin-left: 30px;
 }
 .right {
-  margin-right: 20px;
+  margin-right: 0;
 }
 </style>
 
