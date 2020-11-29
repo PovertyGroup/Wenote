@@ -4,8 +4,8 @@
         Header
     link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/morioh/dist/css/morioh.min.css")
     div.editor-wrap(v-if="!this.noSuchNote")
-        markdown-editor(:options="editorOptions" v-model="noteMd" theme="primary")
-        MarkdownCard(:mdSource="this.noteMd")
+        markdown-editor.editor(:options="editorOptions" v-model="noteMd" theme="primary" )
+        MarkdownCard.md-card(:mdSource="this.noteMd")
     NoSuchNoteCard(v-if="this.noSuchNote").not-such-note-card
 </template>
 
@@ -45,9 +45,7 @@ export default {
     mounted() {
         console.log(Vue.$jwt[0]);
         Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, '/notes/' + this.$route.params.id)).then((res) => {
-            // console.log(res);
             this.noteMd = res.data.content;
-            // console.log(this.noteMd);
         })
         .catch(() => {
             this.noSuchNote = true;
@@ -62,7 +60,22 @@ export default {
 }
 
 .editor-wrap{
-    width: 50%;
+    margin: 0 auto;
+    width: 100%;
     text-align: left;
+    display: flex;
+    flex-direction: row;
 }
+
+.editor{
+    margin-left: 10px;
+    width: calc(50% - 30px);
+    margin-right: 40px;
+}
+
+.md-card{
+    margin-right: 10px;
+    width: calc(50% - 30px);
+}
+
 </style>

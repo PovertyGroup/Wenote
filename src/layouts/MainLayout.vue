@@ -13,12 +13,12 @@ header {
     padding-bottom: 20px;
 }
 .el-main{
-    min-height: 100%;
+    min-height: calc(100% - 100px);
     bottom: 0;
-    padding: 10% 20%;
     margin: 10px;
 }
 .el-footer{
+    min-height: 100px;
     bottom: 0;
 }
 .el-main{
