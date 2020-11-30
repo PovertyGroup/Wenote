@@ -3,7 +3,7 @@
     template(v-slot:header)
         Header
     .note-wrap
-        .note-title-wrap
+        .note-title-wrap(v-if="!this.noSuchNote")
             h1.note-title {{ this.noteTitle }}
             .note-info-wrap
                 .note-info-item
@@ -149,14 +149,15 @@ export default {
 }
 
 .note-title{
-    font-size: 48px;
+    font-size: 45px;
     margin: 0;
 }
 
 .note-info-wrap{
     display: flex;
     padding-top: 5px;
-    font-size: 13px;
+    font-size: 18px;
+    padding-top: 10px;
 }
 
 .note-info-item{
