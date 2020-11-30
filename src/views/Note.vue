@@ -151,6 +151,7 @@ export default {
 .note-title{
     font-size: 45px;
     margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .note-info-wrap{
