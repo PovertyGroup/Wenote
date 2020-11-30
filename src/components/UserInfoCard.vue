@@ -38,6 +38,9 @@ export default {
           localStorage.removeItem('jwt')
           location.reload()
         }
+        if(command=="info"){
+          this.$router.push("/info");
+        }
       }
   },
   mounted(){
