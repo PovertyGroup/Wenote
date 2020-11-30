@@ -1,6 +1,6 @@
 <template lang="pug">
 .login-card
-  el-form(:model="form", label-width="80px", :rules="rules", ref="ruleForm")
+  el-form(:model="form" label-width="80px" :rules="rules" ref="ruleForm")
     .logintitle Wenote
     el-form-item.label(label="用户名", prop="username")
       el-input.input(v-model="form.username" placeholder="用户名或邮箱" @input="notifyCreditChanged()")

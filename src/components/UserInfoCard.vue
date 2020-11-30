@@ -48,9 +48,12 @@ export default {
       headers: Vue.$getAuthorizedHeader(),
     })
     .then((res) => {
+      console.log(res);
         this.$set(this.user,"name",res.data.username)
-        this.$set(this.user,"avatar",Vue.$baseUrl.substring(0,Vue.$baseUrl.length-1)+res.data.avatar.url)
-        console.log(this.user.avatar);
+        if(res.data.avatar)
+          this.$set(this.user,"avatar",Vue.$baseUrl.substring(0,Vue.$baseUrl.length-1)+res.data.avatar.url)
+        else
+          this.$set(this.user,"avatar","https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png")
          // 成功
     })
     .catch(() => {
