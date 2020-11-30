@@ -2,11 +2,20 @@
   MainLayout
     template(v-slot:header)
         Header
-    link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/morioh/dist/css/morioh.min.css")
-    div.editor-wrap(v-if="!this.noSuchNote")
-        //- markdown-editor.editor(:options="editorOptions" v-model="noteMd" theme="primary" height="auto")
-        MarkdownCard.md-card(:mdSource="this.noteMd")
-    NoSuchNoteCard(v-if="this.noSuchNote").not-such-note-card
+    .note-wrap
+        .note-title-wrap
+            h1.note-title {{ this.noteTitle }}
+            .note-info-wrap
+                .note-info-item
+                    i.far.fa-user
+                    p.note-author-name {{ this.noteAuthor.username }}
+                .note-info-item
+                    i.far.fa-calendar-alt
+                    p.note-pudate-time {{ this.updateTime }}
+        div.editor-wrap(v-if="!this.noSuchNote")
+            mavon-editor(v-model="this.noteMd" language="zh-CN" :toolbars="toolbars")
+            //- MarkdownCard.md-card(:mdSource="this.noteMd")
+        NoSuchNoteCard(v-if="this.noSuchNote").not-such-note-card
 </template>
 
 <script>
@@ -15,6 +24,8 @@ import MainLayout from '../layouts/MainLayout'
 import MarkdownCard from '../components/MarkdownCard.vue'
 import NoSuchNoteCard from '../components/NoSuchNoteCard.vue'
 import Vue from 'vue'
+
+import { format } from 'timeago.js';
 
 export default {
     Name: 'Note',
@@ -27,26 +38,56 @@ export default {
     data() {
         return {
             noteMd: '',
+            noteTitle: '',
             noSuchNote: false,
-            editorOptions: {
-                lineNumbers: false,
-                styleActiveLine: true,
-                styleSelectedText: true,
-                lineWrapping: true,
-                indentWithTabs: true,
-                tabSize: 2,
-                indentUnit: 2
+            toolbars: {
+                bold: true, // 粗体
+                italic: true, // 斜体
+                header: true, // 标题
+                underline: true, // 下划线
+                strikethrough: true, // 中划线
+                mark: true, // 标记
+                superscript: true, // 上角标
+                subscript: true, // 下角标
+                quote: true, // 引用
+                ol: true, // 有序列表
+                ul: true, // 无序列表
+                link: true, // 链接
+                imagelink: true, // 图片链接
+                code: true, // code
+                table: true, // 表格
+                fullscreen: true, // 全屏编辑
+                readmodel: true, // 沉浸式阅读
+                htmlcode: false, // 展示html源码
+                help: true, // 帮助
+                undo: true, // 上一步
+                redo: true, // 下一步
+                trash: false, // 清空
+                save: true, // 保存（触发events中的save事件）
+                navigation: false, // 导航目录
+                alignleft: true, // 左对齐
+                aligncenter: true, // 居中
+                alignright: true, // 右对齐
+                subfield: false, // 单双栏模式
+                preview: false, // 预览
             }
         }
     },
     mounted() {
         console.log(Vue.$jwt[0]);
         Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, '/notes/' + this.$route.params.id)).then((res) => {
+            this.noteTitle = res.data.title;
             this.noteMd = res.data.content;
+            this.noteAuthor = res.data.author;
         })
         .catch(() => {
             this.noSuchNote = true;
         })
+    },
+    computed: {
+        updateTime() {
+            return format(this.noteAuthor.updatedAt, 'zh_CN');
+        }
     }
 }
 </script>
@@ -56,18 +97,10 @@ export default {
     margin: auto;
 }
 
-.editor-wrap{
-    margin: 0 auto;
+.editor-wrap, .editor-wrap > *{
+    margin: 0;
     width: 100%;
-    text-align: left;
-    display: flex;
-    flex-direction: row;
-}
-
-.editor{
-    margin-left: 10px;
-    width: calc(50% - 30px);
-    margin-right: 40px;
+    height: 100%;
 }
 
 .md-card{
@@ -75,4 +108,44 @@ export default {
     width: calc(50% - 30px);
 }
 
+.note-wrap{
+    width: 100%;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.note-title-wrap{
+    line-height: 1;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 30px;
+    padding-left: 10px;
+}
+
+.note-title-wrap * {
+    width: fit-content;
+}
+
+.note-title{
+    font-size: 48px;
+    margin: 0;
+}
+
+.note-info-wrap{
+    display: flex;
+    padding-top: 5px;
+    font-size: 13px;
+}
+
+.note-info-item{
+    display: flex;
+    padding-left: 10px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.far{
+    margin: 0 5px;
+}
 </style>

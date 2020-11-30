@@ -49,6 +49,14 @@ import 'element-ui/lib/theme-chalk/index.css';
 
 Vue.use(ElementUI)
 
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
+
+Vue.use(mavonEditor)
+
+// font-awesome
+import '@fortawesome/fontawesome-free/css/all.min.css'
+
 // router and vue setup
 import router from './routers/router'
 new Vue({
