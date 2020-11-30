@@ -27,9 +27,11 @@ Vue.$jwt = {
 }
 
 Vue.$getAuthorizedHeader = function() {
-    return {
-        Authorization: 'Bearer ' + Vue.$jwt.get(),
-    }
+    if(localStorage.getItem('jwt'))
+        return {
+            Authorization: 'Bearer ' + Vue.$jwt.get(),
+        }
+    return {};
 }
 
 // Vue.$getInfo = function() {

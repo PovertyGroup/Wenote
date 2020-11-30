@@ -13,7 +13,7 @@
                     i.far.fa-calendar-alt
                     p.note-pudate-time {{ this.updateTime }}
         div.editor-wrap(v-if="!this.noSuchNote")
-            mavon-editor(v-model="this.noteMd" language="zh-CN" :toolbars="toolbars")
+            mavon-editor(v-model="noteMd" language="zh-CN" :toolbars="toolbars" @save="saveNote")
             //- MarkdownCard.md-card(:mdSource="this.noteMd")
         NoSuchNoteCard(v-if="this.noSuchNote").not-such-note-card
 </template>
@@ -39,6 +39,7 @@ export default {
         return {
             noteMd: '',
             noteTitle: '',
+            noteAuthor: '',
             noSuchNote: false,
             toolbars: {
                 bold: true, // 粗体
@@ -87,6 +88,25 @@ export default {
     computed: {
         updateTime() {
             return format(this.noteAuthor.updatedAt, 'zh_CN');
+        }
+    },
+    methods: {
+        saveNote(value){
+            Vue.$axios.put(Vue.$composeUrl(Vue.$baseUrl, '/notes/' + this.$route.params.id), {
+                "content": value,
+            }, { headers: Vue.$getAuthorizedHeader() })
+            .then(() => {
+                this.$message({
+                    message: "已保存",
+                    type: "success",
+                });
+            })
+            .catch(err => {
+                this.$message({
+                    message: err.data.message,
+                    type: "error",
+                });
+            })
         }
     }
 }
