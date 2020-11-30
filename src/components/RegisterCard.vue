@@ -70,7 +70,7 @@ export default {
     notifySubmit(){
       this.$refs['ruleForm'].validate((valid) => {
         if (valid)
-          this.emit('onSubmit')
+          this.$emit('onSubmit')
       })
     },
   }
