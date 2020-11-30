@@ -1,6 +1,6 @@
 <template lang="pug">
     div
-        h1 这里并没有笔记
+        h1 Wenote并没有记录这篇笔记
 </template>
 
 <script>
