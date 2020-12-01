@@ -21,7 +21,7 @@
             mavon-editor(v-model="noteMd" language="zh-CN" :toolbars="toolbars" @save="saveNote")
                 template(slot="left-toolbar-after")
                     el-button(type="button"  class="op-icon fa fa-mavon-floppy-o"
-                            aria-hidden="true" :title="`这是标题`" @click="saveNote()"
+                            aria-hidden="true" :title="`记得保存哦`" @click="saveNote()"
                             style="width: 100px;height: 30px; background:  #8fbbfd3a") 保存更改
             //- MarkdownCard.md-card(:mdSource="this.noteMd")
         NoSuchNoteCard(v-if="this.noSuchNote").not-such-note-card
