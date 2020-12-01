@@ -4,7 +4,12 @@
         Header
     .note-wrap
         .note-title-wrap(v-if="!this.noSuchNote")
-            h1.note-title {{ this.noteTitle }}
+            .edit-Warp(v-if="!this.canEdit")
+                h1.note-title {{ this.noteTitle }}
+                el-button.save-title(icon="el-icon-edit" size="mini" @click="editTitle")
+            .edit-Warp(v-if="this.canEdit")
+                el-input.edit-title(v-model="noteTitle" size="large" placeholder="请输入标题") {{ this.noteTitle }}
+                el-button.save-title(icon="el-icon-check" type="success" size="mini" @click="saveTitle()")
             .note-info-wrap
                 .note-info-item
                     i.far.fa-user
@@ -20,10 +25,13 @@
                             style="width: 100px;height: 30px; background:  #8fbbfd3a") 保存更改
             //- MarkdownCard.md-card(:mdSource="this.noteMd")
         NoSuchNoteCard(v-if="this.noSuchNote").not-such-note-card
+    template(v-slot:footer)
+        Footer
 </template>
 
 <script>
 import Header from '../layouts/Header'
+import Footer from '../layouts/Footer'
 import MainLayout from '../layouts/MainLayout'
 import MarkdownCard from '../components/MarkdownCard.vue'
 import NoSuchNoteCard from '../components/NoSuchNoteCard.vue'
@@ -37,7 +45,8 @@ export default {
         MarkdownCard,
         NoSuchNoteCard,
         MainLayout,
-        Header
+        Header,
+        Footer
     },
     data() {
         return {
@@ -45,6 +54,7 @@ export default {
             noteTitle: '',
             noteAuthor: '',
             noSuchNote: false,
+            canEdit: false,
             toolbars: {
                 bold: true, // 粗体
                 italic: true, // 斜体
@@ -104,6 +114,9 @@ export default {
                     message: "已保存",
                     type: "success",
                 });
+                setTimeout(() => {
+                    location.reload();
+                }, 1500);
             })
             .catch(err => {
                 this.$message({
@@ -111,7 +124,31 @@ export default {
                     type: "error",
                 });
             })
-        }
+        },
+        saveTitle(){
+            Vue.$axios.put(Vue.$composeUrl(Vue.$baseUrl, '/notes/' + this.$route.params.id), {
+                "title": this.noteTitle,
+            }, { headers: Vue.$getAuthorizedHeader() })
+            .then(() => {
+                this.$message({
+                    message: "已保存",
+                    type: "success",
+                });
+                setTimeout(() => {
+                    location.reload();
+                }, 1500);
+            })
+            .catch(err => {
+                this.$message({
+                    message: err.data.message,
+                    type: "error",
+                });
+            })
+            return this.canEdit = !this.canEdit
+        },
+        editTitle(){
+            return this.canEdit = !this.canEdit
+        },
     }
 }
 </script>
@@ -156,6 +193,8 @@ export default {
     font-size: 45px;
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    vertical-align:middle;
+    display: inline-block;
 }
 
 .note-info-wrap{
@@ -175,7 +214,15 @@ export default {
     margin: 0 5px;
 }
 
-.save{
-    width: 100px;
+.edit-title{
+    width: 250px;
+    font-size: 30px;
+}
+
+.save-title{
+    margin: 10px;
+    vertical-align:middle;
+    vertical-align:middle;
+    display: inline-block;
 }
 </style>
