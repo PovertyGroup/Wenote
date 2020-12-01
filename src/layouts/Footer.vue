@@ -2,7 +2,7 @@
 .footer
   .center
     p Wenote
-    p Created By Sheey&T-Fate&Codgi
+    p Created by sheey & T-Fate & Codgi with ❤️
 </template>
 
 
