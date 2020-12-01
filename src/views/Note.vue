@@ -90,7 +90,10 @@ export default {
     },
     mounted() {
         console.log(Vue.$jwt[0]);
-        Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, '/notes/' + this.$route.params.id)).then((res) => {
+        Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, '/notes/' + this.$route.params.id), {
+            headers: Vue.$getAuthorizedHeader()
+        })
+        .then((res) => {
             this.noteTitle = res.data.title;
             this.noteMd = res.data.content;
             this.noteAuthor = res.data.author;

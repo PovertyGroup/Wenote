@@ -3,7 +3,8 @@
     template(v-slot:header)
       Header
     //.view-note
-    MarkdownCard.md-card(:mdSource="this.noteMd")
+    MarkdownCard.md-card(:mdSource="this.noteMd" v-if="!this.noSuchNote")
+    NoSuchNoteCard(v-if="this.noSuchNote").not-such-note-card
     template(v-slot:footer)
       Footer
 </template>
@@ -29,6 +30,7 @@ export default {
         noteMd: '',
         noteTitle: '',
         noteAuthor: '',
+        noSuchNote: false,
       }
     },
     mounted() {
@@ -45,6 +47,9 @@ export default {
 </script>
 
 <style scoped>
+.not-such-note-card{
+    margin: auto;
+}
 .md-card{
   margin: auto;
   background:  #cde2fd41;
