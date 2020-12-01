@@ -4,10 +4,10 @@
         Header
     .note-wrap
         .note-title-wrap(v-if="!this.noSuchNote")
-            .edit-Warp(v-if="!this.canEdit")
+            .edit-wrap(v-if="!this.canEdit")
                 h1.note-title {{ this.noteTitle }}
                 el-button.save-title(icon="el-icon-edit" size="mini" @click="editTitle")
-            .edit-Warp(v-if="this.canEdit")
+            .edit-wrap(v-if="this.canEdit")
                 el-input.edit-title(v-model="noteTitle" size="large" placeholder="请输入标题") {{ this.noteTitle }}
                 el-button.save-title(icon="el-icon-check" type="success" size="mini" @click="saveTitle()")
             .note-info-wrap
@@ -134,9 +134,6 @@ export default {
                     message: "已保存",
                     type: "success",
                 });
-                setTimeout(() => {
-                    location.reload();
-                }, 1500);
             })
             .catch(err => {
                 this.$message({
@@ -158,7 +155,7 @@ export default {
     margin: auto;
 }
 
-.editor-wrap, .editor-wrap > *{
+.editor-wrap, .editor-wrap > * {
     margin: 0;
     width: 100%;
     height: 100%;
@@ -207,6 +204,7 @@ export default {
 .note-info-item{
     display: flex;
     padding-left: 10px;
+    font-size: 14px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -214,7 +212,13 @@ export default {
     margin: 0 5px;
 }
 
+.edit-wrap {
+    display: flex;
+    flex-direction: row;
+}
+
 .edit-title{
+    margin: auto;
     width: 250px;
     font-size: 30px;
 }
