@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import HelloWorld from '@/components/HelloWorld.vue'
 import Login from '@/views/Login.vue'
 import Note from '@/views/Note.vue'
+import ViewNote from '@/views/ViewNote.vue'
 import Index from '@/views/Index.vue'
 import Register from '@/views/Register.vue'
 import PageNotFound from '@/views/404.vue'
@@ -14,6 +15,7 @@ const routes = [
     { path: '/home', component: HelloWorld },
     { path: '/login', component: Login },
     { path: '/note/:id', component: Note },
+    { path: '/viewnote/:id', component: ViewNote },
     { path: '/index', component: Index },
     { path: '/', redirect: '/index' },
     { path: '/about', redirect: '/note/5fb922d85703375b1ccf28dc' },

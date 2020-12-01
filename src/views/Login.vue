@@ -24,6 +24,15 @@ export default {
     Header,
     Footer,
   },
+  created(){
+    if (Vue.$jwt.get() != undefined){
+      this.$message({
+            message: "你已经登陆过了",
+            type: "success",
+          });
+      this.$router.push("/index");
+    }
+  },
   data: function () {
     return {
       username: "",

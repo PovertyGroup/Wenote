@@ -18,7 +18,7 @@ header {
     margin: 10px;
 }
 .el-footer{
-    min-height: 100px;
+    min-height: 70px;
     bottom: 0;
 }
 .el-main{
