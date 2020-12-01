@@ -14,6 +14,10 @@
                     p.note-pudate-time {{ this.updateTime }}
         div.editor-wrap(v-if="!this.noSuchNote")
             mavon-editor(v-model="noteMd" language="zh-CN" :toolbars="toolbars" @save="saveNote")
+                template(slot="left-toolbar-after")
+                    el-button(type="button"  class="op-icon fa fa-mavon-floppy-o"
+                            aria-hidden="true" :title="`这是标题`" @click="saveNote()"
+                            style="width: 100px;height: 30px; background:  #8fbbfd3a") 保存更改
             //- MarkdownCard.md-card(:mdSource="this.noteMd")
         NoSuchNoteCard(v-if="this.noSuchNote").not-such-note-card
 </template>
@@ -64,7 +68,7 @@ export default {
                 undo: true, // 上一步
                 redo: true, // 下一步
                 trash: false, // 清空
-                save: true, // 保存（触发events中的save事件）
+                save: false, // 保存（触发events中的save事件）
                 navigation: false, // 导航目录
                 alignleft: true, // 左对齐
                 aligncenter: true, // 居中
@@ -169,5 +173,9 @@ export default {
 
 .far{
     margin: 0 5px;
+}
+
+.save{
+    width: 100px;
 }
 </style>
