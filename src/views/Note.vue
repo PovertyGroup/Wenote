@@ -53,6 +53,7 @@ export default {
             noteMd: '',
             noteTitle: '',
             noteAuthor: '',
+            timer: null,
             noSuchNote: false,
             canEdit: false,
             toolbars: {
@@ -103,10 +104,14 @@ export default {
     },
     mounted() {
         if(Vue.$jwt.get() == undefined){
-            this.$router.push('/viewnote/'+this.$route.params.id);
+            this.$route.push('/viewnote/'+this.$route.params.id);
         }
-        // setInterval(this.saveNote(this.noteMd),10000);
+        this.timer = setInterval(this.saveNote(),3000);
+        this.timer.unref();
     },
+    beforeDestroy() {
+        clearInterval(this.timer);
+	},
     computed: {
         updateTime() {
             return format(this.noteAuthor.updatedAt, 'zh_CN');
