@@ -48,7 +48,6 @@ export default {
       headers: Vue.$getAuthorizedHeader(),
     })
     .then((res) => {
-      console.log(res);
         this.$set(this.user,"name",res.data.username)
         if(res.data.avatar)
           this.$set(this.user,"avatar",Vue.$baseUrl.substring(0,Vue.$baseUrl.length-1)+res.data.avatar.url)

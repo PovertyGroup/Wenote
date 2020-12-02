@@ -88,8 +88,7 @@ export default {
             }
         }
     },
-    mounted() {
-        console.log(Vue.$jwt[0]);
+    created(){
         Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, '/notes/' + this.$route.params.id), {
             headers: Vue.$getAuthorizedHeader()
         })
@@ -101,6 +100,12 @@ export default {
         .catch(() => {
             this.noSuchNote = true;
         })
+    },
+    mounted() {
+        if(Vue.$jwt.get() == undefined){
+            this.$router.push('/viewnote/'+this.$route.params.id);
+        }
+        // setInterval(this.saveNote(this.noteMd),10000);
     },
     computed: {
         updateTime() {
@@ -146,6 +151,16 @@ export default {
         editTitle(){
             return this.canEdit = !this.canEdit
         },
+        isAuthor(res){
+            Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, '/users/me'),{
+                headers: Vue.$getAuthorizedHeader(),
+            })
+            .then((user) => {
+                if(res.data.author.id!=user.data.id){
+                    this.$router.push(this.$route.path.replace(/note/,"viewnote"));
+                }
+            })
+        }
     }
 }
 </script>
