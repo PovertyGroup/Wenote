@@ -53,6 +53,7 @@ export default {
             noteMd: '',
             noteTitle: '',
             noteAuthor: '',
+            timer: null,
             noSuchNote: false,
             canEdit: false,
             toolbars: {
@@ -88,8 +89,7 @@ export default {
             }
         }
     },
-    mounted() {
-        console.log(Vue.$jwt[0]);
+    created(){
         Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, '/notes/' + this.$route.params.id), {
             headers: Vue.$getAuthorizedHeader()
         })
@@ -102,6 +102,16 @@ export default {
             this.noSuchNote = true;
         })
     },
+    mounted() {
+        if(Vue.$jwt.get() == undefined){
+            this.$route.push('/viewnote/'+this.$route.params.id);
+        }
+        this.timer = setInterval(this.saveNote(),3000);
+        this.timer.unref();
+    },
+    beforeDestroy() {
+        clearInterval(this.timer);
+	},
     computed: {
         updateTime() {
             return format(this.noteAuthor.updatedAt, 'zh_CN');
@@ -146,6 +156,16 @@ export default {
         editTitle(){
             return this.canEdit = !this.canEdit
         },
+        isAuthor(res){
+            Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, '/users/me'),{
+                headers: Vue.$getAuthorizedHeader(),
+            })
+            .then((user) => {
+                if(res.data.author.id!=user.data.id){
+                    this.$router.push(this.$route.path.replace(/note/,"viewnote"));
+                }
+            })
+        }
     }
 }
 </script>

@@ -27,7 +27,7 @@ Vue.$jwt = {
 }
 
 Vue.$getAuthorizedHeader = function() {
-    if(localStorage.getItem('jwt'))
+    if (localStorage.getItem('jwt'))
         return {
             Authorization: 'Bearer ' + Vue.$jwt.get(),
         }
