@@ -25,7 +25,7 @@ export default {
 
 <style scoped>
 .md-wrap{
-    margin: 30px;
+    margin: 0;
     padding: 10px;
     line-height: 2rem;
     text-align: left;

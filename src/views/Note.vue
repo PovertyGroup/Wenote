@@ -53,6 +53,7 @@ export default {
             noteMd: '',
             noteTitle: '',
             noteAuthor: '',
+            tags:[],
             timer: null,
             noSuchNote: false,
             canEdit: false,
@@ -90,10 +91,12 @@ export default {
         }
     },
     created(){
+        console.log(Vue.$jwt.get())
         Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, '/notes/' + this.$route.params.id), {
             headers: Vue.$getAuthorizedHeader()
         })
         .then((res) => {
+            this.isAuthor(res)
             this.noteTitle = res.data.title;
             this.noteMd = res.data.content;
             this.noteAuthor = res.data.author;
@@ -102,16 +105,12 @@ export default {
             this.noSuchNote = true;
         })
     },
-    mounted() {
-        if(Vue.$jwt.get() == undefined){
-            this.$route.push('/viewnote/'+this.$route.params.id);
+    mounted(){
+        if(Vue.$jwt.get() == undefined || Vue.$jwt.get() === null){
+            this.$router.push('/viewnote/'+this.$route.params.id);
         }
-        this.timer = setInterval(this.saveNote(),3000);
         this.timer.unref();
     },
-    beforeDestroy() {
-        clearInterval(this.timer);
-	},
     computed: {
         updateTime() {
             return format(this.noteAuthor.updatedAt, 'zh_CN');
@@ -121,6 +120,7 @@ export default {
         saveNote(value){
             Vue.$axios.put(Vue.$composeUrl(Vue.$baseUrl, '/notes/' + this.$route.params.id), {
                 "content": value,
+                "tags": ["熊","sda"]
             }, { headers: Vue.$getAuthorizedHeader() })
             .then(() => {
                 this.$message({
@@ -161,8 +161,9 @@ export default {
                 headers: Vue.$getAuthorizedHeader(),
             })
             .then((user) => {
+                console.log(res);
                 if(res.data.author.id!=user.data.id){
-                    this.$router.push(this.$route.path.replace(/note/,"viewnote"));
+                    this.$router.push('/viewnote/'+this.$route.params.id);
                 }
             })
         }
