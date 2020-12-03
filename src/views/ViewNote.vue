@@ -62,8 +62,8 @@ export default {
             this.noteMd = res.data.content;
             this.noteAuthor = res.data.author;
             this.noteAvatar = Vue.$baseUrl.substring(0,Vue.$baseUrl.length-1)+res.data.author.avatar.url;
-            console.log(this.noteAuthor.followers)
-            if(this.noteAuthor.followers.indexOf(Vue.$info.get())>0){
+          console.log(Vue.$info.get())
+            if(this.noteAuthor.followers.indexOf(Vue.$info.get()) >= 0){
               this.followed = true
             }
         })
@@ -144,14 +144,14 @@ export default {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 .md-card{
+  background: rgb(255, 255, 255);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 12px 0px;
   margin: 20px auto 0 auto;
-  width: calc(50% - 30px);
+  width: 60%;
 }
 .note{
   min-height: 150px;
-  background: rgb(255, 255, 255);
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 12px 0px;
-  padding: 10px;
+  padding: 20px 10%;
 }
 .avatar{
   vertical-align:middle;
@@ -184,13 +184,15 @@ export default {
 .update-time{
   float: right;
   line-height: 60px;
+  margin-right: 10px;
 }
 
 .noteinfo{
+  padding: 0 60px;
   height: 60px;
+  border-bottom: 1px solid #eeeeee;
 }
 .author-info{
-  width: 200px;
   float: left;
 }
 </style>
