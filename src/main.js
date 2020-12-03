@@ -26,6 +26,15 @@ Vue.$jwt = {
     }
 }
 
+Vue.$info = {
+    set: function(value) {
+        window.localStorage.setItem('id', value)
+    },
+    get: function() {
+        return window.localStorage.getItem('id')
+    }
+}
+
 Vue.$getAuthorizedHeader = function() {
     if (localStorage.getItem('jwt'))
         return {
@@ -34,15 +43,7 @@ Vue.$getAuthorizedHeader = function() {
     return {};
 }
 
-// Vue.$getInfo = function() {
-//     Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, '/users/me'), {
-//             headers: Vue.$getAuthorizedHeader(),
-//         })
-//         .then((res) => {
-//             console.log(res)
-//             return res
-//         })
-// }
+
 Vue.config.productionTip = false
 
 // ElementUI
