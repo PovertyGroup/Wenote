@@ -63,7 +63,8 @@ export default {
             type: "success",
           });
           Vue.$jwt.set(response.data.jwt);
-          console.log(response.data);
+          Vue.$info.set(response.data.user.id)
+          console.log(response);
           Vue.$axios
             .get(Vue.$composeUrl(Vue.$baseUrl, "/notes/mine"), {
               headers: Vue.$getAuthorizedHeader(),
