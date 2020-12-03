@@ -4,8 +4,15 @@
 </template>
 
 <script>
+// import Vue from "vue";
+import Footer from "../layouts/Footer";
+// import Aside from "@/components/Aside"
 export default {
-    name: "NoSuchNoteCard",
+    name: "Info",
+    components: {
+        // Aside,
+        Footer,
+    },
 }
 </script>
 

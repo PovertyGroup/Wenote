@@ -2,11 +2,27 @@
 .header
   .left
     el-link.sitename(:underline="false", href="/index") Wenote 📝
-    el-link(:underline="false",href="/problem") 熊宝的笔记(镇站之宝)
-    el-link(:underline="false") 其他垃圾笔记
+    el-link(:underline="false" href="/problem") 熊宝的笔记(镇站之宝)
+    el-link(:underline="false" href="/about") 关于
+  .center
+    el-col(:span="12")
+      el-autocomplete.input(v-model="search" , placeholder="请输入内容" :trigger-on-focus="false" @select="handleSelect")
   .right
     UserInfoCard
 </template>
+
+<script>
+// import Vue from 'vue'
+  export default{
+    data(){
+      return {
+        notes: [],
+        search: '',
+      }
+    },
+
+}
+</script>
 
 <style scoped>
 .header {

@@ -7,6 +7,7 @@ div
           span.el-dropdown-link
             img.avatar(:src="user.avatar")
           el-dropdown-menu(slot="dropdown")
+            el-dropdown-item(icon="el-icon-plus" command="creat-note") 新建笔记
             el-dropdown-item(icon="el-icon-user" command="info") 个人信息
             el-dropdown-item(icon="el-icon-close" command="loginout") 退出登录
   .notLogin(v-else)
@@ -40,6 +41,9 @@ export default {
         }
         if(command=="info"){
           this.$router.push("/info");
+        }
+        if(command=="creat-note"){
+          this.$message.error("dnmd把接口给我！")
         }
       }
   },

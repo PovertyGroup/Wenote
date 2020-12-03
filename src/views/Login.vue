@@ -5,8 +5,6 @@ MainLayout
   template(v-slot:footer)
     Footer
   LoginCard.login-card(@onLoginCreditChanged="loginCreditChanged", @onSubmit="submit")
-  template(v-slot:footer)
-    Footer
 </template>
 
 <script>
@@ -78,7 +76,7 @@ export default {
         .catch((error) => {
           loading.close();
           if (error.message === "Network Error") {
-            this.$message.error("爬");
+            this.$message.error("网络不太行呢~");
           } else {
             this.$message.error(error.response.data.message.message);
           }
