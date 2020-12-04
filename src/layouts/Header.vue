@@ -3,7 +3,6 @@
   .left
     el-link.sitename(:underline="false", href="/index") Wenote 📝
     el-link(:underline="false",href="/problem") 熊宝的笔记(镇站之宝)
-    el-link(:underline="false") 其他垃圾笔记
   .right
     UserInfoCard
 </template>

@@ -20,9 +20,9 @@ const routes = [
     { path: '/', redirect: '/index' },
     { path: '/about', redirect: '/note/5fb922d85703375b1ccf28dc' },
     { path: '/problem', redirect: 'note/5fbe48fb43facc04e2ddd7a7' },
-    { path: '/register', component: Register },
-    { path: '/info', component: Info },
-    { path: '/404', component: PageNotFound },
+    { path: '/register', component: Register }, 
+    { path: '/info/', component: Info },
+    { path: '/404', component: PageNotFound }, 
     { path: '*', redirect: '/404' },
 ]
 

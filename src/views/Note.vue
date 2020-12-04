@@ -117,7 +117,7 @@ export default {
         }
     },
     methods: {
-        saveNote(value){
+        saveNote(value) {
             Vue.$axios.put(Vue.$composeUrl(Vue.$baseUrl, '/notes/' + this.$route.params.id), {
                 "content": value,
                 "tags": ["熊","sda"]
@@ -161,7 +161,6 @@ export default {
                 headers: Vue.$getAuthorizedHeader(),
             })
             .then((user) => {
-                console.log(res);
                 if(res.data.author.id!=user.data.id){
                     this.$router.push('/viewnote/'+this.$route.params.id);
                 }

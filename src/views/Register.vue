@@ -2,7 +2,7 @@
 MainLayout
   template(v-slot:header)
     Header
-  RegisterCard.RegisterCard(@onLoginCreditChanged="loginCreditChanged",@onSubmit="submit")
+  RegisterCard.registerCard(@onLoginCreditChanged="loginCreditChanged",@onSubmit="submit")
   template(v-slot:footer)
     Footer
 </template>
@@ -80,4 +80,5 @@ export default {
 </script>
 
 <style>
+
 </style>
