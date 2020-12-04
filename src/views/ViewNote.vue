@@ -14,8 +14,10 @@
                             icon="el-icon-plus" size="mini" @click="follow()") 关注
             el-button.button(v-if="this.followed" icon="el-icon-check"
                             size="mini" @click="unfollow()") 已关注
-            p.like-num {{likeNum}} 赞
-            p.like-num {{starNum}} 收藏
+            i.far.fa-thumbs-up.like-icon
+            p.like-num 点赞 {{likeNum}}
+            i.far.fa-star.star-icon
+            p.like-num 收藏 {{starNum}}
           .update-time
             i.far.fa-calendar-alt
             p.note-update-time 发布于{{ this.updateTime }}
@@ -289,17 +291,32 @@ export default {
   padding: 0 60px;
   height: 60px;
   border-bottom: 1px solid #eeeeee;
+  background: #fafafa;
 }
 
-.author-info{
+.author-info {
   float: left;
+  height: 100%;
+  line-height: 60px;
 }
 
 .like-num{
-  vertical-align:middle;
+  vertical-align: middle;
   display: inline-block;
-  margin: auto 5px auto 15px;
+  margin: auto 0 auto 5px;
   font-size: 15px;
+}
+
+.like-icon{
+  vertical-align: middle;
+  display: inline-block;
+  margin: auto 0 auto 20px;
+  font-size: 15px;
+}
+
+.star-icon{
+  vertical-align: middle;
+  margin: auto 0 auto 20px;
 }
 
 .like{

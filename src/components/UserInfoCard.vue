@@ -1,5 +1,5 @@
 <template lang="pug">
-div
+div.user-info-card
   .isLogin(v-if="isLogedIn")
     div.userinfo
       p.name {{user.name}}
@@ -71,6 +71,9 @@ export default {
 </script>
 
 <style>
+.user-info-card{
+  width: fit-content;
+}
 .regist {
   margin-right: 20px;
   font-size: 17px;
@@ -79,10 +82,17 @@ export default {
   margin-right: 20px;
   font-size: 17px;
 }
+
+.isLogin{
+  width: fit-content;
+  margin-right: 0;
+}
+
 .userinfo{
   height: 50px;
-  width: 150px;
+  width: fit-content;
 }
+
 .avatar{
   margin: 5px;
   padding: 2px;
@@ -95,10 +105,12 @@ export default {
   justify-content: center;
   overflow: hidden;
 }
+
 .dropdown{
   height: 40px;
   display: inline-block;
 }
+
 .name{
   margin: 5px;
   font-size: 20px;
