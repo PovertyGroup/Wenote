@@ -18,6 +18,8 @@
             p.like-num 点赞 {{likeNum}}
             i.far.fa-star.star-icon
             p.like-num 收藏 {{starNum}}
+            i.el-icon-collection-tag.tag-icon
+            el-tag.tags(v-for="tag in noteTags" type="info" effect="dark" size="mini") {{tag}}
           .update-time
             i.far.fa-calendar-alt
             p.note-update-time 发布于{{ this.updateTime }}
@@ -63,6 +65,7 @@ export default {
         noteId:'',
         likeNum: '',
         starNum: '',
+        noteTags: [],
         noteLikers: [],
         noteStarers: [],
         starNote: false,
@@ -87,7 +90,8 @@ export default {
             this.noteStarers = res.data.starers
             this.likeNum = res.data.likers.length
             this.starNum = res.data.starers.length
-            console.log(res.data.starers.length)
+            this.noteTags = res.data.tags
+            console.log(this.noteTags)
             if(this.noteAuthor.followers.indexOf(Vue.$info.get()) >= 0){
               this.followed = true;
             }
@@ -109,13 +113,11 @@ export default {
         Vue.$axios.post(Vue.$composeUrl(Vue.$baseUrl,"/users/follow/"+this.noteAuthor.id),{},{
           headers: Vue.$getAuthorizedHeader()
         })
-        .then((res)=>{
+        .then(()=>{
           this.$message.success("已成功关注该作者~");
           this.followed = true;
-          console.log(res);
         })
         .catch((error)=>{
-          console.log(error.response)
           if(error.response.status==403){
             this.$message.error("你还没有登陆！");
           }else if(error.response.data.message === "Cannot follow self."){
@@ -129,26 +131,25 @@ export default {
         Vue.$axios.post(Vue.$composeUrl(Vue.$baseUrl,"/users/unfollow/"+this.noteAuthor.id),{},{
           headers: Vue.$getAuthorizedHeader()
         })
-        .then((res)=>{
+        .then(()=>{
           this.$message.warning("取消关注对方了呢，哭唧唧~");
           this.followed = false;
-          console.log(res.data);
         })
         .catch((error)=>{
-          console.log(error)
+          if(error.response.data.statusCode == 403){
+            this.$message.error("您还没有登陆...")
+          }
         })
       },
       like(){
         Vue.$axios.post(Vue.$composeUrl(Vue.$baseUrl,"/notes/like/"+this.noteId),{},{
           headers: Vue.$getAuthorizedHeader()
         })
-        .then((res)=>{
+        .then(()=>{
           this.$message.success("点赞成功~");
           this.likeNote = true;
-          console.log(res);
         })
         .catch((error)=>{
-          console.log(error.response.data.statusCode)
           if(error.response.data.statusCode == 403){
             this.$message.error("您还没有登陆...")
           }
@@ -158,23 +159,20 @@ export default {
         Vue.$axios.post(Vue.$composeUrl(Vue.$baseUrl,"/notes/unlike/"+this.noteId),{},{
           headers: Vue.$getAuthorizedHeader()
         })
-        .then((res)=>{
+        .then(()=>{
           this.$message.warning("取消对这篇文章点赞了呢");
           this.likeNote = false;
-          console.log(res);
         })
       },
       star(){
         Vue.$axios.post(Vue.$composeUrl(Vue.$baseUrl,"/notes/star/"+this.noteId),{},{
           headers: Vue.$getAuthorizedHeader()
         })
-        .then((res)=>{
+        .then(()=>{
           this.$message.success("收藏成功~");
           this.starNote = true;
-          console.log(res);
         })
         .catch((error)=>{
-          console.log(error.response.data.statusCode)
           if(error.response.data.statusCode == 403){
             this.$message.error("您还没有登陆...")
           }
@@ -184,10 +182,9 @@ export default {
         Vue.$axios.post(Vue.$composeUrl(Vue.$baseUrl,"/notes/unstar/"+this.noteId),{},{
           headers: Vue.$getAuthorizedHeader()
         })
-        .then((res)=>{
+        .then(()=>{
           this.$message.warning("取消收藏了");
           this.starNote = false;
-          console.log(res);
         })
       }
     }
@@ -333,5 +330,15 @@ export default {
   bottom:4%;
   left:85%;
   height: 45px;
+}
+
+.tag-icon{
+  vertical-align: middle;
+  margin: auto 0 auto 20px;
+}
+
+.tags{
+  margin: 0 0 10px 15px;
+  font-size: 14px;
 }
 </style>

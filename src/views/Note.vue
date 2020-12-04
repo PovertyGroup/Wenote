@@ -10,6 +10,22 @@
             .edit-wrap(v-if="this.canEdit")
                 el-input.edit-title(v-model="noteTitle" size="large" placeholder="请输入标题") {{ this.noteTitle }}
                 el-button.save-title(icon="el-icon-check" type="success" size="mini" @click="saveTitle()")
+            .tags-wrap
+                el-tag(:key="tag"
+                    v-for="tag in noteTags"
+                    closable
+                    :disable-transitions="false"
+                    @close="handleClose(tag)").tags {{tag}}
+                el-input(
+                    class="input-new-tag"
+                    v-if="inputVisible"
+                    v-model="inputValue"
+                    ref="saveTagInput"
+                    size="small"
+                    @keyup.enter.native="handleInputConfirm"
+                    @blur="handleInputConfirm"
+                )
+                el-button(v-else size="small" @click="showInput").tags + New Tag
             .note-info-wrap
                 .note-info-item
                     i.far.fa-user
@@ -23,7 +39,6 @@
                     el-button(type="button"  class="op-icon fa fa-mavon-floppy-o"
                             aria-hidden="true" :title="`记得保存哦`" @click="() => saveNote(this.noteMd)"
                             style="width: 100px;height: 30px; background:  #8fbbfd3a") 保存更改
-            //- MarkdownCard.md-card(:mdSource="this.noteMd")
         NoSuchNoteCard(v-if="this.noSuchNote").not-such-note-card
     template(v-slot:footer)
         Footer
@@ -53,8 +68,10 @@ export default {
             noteMd: '',
             noteTitle: '',
             noteAuthor: '',
-            tags:[],
+            inputValue: '',
+            noteTags:[],
             timer: null,
+            inputVisible: false,
             noSuchNote: false,
             canEdit: false,
             toolbars: {
@@ -91,7 +108,6 @@ export default {
         }
     },
     created(){
-        console.log(Vue.$jwt.get())
         Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, '/notes/' + this.$route.params.id), {
             headers: Vue.$getAuthorizedHeader()
         })
@@ -100,6 +116,8 @@ export default {
             this.noteTitle = res.data.title;
             this.noteMd = res.data.content;
             this.noteAuthor = res.data.author;
+            this.noteTags = res.data.tags;
+            console.log(this.noteTags)
         })
         .catch(() => {
             this.noSuchNote = true;
@@ -120,7 +138,7 @@ export default {
         saveNote(value){
             Vue.$axios.put(Vue.$composeUrl(Vue.$baseUrl, '/notes/' + this.$route.params.id), {
                 "content": value,
-                "tags": ["熊","sda"]
+                "tags": this.noteTags,
             }, { headers: Vue.$getAuthorizedHeader() })
             .then(() => {
                 this.$message({
@@ -161,11 +179,31 @@ export default {
                 headers: Vue.$getAuthorizedHeader(),
             })
             .then((user) => {
-                console.log(res);
                 if(res.data.author.id!=user.data.id){
                     this.$router.push('/viewnote/'+this.$route.params.id);
                 }
             })
+        },
+
+        handleClose(tag) {
+            this.noteTags.splice(this.noteTags.indexOf(tag), 1);
+        },
+
+        showInput() {
+            this.inputVisible = true;
+            this.$nextTick(_ => {
+                console.log(_)
+                this.$refs.saveTagInput.$refs.input.focus();
+            });
+        },
+
+        handleInputConfirm() {
+            let inputValue = this.inputValue;
+            if (inputValue) {
+            this.noteTags.push(inputValue);
+        }
+        this.inputVisible = false;
+        this.inputValue = '';
         }
     }
 }
@@ -248,5 +286,20 @@ export default {
     margin: 10px;
     vertical-align:middle;
     display: inline-block;
+}
+
+.tags-wrap{
+    margin: 10px 0 10px 10px;
+}
+
+.tags{
+    margin: 0 0 10px 15px;
+    font-size: 14px;
+}
+
+.input-new-tag {
+    width: 90px;
+    margin: 0 0 10px 15px;
+    vertical-align: bottom;
 }
 </style>
