@@ -1,7 +1,7 @@
 <template lang="pug">
 .header
   el-col(:span="8" type="flex" justify="start").left
-    el-link.sitename(:underline="false" href="/index") Wenote 📝
+    el-link.sitename(:underline="false" href="/home") Wenote 📝
     el-link(:underline="false" href="/problem") 熊宝的笔记(镇站之宝)
     el-link(:underline="false" href="/about") 关于
   el-col(:span="8" type="flex" justify="end").center

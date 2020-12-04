@@ -5,6 +5,7 @@ import App from './App.vue'
 import axios from 'axios'
 
 Vue.$baseUrl = 'http://172.21.4.9:1337/'
+Vue.$siteUrl = 'http://172.21.225.8:8081/'
 Vue.$axios = axios
 Vue.$composeUrl = function(baseUrl, path) {
     if (baseUrl.endsWith('/') && !path.startsWith('/'))

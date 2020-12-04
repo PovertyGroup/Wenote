@@ -25,11 +25,11 @@
             p.note-update-time 发布于{{ this.updateTime }}
         MarkdownCard.note(:mdSource="this.noteMd")
       NoSuchNoteCard(v-if="this.noSuchNote").not-such-note-card
-    el-button(v-if="!this.likeNote" type="primary" plain round
+    el-button(v-if="!this.likeNote && !this.noSuchNote" type="primary" plain round
               icon="el-icon-circle-check" @click="like()").like 点赞
     el-button(v-if="this.likeNote" type="primary" round
               icon="el-icon-circle-check" size="small"  @click="unlike()").like 已点赞
-    el-button(v-if="!this.starNote" type="success"
+    el-button(v-if="!this.starNote && !this.noSuchNote" type="success"
               plain round  icon="el-icon-star-off" @click="star()").star 收藏
     el-button(v-if="this.starNote" type="success"
               round icon="el-icon-star-off" @click="unstar()").star 已收藏
@@ -91,18 +91,18 @@ export default {
             this.noteStarers = res.data.starers
             this.likeNum = res.data.likers.length
             this.starNum = res.data.starers.length
-            this.noteTags = res.data.tags
-            console.log(this.noteTags.length)
-            if(this.noteAuthor.followers.indexOf(Vue.$info.get()) >= 0){
+            this.noteTags = res.data.tags ? res.data.tags : [];
+            // console.log(this.noteTags.length)
+            if(this.noteAuthor.followers && this.noteAuthor.followers.indexOf(Vue.$info.get()) >= 0){
               this.followed = true;
             }
-            if(this.noteLikers.indexOf(Vue.$info.get()) >= 0){
+            if(this.noteLikers && this.noteLikers.indexOf(Vue.$info.get()) >= 0){
               this.likeNote = true;
             }
-            if(this.noteStarers.indexOf(Vue.$info.get()) >= 0){
+            if(this.noteStarers && this.noteStarers.indexOf(Vue.$info.get()) >= 0){
               this.starNote = true;
             }
-            if(this.noteTags.length == 0){
+            if(this.noteTags && this.noteTags.length == 0){
               this.Tags = false;
             }
         })

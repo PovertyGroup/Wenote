@@ -43,12 +43,24 @@ export default {
           this.$router.push("/info");
         }
         if(command=="creat-note"){
-          this.$message.error("dnmd把接口给我！")
+          // this.$message.error("dnmd把接口给我！")
+          Vue.$axios.post(Vue.$composeUrl(Vue.$baseUrl, '/notes'), {"title": "新笔记"}, { headers: Vue.$getAuthorizedHeader() })
+          .then((res => {
+            this.$message.success('创建新笔记成功')
+            setTimeout(() => {
+              this.$router.push('/note/' + res.data.id)
+            }, 2000);
+          }))
+          .catch(err => {
+            this.$message.error(err.data.message);
+            this.$message.error('cadjsdiguhsdrfui');
+            console.log(err.data);
+          })
         }
       }
   },
   mounted(){
-    Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, '/users/me'),{
+    Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, '/users/me'), {
       headers: Vue.$getAuthorizedHeader(),
     })
     .then((res) => {

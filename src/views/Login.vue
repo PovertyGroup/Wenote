@@ -26,7 +26,7 @@ export default {
     if (Vue.$jwt.get() != undefined){
       this.$message({
             message: "你已经登陆过了",
-            type: "success",
+            info: "success",
           });
       this.$router.push("/index");
     }
