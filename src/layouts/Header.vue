@@ -5,7 +5,6 @@
     el-link(:underline="false" href="/problem") 熊宝的笔记(镇站之宝)
     el-link(:underline="false" href="/about") 关于
   el-col(:span="8" type="flex" justify="end").center
-    //- el-autocomplete.input(v-model="search" , placeholder="请输入内容" :trigger-on-focus="false" @select="handleSelect")\
     el-autocomplete.search-input(placeholder="请输入内容" v-model="searchText" suffix-icon="el-icon-search"
                                  :fetch-suggestions="querySearchAsync" @select="handleSelect")
   el-col(:span="8" type="flex" justify="end").right
@@ -55,7 +54,12 @@ export default{
       };
     },
     handleSelect(item) {
+<<<<<<< HEAD
       this.$router.push('/note/' + item.id);
+=======
+      this.$router.push('/viewnote/' + item.id)
+      location.reload()
+>>>>>>> 0e9084c1a4e7a0bc7cd323c87a23301fc74f2dff
     },
     fetchNote: async function(id){
       let note = undefined;
@@ -88,7 +92,8 @@ export default{
 }
 
 .left {
-  margin-left: 0;
+  width: auto;
+  margin-left: 2%;
 }
 
 .left * {
@@ -105,7 +110,9 @@ export default{
   margin-left: 30px;
 }
 .right {
+  width: auto;
   margin-right: 0;
+  margin-left: auto;
 }
 
 .right :last-child{
@@ -113,7 +120,8 @@ export default{
 }
 
 .center{
-  margin: auto 0;
+  width: auto;
+  margin: auto;
 }
 
 .search-input{
