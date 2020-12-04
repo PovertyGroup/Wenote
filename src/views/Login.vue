@@ -2,8 +2,6 @@
 MainLayout
   template(v-slot:header)
     Header
-  template(v-slot:footer)
-    Footer
   LoginCard.login-card(@onLoginCreditChanged="loginCreditChanged", @onSubmit="submit")
 </template>
 
@@ -88,7 +86,7 @@ export default {
 
 <style scoped>
 .login-card {
-  margin: auto;
+  margin :auto;
   display: flex;
   flex-direction: column;
 }

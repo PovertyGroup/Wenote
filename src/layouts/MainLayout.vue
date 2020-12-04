@@ -1,10 +1,10 @@
 <template lang="pug">
-    el-container(direction="vertical")
+    el-container(direction = "vertical")
         header
             slot(name="header")
-        el-main
+        el-main()
             slot
-        el-footer
+        el-footer()
             slot(name="footer")
 </template>
 
@@ -16,16 +16,14 @@ header {
     min-height: calc(100% - 100px);
     bottom: 0;
     margin: 10px;
-}
-.el-footer{
-    min-height: 70px;
-    bottom: 0;
-}
-.el-main{
     display: flex;
 }
+.el-footer{
+    min-height: 30px;
+    bottom: 0;
+}
+
 .el-container{
     min-height: 100vh;
 }
-
 </style>
