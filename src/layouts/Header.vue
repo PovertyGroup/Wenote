@@ -55,7 +55,7 @@ export default{
       };
     },
     handleSelect(item) {
-      this.$router.push('/note/' + item.id)
+      this.$router.push('/note/' + item.id);
     },
     fetchNote: async function(id){
       let note = undefined;
