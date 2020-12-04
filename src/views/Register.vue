@@ -38,7 +38,7 @@ export default {
     submit() {
       const loading = this.$loading({
         lock: true,
-        text: "Wenote正在记录你的信息...",
+        text: "Wenote 正在记录你的信息...",
         spinner: "el-icon-loading",
         background: "rgba(217,229, 247, 0.9)",
       });
@@ -48,13 +48,13 @@ export default {
           email: this.email,
           password: this.password,
         })
-        .then((response) => {
+        .then(() => {
           loading.close();
           this.$message({
             message: "注册成功,请前往邮箱点击验证邮件！",
             type: "success",
           });
-          console.log(response.data);
+          // console.log(response.data);
           // Vue.$axios
           //   .get(Vue.$composeUrl(Vue.$baseUrl, "/notes/mine"), {
           //     headers: Vue.$getAuthorizedHeader(),
@@ -63,7 +63,10 @@ export default {
           //     // TODO
           //     console.log(res.data);
           //   });
-          this.$router.push("/login");
+          // this.$router.push("/index");
+          setTimeout(() => {
+            this.$router.push("/login");
+          }, 5000);
         })
         .catch((error) => {
           loading.close();

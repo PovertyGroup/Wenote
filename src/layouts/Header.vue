@@ -54,8 +54,12 @@ export default{
       };
     },
     handleSelect(item) {
+<<<<<<< HEAD
+      this.$router.push('/note/' + item.id);
+=======
       this.$router.push('/viewnote/' + item.id)
       location.reload()
+>>>>>>> 0e9084c1a4e7a0bc7cd323c87a23301fc74f2dff
     },
     fetchNote: async function(id){
       let note = undefined;
