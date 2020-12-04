@@ -49,7 +49,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .note {
   height: 225px;
   border-radius: 4px;

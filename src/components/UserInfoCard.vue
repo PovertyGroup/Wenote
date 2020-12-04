@@ -38,7 +38,6 @@ export default {
         if(command=="logout"){
           localStorage.removeItem('jwt')
           localStorage.removeItem('id')
-          location.reload()
           this.$router.push("/login")
         }
         if(command=="info"){
