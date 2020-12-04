@@ -88,7 +88,8 @@ export default{
 }
 
 .left {
-  margin-left: 0;
+  width: auto;
+  margin-left: 2%;
 }
 
 .left * {
@@ -105,7 +106,9 @@ export default{
   margin-left: 30px;
 }
 .right {
+  width: auto;
   margin-right: 0;
+  margin-left: auto;
 }
 
 .right :last-child{
@@ -113,7 +116,8 @@ export default{
 }
 
 .center{
-  margin: auto 0;
+  width: auto;
+  margin: auto;
 }
 
 .search-input{
