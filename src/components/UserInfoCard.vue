@@ -9,7 +9,7 @@ div.user-info-card
           el-dropdown-menu(slot="dropdown")
             el-dropdown-item(icon="el-icon-plus" command="creat-note") 新建笔记
             el-dropdown-item(icon="el-icon-user" command="info") 个人信息
-            el-dropdown-item(icon="el-icon-close" command="loginout") 退出登录
+            el-dropdown-item(icon="el-icon-close" command="logout") 退出登录
   .notLogin(v-else)
     el-link.doc(:underline="false", href="/about") 关于
     el-link.regist(:underline="false", href="/login") 登录
@@ -35,10 +35,11 @@ export default {
   },
   methods: {
       handleCommand(command) {
-        if(command=="loginout"){
+        if(command=="logout"){
           localStorage.removeItem('jwt')
           localStorage.removeItem('id')
           location.reload()
+          this.$router.push("/login")
         }
         if(command=="info"){
           this.$router.push("/info");
