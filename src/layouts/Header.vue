@@ -8,6 +8,7 @@
     el-autocomplete.search-input(placeholder="请输入内容" v-model="searchText" suffix-icon="el-icon-search"
                                  :fetch-suggestions="querySearchAsync" @select="handleSelect")
   el-col(:span="8" type="flex" justify="end").right
+
     UserInfoCard
 </template>
 
