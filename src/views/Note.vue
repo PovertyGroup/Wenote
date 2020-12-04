@@ -11,21 +11,26 @@
                 el-input.edit-title(v-model="noteTitle" size="large" placeholder="请输入标题") {{ this.noteTitle }}
                 el-button.save-title(icon="el-icon-check" type="success" size="mini" @click="saveTitle()")
             .tags-wrap
-                el-tag(:key="tag"
-                    v-for="tag in noteTags"
-                    closable
-                    :disable-transitions="false"
-                    @close="handleClose(tag)").tags {{tag}}
-                el-input(
-                    class="input-new-tag"
-                    v-if="inputVisible"
-                    v-model="inputValue"
-                    ref="saveTagInput"
-                    size="small"
-                    @keyup.enter.native="handleInputConfirm"
-                    @blur="handleInputConfirm"
-                )
-                el-button(v-else size="small" @click="showInput").tags + New Tag
+                .tag-edit
+                    p.setting-title 标签
+                    el-tag(:key="tag"
+                        v-for="tag in noteTags"
+                        closable
+                        :disable-transitions="false"
+                        @close="handleClose(tag)").tags {{tag}}
+                    el-input(
+                        class="input-new-tag"
+                        v-if="inputVisible"
+                        v-model="inputValue"
+                        ref="saveTagInput"
+                        size="small"
+                        @keyup.enter.native="handleInputConfirm"
+                        @blur="handleInputConfirm"
+                    )
+                    el-button(v-else size="small" @click="showInput").tags + 添加新标签
+                .public-switch-wrap
+                    p.setting-title 公开
+                    el-switch.public-switch(v-model="notePublic" @change="updatePublic")
             .note-info-wrap
                 .note-info-item
                     i.far.fa-user
@@ -77,6 +82,7 @@ export default {
             inputVisible: false,
             noSuchNote: false,
             canEdit: false,
+            notePublic: true,
             toolbars: {
                 bold: true, // 粗体
                 italic: true, // 斜体
@@ -120,6 +126,7 @@ export default {
             this.noteMd = res.data.content;
             this.noteAuthor = res.data.author;
             this.noteTags = res.data.tags;
+            this.notePublic = res.data.public;
             console.log(this.noteTags)
         })
         .catch(() => {
@@ -206,10 +213,28 @@ export default {
         handleInputConfirm() {
             let inputValue = this.inputValue;
             if (inputValue) {
-            this.noteTags.push(inputValue);
-        }
-        this.inputVisible = false;
-        this.inputValue = '';
+                this.noteTags.push(inputValue);
+            }
+            this.inputVisible = false;
+            this.inputValue = '';
+        },
+
+        updatePublic(){
+            Vue.$axios.put(Vue.$composeUrl(Vue.$baseUrl, '/notes/' + this.$route.params.id), {
+                "public": this.notePublic,
+            }, { headers: Vue.$getAuthorizedHeader() })
+            .then(() => {
+                this.$message({
+                    message: "已保存",
+                    type: "success",
+                });
+            })
+            .catch(err => {
+                this.$message({
+                    message: err.data.message,
+                    type: "error",
+                });
+            })
         }
     }
 }
@@ -296,10 +321,19 @@ export default {
 
 .tags-wrap{
     margin: 10px 0 10px 10px;
+    /* width: 100%; */
+}
+
+.tag-edit{
+    display: flex;
+}
+
+.tag-edit *{
+    margin: auto;
 }
 
 .tags{
-    margin: 0 0 10px 15px;
+    margin: auto 10px;
     font-size: 14px;
 }
 
@@ -307,5 +341,25 @@ export default {
     width: 90px;
     margin: 0 0 10px 15px;
     vertical-align: bottom;
+}
+
+.public-switch-wrap{
+    margin: 10px 0 0 0;
+    display: flex;
+    margin-right: 5%;
+}
+
+.public-switch-wrap p{
+    margin: auto;
+    margin-right: 10px;
+}
+
+.setting-title{
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.public-switch{
+    margin-left: 10px;
 }
 </style>
