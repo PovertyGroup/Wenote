@@ -51,10 +51,9 @@ export default {
         .then((response) => {
           loading.close();
           this.$message({
-            message: "注册成功",
+            message: "注册成功,请前往邮箱点击验证邮件！",
             type: "success",
           });
-          Vue.$jwt.set(response.data.jwt);
           console.log(response.data);
           // Vue.$axios
           //   .get(Vue.$composeUrl(Vue.$baseUrl, "/notes/mine"), {
@@ -64,12 +63,12 @@ export default {
           //     // TODO
           //     console.log(res.data);
           //   });
-          this.$router.push("/index");
+          this.$router.push("/login");
         })
         .catch((error) => {
           loading.close();
           if (error.message === "Network Error") {
-            this.$message.error("爬");
+            this.$message.error("网络不太行呢~");
           } else {
             this.$message.error(error.response.data.message.message);
           }
