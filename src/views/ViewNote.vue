@@ -18,7 +18,7 @@
             p.like-num 点赞 {{likeNum}}
             i.far.fa-star.star-icon
             p.like-num 收藏 {{starNum}}
-            i.el-icon-collection-tag.tag-icon
+            i.el-icon-collection-tag.tag-icon(v-if="Tags")
             el-tag.tags(v-for="tag in noteTags" type="info" effect="dark" size="mini") {{tag}}
           .update-time
             i.far.fa-calendar-alt
@@ -68,6 +68,7 @@ export default {
         noteTags: [],
         noteLikers: [],
         noteStarers: [],
+        Tags: true,
         starNote: false,
         likeNote: false,
         followed: false,
@@ -91,7 +92,7 @@ export default {
             this.likeNum = res.data.likers.length
             this.starNum = res.data.starers.length
             this.noteTags = res.data.tags
-            console.log(this.noteTags)
+            console.log(this.noteTags.length)
             if(this.noteAuthor.followers.indexOf(Vue.$info.get()) >= 0){
               this.followed = true;
             }
@@ -100,6 +101,9 @@ export default {
             }
             if(this.noteStarers.indexOf(Vue.$info.get()) >= 0){
               this.starNote = true;
+            }
+            if(this.noteTags.length == 0){
+              this.Tags = false;
             }
         })
         .catch(() => {
