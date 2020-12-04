@@ -37,6 +37,7 @@ export default {
       handleCommand(command) {
         if(command=="loginout"){
           localStorage.removeItem('jwt')
+          localStorage.removeItem('id')
           location.reload()
         }
         if(command=="info"){

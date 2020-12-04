@@ -21,6 +21,8 @@
             i.el-icon-collection-tag.tag-icon(v-if="Tags")
             el-tag.tags(v-for="tag in noteTags" type="info" effect="dark" size="mini") {{tag}}
           .update-time
+            el-button.edit-note(v-if="this.isAuthor" type="primary" size="mini"
+                                icon="el-icon-edit-outline" @click="editnote()") 编辑
             i.far.fa-calendar-alt
             p.note-update-time 发布于{{ this.updateTime }}
         MarkdownCard.note(:mdSource="this.noteMd")
@@ -69,6 +71,7 @@ export default {
         noteLikers: [],
         noteStarers: [],
         Tags: true,
+        isAuthor: false,
         starNote: false,
         likeNote: false,
         followed: false,
@@ -92,7 +95,8 @@ export default {
             this.likeNum = res.data.likers.length
             this.starNum = res.data.starers.length
             this.noteTags = res.data.tags ? res.data.tags : [];
-            // console.log(this.noteTags.length)
+            console.log(res.data.author.id)
+            console.log(Vue.$info.get())
             if(this.noteAuthor.followers && this.noteAuthor.followers.indexOf(Vue.$info.get()) >= 0){
               this.followed = true;
             }
@@ -104,6 +108,9 @@ export default {
             }
             if(this.noteTags && this.noteTags.length == 0){
               this.Tags = false;
+            }
+            if(res.data.author.id === Vue.$info.get()){
+              this.isAuthor = true;
             }
         })
         .catch(() => {
@@ -190,7 +197,10 @@ export default {
           this.$message.warning("取消收藏了");
           this.starNote = false;
         })
-      }
+      },
+      editnote(){
+        this.$router.push(Vue.$composeUrl("/note/",this.noteId))
+      },
     }
 };
 </script>
@@ -289,7 +299,7 @@ export default {
 }
 
 .noteinfo{
-  padding: 0 60px;
+  padding: 0 30px;
   height: 60px;
   border-bottom: 1px solid #eeeeee;
   background: #fafafa;
@@ -344,5 +354,10 @@ export default {
 .tags{
   margin: 0 0 10px 15px;
   font-size: 14px;
+}
+
+.edit-note{
+  vertical-align: middle;
+  margin: 5px 15px 5px 15px;
 }
 </style>
