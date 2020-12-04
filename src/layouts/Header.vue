@@ -107,7 +107,7 @@ export default{
 }
 .right {
   width: auto;
-  margin-right: 0;
+  margin-right: 1%;
   margin-left: auto;
 }
 
