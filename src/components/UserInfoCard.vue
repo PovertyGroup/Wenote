@@ -15,7 +15,7 @@ div.user-info-card
     el-link.regist(:underline="false", href="/login") 登录
 </template>
 
-<script>
+<script scoped>
 import Vue from "vue";
 export default {
   data() {

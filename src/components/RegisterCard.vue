@@ -77,7 +77,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .register-button{
   max-width: 60%;
   width: 200px;

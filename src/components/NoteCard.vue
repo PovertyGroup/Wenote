@@ -57,7 +57,7 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
 .home-note {
   width: 360px;
   height: 225px;

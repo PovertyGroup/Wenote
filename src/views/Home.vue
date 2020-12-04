@@ -4,8 +4,10 @@ MainLayout
     Header
   template(slot="footer")
     Footer
-  div(v-for = "note in notes" :key="note")
-    NoteCard(:id="note").note-card
+  div.note-container-wrap
+    div.note-container
+      div(v-for = "note in notes" :key="note")
+        NoteCard(:id="note").note-card
 
 </template>
 
@@ -30,9 +32,7 @@ export default {
       }
     },
     mounted(){
-      Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, '/recommand'),{
-        headers:Vue.$getAuthorizedHeader()
-      })
+      Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, '/recommand'))
       .then((res)=>{
         this.notes = res.data
       })
@@ -44,8 +44,22 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .note-card{
   margin:0 10px 0 0;
 }
+
+.note-container-wrap{
+  margin: auto;
+}
+
+.note-container{
+  display: flex;
+  flex-wrap:wrap;
+  width: fit-content;
+  max-width: 100%;
+  justify-content: center;
+  margin: auto 50px auto 50px;
+}
+
 </style>
