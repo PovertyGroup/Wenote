@@ -1,5 +1,5 @@
 <template lang="pug">
-div
+div.user-info-card
   .isLogin(v-if="isLogedIn")
     div.userinfo
       p.name {{user.name}}
@@ -7,6 +7,7 @@ div
           span.el-dropdown-link
             img.avatar(:src="user.avatar")
           el-dropdown-menu(slot="dropdown")
+            el-dropdown-item(icon="el-icon-plus" command="creat-note") 新建笔记
             el-dropdown-item(icon="el-icon-user" command="info") 个人信息
             el-dropdown-item(icon="el-icon-close" command="logout") 退出登录
   .notLogin(v-else)
@@ -36,19 +37,36 @@ export default {
       handleCommand(command) {
         if(command=="logout"){
           localStorage.removeItem('jwt')
+          localStorage.removeItem('id')
           location.reload()
           this.$router.push("/login")
         }
         if(command=="info"){
           this.$router.push("/info");
         }
+        if(command=="creat-note"){
+          // this.$message.error("dnmd把接口给我！")
+          Vue.$axios.post(Vue.$composeUrl(Vue.$baseUrl, '/notes'), {"title": "新笔记"}, { headers: Vue.$getAuthorizedHeader() })
+          .then((res => {
+            this.$message.success('创建新笔记成功')
+            setTimeout(() => {
+              this.$router.push('/note/' + res.data.id)
+            }, 2000);
+          }))
+          .catch(err => {
+            this.$message.error(err.data.message);
+            this.$message.error('cadjsdiguhsdrfui');
+            console.log(err.data);
+          })
+        }
       }
   },
   mounted(){
-    Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, '/users/me'),{
+    Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, '/users/me'), {
       headers: Vue.$getAuthorizedHeader(),
     })
     .then((res) => {
+      console.log(res.data)
         this.$set(this.user,"name",res.data.username)
         if(res.data.avatar)
           this.$set(this.user,"avatar",Vue.$baseUrl.substring(0,Vue.$baseUrl.length-1)+res.data.avatar.url)
@@ -68,6 +86,9 @@ export default {
 </script>
 
 <style>
+.user-info-card{
+  width: fit-content;
+}
 .regist {
   margin-right: 20px;
   font-size: 17px;
@@ -76,10 +97,17 @@ export default {
   margin-right: 20px;
   font-size: 17px;
 }
+
+.isLogin{
+  width: fit-content;
+  margin-right: 0;
+}
+
 .userinfo{
   height: 50px;
-  width: 150px;
+  width: fit-content;
 }
+
 .avatar{
   margin: 5px;
   padding: 2px;
@@ -92,10 +120,12 @@ export default {
   justify-content: center;
   overflow: hidden;
 }
+
 .dropdown{
   height: 40px;
   display: inline-block;
 }
+
 .name{
   margin: 5px;
   font-size: 20px;

@@ -1,11 +1,86 @@
 <template lang="pug">
 .header
+<<<<<<< HEAD
   .left
     el-link.sitename(:underline="false", href="/index") Wenote 📝
     el-link(:underline="false",href="/problem") 熊宝的笔记(镇站之宝)
   .right
+=======
+  el-col(:span="8" type="flex" justify="start").left
+    el-link.sitename(:underline="false" href="/home") Wenote 📝
+    el-link(:underline="false" href="/problem") 熊宝的笔记(镇站之宝)
+    el-link(:underline="false" href="/about") 关于
+  el-col(:span="8" type="flex" justify="end").center
+    el-autocomplete.search-input(placeholder="请输入内容" v-model="searchText" suffix-icon="el-icon-search"
+                                 :fetch-suggestions="querySearchAsync" @select="handleSelect")
+  el-col(:span="8" type="flex" justify="end").right
+>>>>>>> c3e89c28dff7a855cab4eb9621858207d2e7dcb8
     UserInfoCard
 </template>
+
+<script>
+import UserInfoCard from "@/components/UserInfoCard";
+import Vue from 'vue'
+
+export default{
+  name: "Header",
+  components: {
+    UserInfoCard,
+  },
+  data() {
+    return {
+      notes: [],
+      searchText: '',
+      timeout: null
+    }
+  },
+  methods: {
+    querySearchAsync: async function(queryString, cb) {
+      if(queryString.replaceAll(' ', '') == '') return cb([]);
+      let notes = [];
+      let fetchNote = this.fetchNote;
+      Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, "/notes?title_contains=" + queryString),
+        {
+          headers: Vue.$getAuthorizedHeader(),
+        })
+      .then(async function(res) {
+        for(var noteid of res.data){
+          let note = await fetchNote(noteid);
+          if(note) notes.push({"value": note.title, "id": note.id});
+        }
+      })
+
+      clearTimeout(this.timeout);
+      this.timeout = setTimeout(() => {
+        cb(notes);
+      }, 3000 * Math.random());
+    },
+    createStateFilter(queryString) {
+      return (state) => {
+        return (state.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+      };
+    },
+    handleSelect(item) {
+      this.$router.push('/viewnote/' + item.id)
+      location.reload()
+    },
+    fetchNote: async function(id){
+      let note = undefined;
+      await Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, "/notes/" + id),
+        {
+          headers: Vue.$getAuthorizedHeader(),
+        })
+        .then((res) => {
+          note = res.data;
+        })
+        .catch(() => {
+          return;
+        })
+      return note;
+    }
+  }
+}
+</script>
 
 <style scoped>
 .header {
@@ -20,7 +95,8 @@
 }
 
 .left {
-  margin-left: 0;
+  width: auto;
+  margin-left: 2%;
 }
 
 .left * {
@@ -28,21 +104,30 @@
   font-size: 15px;
 }
 
+.left :first-child {
+  margin-left: 0;
+}
+
 .sitename {
   font-size: 30px;
   margin-left: 30px;
 }
 .right {
+  width: auto;
+  margin-right: 1%;
+  margin-left: auto;
+}
+
+.right :last-child{
   margin-right: 0;
 }
-</style>
 
-<script>
-import UserInfoCard from "@/components/UserInfoCard";
-export default {
-  name: "InfoCard",
-  components: {
-    UserInfoCard,
-  },
-};
-</script>
+.center{
+  width: auto;
+  margin: auto;
+}
+
+.search-input{
+  width: 300px;
+}
+</style>

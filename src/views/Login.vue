@@ -3,8 +3,6 @@ MainLayout
   template(v-slot:header)
     Header
   LoginCard.login-card(@onLoginCreditChanged="loginCreditChanged", @onSubmit="submit")
-  template(v-slot:footer)
-    Footer
 </template>
 
 <script>
@@ -26,7 +24,7 @@ export default {
     if (Vue.$jwt.get() != undefined){
       this.$message({
             message: "你已经登陆过了",
-            type: "success",
+            info: "success",
           });
       this.$router.push("/index");
     }
@@ -76,7 +74,7 @@ export default {
         .catch((error) => {
           loading.close();
           if (error.message === "Network Error") {
-            this.$message.error("爬");
+            this.$message.error("网络不太行呢~");
           } else {
             this.$message.error(error.response.data.message.message);
           }

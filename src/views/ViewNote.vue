@@ -3,21 +3,38 @@
     template(v-slot:header)
       Header
     .note-wrap
-      .note-title-wrap(v-if="!this.noSuchNote")
+      .note-wrap(v-if="!this.noSuchNote")
           h1.note-title {{ this.noteTitle }}
       .md-card(v-if="!this.noSuchNote")
         .noteinfo
           .author-info
             img.avatar(:src="this.noteAvatar")
             p.note-author-name {{ this.noteAuthor.username }}
-            el-button.button(v-if="!this.followed" type="primary" icon="el-icon-plus" size="mini" @click="follow()") 关注
-            el-button.button(v-if="this.followed" icon="el-icon-check" size="mini" @mouseover='show-button' @click="unfollow()") 已关注
+            el-button.button(v-if="!this.followed" type="primary"
+                            icon="el-icon-plus" size="mini" @click="follow()") 关注
+            el-button.button(v-if="this.followed" icon="el-icon-check"
+                            size="mini" @click="unfollow()") 已关注
+            i.far.fa-thumbs-up.like-icon
+            p.like-num 点赞 {{likeNum}}
+            i.far.fa-star.star-icon
+            p.like-num 收藏 {{starNum}}
+            i.el-icon-collection-tag.tag-icon(v-if="Tags")
+            el-tag.tags(v-for="tag in noteTags" type="info" effect="dark" size="mini") {{tag}}
           .update-time
+            el-button.edit-note(v-if="this.isAuthor" type="primary" size="mini"
+                                icon="el-icon-edit-outline" @click="editnote()") 编辑
             i.far.fa-calendar-alt
             p.note-update-time 发布于{{ this.updateTime }}
         MarkdownCard.note(:mdSource="this.noteMd")
       NoSuchNoteCard(v-if="this.noSuchNote").not-such-note-card
-      el-backtop(target=".page-component__scroll .el-scrollbar__wrap")
+    el-button(v-if="!this.likeNote && !this.noSuchNote" type="primary" plain round
+              icon="el-icon-circle-check" @click="like()").like 点赞
+    el-button(v-if="this.likeNote" type="primary" round
+              icon="el-icon-circle-check" size="small"  @click="unlike()").like 已点赞
+    el-button(v-if="!this.starNote && !this.noSuchNote" type="success"
+              plain round  icon="el-icon-star-off" @click="star()").star 收藏
+    el-button(v-if="this.starNote" type="success"
+              round icon="el-icon-star-off" @click="unstar()").star 已收藏
     template(v-slot:footer)
       Footer
 </template>
@@ -47,6 +64,16 @@ export default {
         noteTitle: '',
         noteAuthor: '',
         noteAvatar: '',
+        noteId:'',
+        likeNum: '',
+        starNum: '',
+        noteTags: [],
+        noteLikers: [],
+        noteStarers: [],
+        Tags: true,
+        isAuthor: false,
+        starNote: false,
+        likeNote: false,
         followed: false,
         noSuchNote: false,
       }
@@ -56,33 +83,52 @@ export default {
             return format(this.noteAuthor.updatedAt, 'zh_CN');
         }
     },
-    mounted() {
+    created(){
       Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, '/notes/' + this.$route.params.id)).then((res) => {
             this.noteTitle = res.data.title;
             this.noteMd = res.data.content;
             this.noteAuthor = res.data.author;
+            this.noteId = res.data.id;
             this.noteAvatar = Vue.$baseUrl.substring(0,Vue.$baseUrl.length-1)+res.data.author.avatar.url;
-          console.log(Vue.$info.get())
-            if(this.noteAuthor.followers.indexOf(Vue.$info.get()) >= 0){
-              this.followed = true
+            this.noteLikers = res.data.likers
+            this.noteStarers = res.data.starers
+            this.likeNum = res.data.likers.length
+            this.starNum = res.data.starers.length
+            this.noteTags = res.data.tags ? res.data.tags : [];
+            console.log(res.data.author.id)
+            console.log(Vue.$info.get())
+            if(this.noteAuthor.followers && this.noteAuthor.followers.indexOf(Vue.$info.get()) >= 0){
+              this.followed = true;
+            }
+            if(this.noteLikers && this.noteLikers.indexOf(Vue.$info.get()) >= 0){
+              this.likeNote = true;
+            }
+            if(this.noteStarers && this.noteStarers.indexOf(Vue.$info.get()) >= 0){
+              this.starNote = true;
+            }
+            if(this.noteTags && this.noteTags.length == 0){
+              this.Tags = false;
+            }
+            if(res.data.author.id === Vue.$info.get()){
+              this.isAuthor = true;
             }
         })
         .catch(() => {
             this.noSuchNote = true;
         })
     },
+    mounted() {
+    },
     methods:{
       follow(){
         Vue.$axios.post(Vue.$composeUrl(Vue.$baseUrl,"/users/follow/"+this.noteAuthor.id),{},{
           headers: Vue.$getAuthorizedHeader()
         })
-        .then((res)=>{
+        .then(()=>{
           this.$message.success("已成功关注该作者~");
           this.followed = true;
-          console.log(res);
         })
         .catch((error)=>{
-          console.log(error.response)
           if(error.response.status==403){
             this.$message.error("你还没有登陆！");
           }else if(error.response.data.message === "Cannot follow self."){
@@ -91,6 +137,69 @@ export default {
             this.$message.error("发生了一点错误...请重试");
           }
         })
+      },
+      unfollow(){
+        Vue.$axios.post(Vue.$composeUrl(Vue.$baseUrl,"/users/unfollow/"+this.noteAuthor.id),{},{
+          headers: Vue.$getAuthorizedHeader()
+        })
+        .then(()=>{
+          this.$message.warning("取消关注对方了呢，哭唧唧~");
+          this.followed = false;
+        })
+        .catch((error)=>{
+          if(error.response.data.statusCode == 403){
+            this.$message.error("您还没有登陆...")
+          }
+        })
+      },
+      like(){
+        Vue.$axios.post(Vue.$composeUrl(Vue.$baseUrl,"/notes/like/"+this.noteId),{},{
+          headers: Vue.$getAuthorizedHeader()
+        })
+        .then(()=>{
+          this.$message.success("点赞成功~");
+          this.likeNote = true;
+        })
+        .catch((error)=>{
+          if(error.response.data.statusCode == 403){
+            this.$message.error("您还没有登陆...")
+          }
+        })
+      },
+      unlike(){
+        Vue.$axios.post(Vue.$composeUrl(Vue.$baseUrl,"/notes/unlike/"+this.noteId),{},{
+          headers: Vue.$getAuthorizedHeader()
+        })
+        .then(()=>{
+          this.$message.warning("取消对这篇文章点赞了呢");
+          this.likeNote = false;
+        })
+      },
+      star(){
+        Vue.$axios.post(Vue.$composeUrl(Vue.$baseUrl,"/notes/star/"+this.noteId),{},{
+          headers: Vue.$getAuthorizedHeader()
+        })
+        .then(()=>{
+          this.$message.success("收藏成功~");
+          this.starNote = true;
+        })
+        .catch((error)=>{
+          if(error.response.data.statusCode == 403){
+            this.$message.error("您还没有登陆...")
+          }
+        })
+      },
+      unstar(){
+        Vue.$axios.post(Vue.$composeUrl(Vue.$baseUrl,"/notes/unstar/"+this.noteId),{},{
+          headers: Vue.$getAuthorizedHeader()
+        })
+        .then(()=>{
+          this.$message.warning("取消收藏了");
+          this.starNote = false;
+        })
+      },
+      editnote(){
+        this.$router.push(Vue.$composeUrl("/note/",this.noteId))
       },
     }
 };
@@ -102,6 +211,7 @@ export default {
 }
 
 .note-wrap{
+    display: flex;
     width: 100%;
     bottom: 0;
     flex-direction: column;
@@ -148,6 +258,7 @@ export default {
   box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 12px 0px;
   margin: 20px auto 0 auto;
   width: 60%;
+  position: relative;
 }
 .note{
   min-height: 150px;
@@ -188,11 +299,65 @@ export default {
 }
 
 .noteinfo{
-  padding: 0 60px;
+  padding: 0 30px;
   height: 60px;
   border-bottom: 1px solid #eeeeee;
+  background: #fafafa;
 }
-.author-info{
+
+.author-info {
   float: left;
+  height: 100%;
+  line-height: 60px;
+}
+
+.like-num{
+  vertical-align: middle;
+  display: inline-block;
+  margin: auto 0 auto 5px;
+  font-size: 15px;
+}
+
+.like-icon{
+  vertical-align: middle;
+  display: inline-block;
+  margin: auto 0 auto 20px;
+  font-size: 15px;
+}
+
+.star-icon{
+  vertical-align: middle;
+  margin: auto 0 auto 20px;
+}
+
+.like{
+  width: 95px;
+  position:fixed;
+  bottom:4%;
+  left:80%;
+  height: 45px;
+}
+
+.star{
+  width: 95px;
+  position:fixed;
+  bottom:4%;
+  left:85%;
+  height: 45px;
+}
+
+.tag-icon{
+  vertical-align: middle;
+  margin: auto 0 auto 20px;
+}
+
+.tags{
+  margin: 0 0 10px 15px;
+  font-size: 14px;
+}
+
+.edit-note{
+  vertical-align: middle;
+  margin: 5px 15px 5px 15px;
 }
 </style>
