@@ -22,7 +22,7 @@
 <script>
 import Vue from "vue";
 export default {
-  name: "InfoSetting",
+  name: "SettingCard",
   components :{
   },
   created() {

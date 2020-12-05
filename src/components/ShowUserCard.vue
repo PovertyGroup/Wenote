@@ -3,21 +3,13 @@
     .note-head
       .note-title()
         i#note-icon.el-icon-notebook-2
-        span() 标题:{{noteTitle}}
-
-    .line
-    .note-info
-      .note-info-wrap
-      span.note-content 创建日期: {{createdtime}}
-      span.note-content 最后更新日期: {{updatatime}}
-      span#content.note-content 概要: {{noteMd}}
-
+        span() 用户名:{{noteTitle}}
 </template>
 
 <script>
 import Vue from 'vue'
 export default {
-  name :"FavorNoteCard",
+  name :"ShowNoteCard",
   data(){
     return{
         noteTitle: "",
@@ -38,7 +30,7 @@ export default {
     .then((res)=>{
       console.log(res.data)
       if (res.data.title.length>10) this.noteTitle = res.data.title.substring(0,9)+"......";
-      else this.noteTitle = res.data.title 
+      else this.noteTitle = res.data.title
       if (res.data.content.length > 49) this.noteMd = res.data.content.substring(0,49)+"......"
       else this.noteMd = res.data.content
       this.author = res.data.author.username

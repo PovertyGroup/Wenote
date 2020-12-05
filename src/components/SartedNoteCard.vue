@@ -1,6 +1,7 @@
 <template lang="pug">
-  div.home
-      div(v-for="note in user.notes" :key="note") 
+el-container().main-container
+  el-container.home
+      div(v-for="note in user.stared_notes" :key="note").note-card
         ShowNoteCard(:id="note")
         el-link(type = "info" :href="'/note/'+note").linknote 查看
 </template>
@@ -10,7 +11,7 @@
 import Vue from 'vue';
 import ShowNoteCard from "@/components/ShowNoteCard";
 export default {
-  name: "InfoHome",
+  name: "MyNoteCard",
   components :{
     ShowNoteCard,
   },
@@ -25,7 +26,8 @@ export default {
         this.$set(this.user,"followers",res.data.followers)
         this.$set(this.user,"email",res.data.email)
         this.$set(this.user,"likes",res.data.likes)
-        this.user.notes = res.data.notes
+        this.user.stared_notes = res.data.stared_notes
+        console.log(res.data.stared_notes)
         if(res.data.avatar)
           this.$set(this.user,"avatar",Vue.$baseUrl.substring(0,Vue.$baseUrl.length-1)+res.data.avatar.url)
         else
@@ -45,8 +47,7 @@ export default {
           followers: '',
           gender: '',
           likes: '',
-          notes: '',
-          stard_notes: '',
+          stared_notes: '',
           email: '',
         }
       }
@@ -59,12 +60,22 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .home{
   margin: auto;
+  display: flex;
+  flex-wrap:wrap;
+  width: fit-content;
+  max-width: 100%;
+  justify-content: center;
+  margin: auto 50px auto 50px;
 }
 .linknote{
+  margin: auto;
   font-size: 20px;
+}
+.note-card{
+  margin: 0 40px 30px 0;
 }
 
 </style>>
