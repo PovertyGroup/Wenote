@@ -27,14 +27,15 @@
             p.note-update-time 发布于{{ this.updateTime }}
         MarkdownCard.note(:mdSource="this.noteMd")
       NoSuchNoteCard(v-if="this.noSuchNote").not-such-note-card
-    el-button(v-if="!this.likeNote && !this.noSuchNote" type="primary" plain round
-              icon="el-icon-circle-check" @click="like()").like 点赞
-    el-button(v-if="this.likeNote" type="primary" round
-              icon="el-icon-circle-check" size="small"  @click="unlike()").like 已点赞
-    el-button(v-if="!this.starNote && !this.noSuchNote" type="success"
-              plain round  icon="el-icon-star-off" @click="star()").star 收藏
-    el-button(v-if="this.starNote" type="success"
-              round icon="el-icon-star-off" @click="unstar()").star 已收藏
+    .buttons
+      el-button(v-if="!this.likeNote && !this.noSuchNote" type="primary"
+                plain round icon="el-icon-circle-check" @click="like()").like 点赞
+      el-button(v-if="this.likeNote" type="primary" round
+                icon="el-icon-circle-check" @click="unlike()").like 已点赞
+      el-button(v-if="!this.starNote && !this.noSuchNote" type="success"
+                plain round  icon="el-icon-star-off" @click="star()").star 收藏
+      el-button(v-if="this.starNote" type="success"
+                round icon="el-icon-star-off" @click="unstar()").star 已收藏
     template(v-slot:footer)
       Footer
 </template>
@@ -330,20 +331,19 @@ export default {
   margin: auto 0 auto 20px;
 }
 
-.like{
-  width: 95px;
+.buttons{
   position:fixed;
   bottom:4%;
   left:80%;
-  height: 45px;
+}
+
+.like{
+  width: 95px;
+  padding-left: 17px;
 }
 
 .star{
-  width: 95px;
-  position:fixed;
-  bottom:4%;
-  left:85%;
-  height: 45px;
+  margin: auto;
 }
 
 .tag-icon{
