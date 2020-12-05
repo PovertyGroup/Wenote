@@ -123,7 +123,6 @@ export default {
 </script>
 
 <style>
-
 .side{
   width: 100%;
   display: flex;

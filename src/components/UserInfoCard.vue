@@ -45,7 +45,7 @@ export default {
         }
         if(command=="creat-note"){
           // this.$message.error("dnmd把接口给我！")
-          Vue.$axios.post(Vue.$composeUrl(Vue.$baseUrl, '/notes'), {"title": "新笔记"}, { headers: Vue.$getAuthorizedHeader() })
+          Vue.$axios.post(Vue.$composeUrl(Vue.$baseUrl, '/notes'), {"title": "新笔记","content":"# ~~请在这儿输入你的笔记内容~~"}, { headers: Vue.$getAuthorizedHeader() })
           .then((res => {
             this.$message.success('创建新笔记成功')
             setTimeout(() => {

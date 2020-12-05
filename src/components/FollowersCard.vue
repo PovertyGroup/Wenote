@@ -1,24 +1,32 @@
 <template lang="pug">
 el-container().main-container
   el-container.home
-      div(v-for="fr in followers" :key="fr").fe-card
+    div(v-for="fr in followers" :key="fr").fe-card
+      div(v-if="val")
         ShowUserCard(:id="fr")
+    div(v-if="!val")
+      NothingCard
 </template>
 
 
 <script>
 import Vue from 'vue';
 import ShowUserCard from "@/components/ShowUserCard";
+import NothingCard from "@/components/NothingCard"
+
 export default {
   name: "FolloweesCard",
   components :{
     ShowUserCard,
+    NothingCard
   },
   created (){
     Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl,'/users/me'),{
       headers: Vue.$getAuthorizedHeader(),
     })
     .then((res) => {
+      if (res.data.followers.length == 0)
+        this.val = false
       this.followers = res.data.followers
     })
     .catch(() => {
@@ -29,6 +37,7 @@ export default {
     if(Vue.$jwt.get() != undefined) {
       return {
         followers:'',
+        val:true
       }
     }
   },
@@ -55,5 +64,4 @@ export default {
 .note-card{
   margin: 0 40px 30px 0;
 }
-
-</style>>
+</style>

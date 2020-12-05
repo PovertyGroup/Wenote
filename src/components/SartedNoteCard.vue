@@ -1,56 +1,43 @@
 <template lang="pug">
 el-container().main-container
   el-container.home
-      div(v-for="note in user.stared_notes" :key="note.id").note-card
+    div(v-for="note in stared_notes" :key="note.id").note-card
+      div(v-if="val")
         ShowViewNoteCard(:id="note.id")
+    div(v-if="!val")
+      NothingCard
 </template>
-
 
 <script>
 import Vue from 'vue';
 import ShowNoteCard from "@/components/ShowNoteCard";
 import ShowViewNoteCard from "@/components/ShowViewNoteCard";
+import NothingCard from "@/components/NothingCard"
+
 export default {
-  name: "MyNoteCard",
+  name: "SartedNoteCard",
   components :{
     ShowNoteCard,
     ShowViewNoteCard,
+    NothingCard,
   },
   created (){
     Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl,'/users/me'),{
       headers: Vue.$getAuthorizedHeader(),
     })
     .then((res) => {
-        this.$set(this.user,"name",res.data.username)
-        this.$set(this.user,"gender",res.data.gender)
-        this.$set(this.user,"followees",res.data.followees)
-        this.$set(this.user,"followers",res.data.followers)
-        this.$set(this.user,"email",res.data.email)
-        this.$set(this.user,"likes",res.data.likes)
-        this.user.stared_notes = res.data.stared_notes
-        if(res.data.avatar)
-          this.$set(this.user,"avatar",Vue.$baseUrl.substring(0,Vue.$baseUrl.length-1)+res.data.avatar.url)
-        else
-          this.$set(this.user,"avatar","https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png")
+      if (res.data.stared_notes.length == 0)
+        this.val = false;
+      this.stared_notes = res.data.stared_notes
     })
     .catch(() => {
       // 失败
     })
   },
   data() {
-    if(Vue.$jwt.get() != undefined) {
-      return {
-        user : {
-          name: '',
-          avatar: '',
-          followees: '',
-          followers: '',
-          gender: '',
-          likes: '',
-          stared_notes: '',
-          email: '',
-        }
-      }
+    return {
+      val: true,
+      stared_notes: '',
     }
   },
   props:{
@@ -77,5 +64,4 @@ export default {
   font-size: 20px;
   margin: auto;
 }
-
-</style>>
+</style>

@@ -1,48 +1,40 @@
 <template lang="pug">
 el-container().main-container
   el-container.home
-      div(v-for="note in user.notes" :key="note").note-card
+    div(v-for="note in notes" :key="note").note-card
+      div(v-if="val")
         ShowNoteCard(:id="note")
+    div(v-if="!val")
+      NothingCard
 </template>
 
-
 <script>
-import Vue from 'vue';
-import ShowNoteCard from "@/components/ShowNoteCard";
-import ShowViewNoteCard from "@/components/ShowViewNoteCard"
-
+import Vue from 'vue'
+import ShowNoteCard from "@/components/ShowNoteCard"
+import NothingCard from "@/components/NothingCard"
 export default {
   name: "MyNoteCard",
   components :{
     ShowNoteCard,
-    ShowViewNoteCard
+    NothingCard
   },
   created (){
     Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl,'/users/me'),{
       headers: Vue.$getAuthorizedHeader(),
     })
     .then((res) => {
-        this.user.notes = res.data.notes
+      if (res.data.notes.length === 0)
+        this.val = false
+      this.notes = res.data.notes
     })
     .catch(() => {
       // 失败
     })
   },
   data() {
-    if(Vue.$jwt.get() != undefined) {
-      return {
-        user : {
-          name: '',
-          avatar: '',
-          followees: '',
-          followers: '',
-          gender: '',
-          likes: '',
-          notes: '',
-          stard_notes: '',
-          email: '',
-        }
-      }
+    return {
+      val: true,
+      notes: '',
     }
   },
   props:{
@@ -66,5 +58,4 @@ export default {
 .note-card{
   margin: 0 40px 30px 0;
 }
-
-</style>>
+</style>

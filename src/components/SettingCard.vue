@@ -9,7 +9,10 @@ div.setting
         el-form-item(label="邮箱", prop="user.mail")
           el-input(v-model="user.email", @input="")
         el-form-item(label="性别", prop="user.gender")
-          el-input(v-model="user.gender", @input="")
+          el-select(v-model="user.gender")
+            el-option(label="boy" value="boy")
+            el-option(label="girl" value="girl")
+            el-option(label="unkown" value="unkown")
     el-button.save(
       type="button",
       @click="saveinfo()",

@@ -40,7 +40,6 @@ export default {
       this.noteDate = res.data.createdAt.substring(0,10)
       this.noteAuthor = res.data.author.username
       this.noteId = res.data.id
-      console.log(this.noteUrl)
       if(this.noteTitle.length>14){
         this.noteTitle = this.noteTitle.substring(0,12)+"......"
       }
