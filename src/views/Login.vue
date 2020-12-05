@@ -3,6 +3,8 @@ MainLayout
   template(v-slot:header)
     Header
   LoginCard.login-card(@onLoginCreditChanged="loginCreditChanged", @onSubmit="submit")
+  template(v-slot:footer)
+    Footer
 </template>
 
 <script>
