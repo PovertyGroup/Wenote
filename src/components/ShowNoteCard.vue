@@ -4,14 +4,12 @@
       .note-title()
         i#note-icon.el-icon-notebook-2
         span() 标题:{{noteTitle}}
-
     .line
     .note-info
       .note-info-wrap
       span.note-content 创建日期: {{createdtime}}
       span.note-content 最后更新日期: {{updatatime}}
       span#content.note-content 概要: {{noteMd}}
-
 </template>
 
 <script>
@@ -26,7 +24,6 @@ export default {
         updatatime:"",
         author:"",
         noteUrl:""
-
     }
   },
   props : {
