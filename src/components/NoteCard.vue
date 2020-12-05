@@ -1,6 +1,6 @@
 <template lang="pug">
 .home-note
-  el-link.link-to(:underline="false" :href = "this.noteUrl")
+  el-link.link-to(:underline="false" @click.native="noteUrl")
     .home-note-head
       .home-note-title
         i#home-note-icon.el-icon-notebook-2
@@ -26,7 +26,6 @@ export default {
       noteMd: "",
       noteId: "",
       noteAuthor: "",
-      noteUrl: ""
     };
   },
   props: {
@@ -43,7 +42,6 @@ export default {
       this.noteDate = res.data.createdAt.substring(0,10)
       this.noteAuthor = res.data.author.username
       this.noteId = res.data.id
-      this.noteUrl = Vue.$composeUrl(Vue.$siteUrl,"viewnote/"+this.noteId)
       console.log(this.noteUrl)
       if(this.noteTitle.length>14){
         this.noteTitle = this.noteTitle.substring(0,12)+"......"
@@ -53,6 +51,9 @@ export default {
       console.log(error)
     })
   },
+  methods: {
+    noteUrl: function() {this.$router.push("viewnote/"+this.noteId)}
+  }
 };
 </script>
 
