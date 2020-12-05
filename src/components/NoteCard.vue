@@ -63,8 +63,8 @@ export default {
   height: 225px;
   border-radius: 4px;
   background: rgb #ffffff;
-  border: solid 1px rgb(131, 180, 255);
-  box-shadow: rgba(135, 183, 255, 0.1) 0px 2px 12px 0px;
+  border: solid 1px rgb(142, 186, 252);
+  box-shadow: rgba(161, 194, 245, 0.658) 0px 2px 12px 0px;
 }
 
 .home-note-head {
