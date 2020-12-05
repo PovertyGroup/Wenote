@@ -46,20 +46,21 @@ export default {
 
 <style scoped>
 .note-card{
-  margin:0 10px 0 0;
+  margin:0 40px 30px 0;
+
 }
 
 .note-container-wrap{
-  margin: auto;
+  margin:auto;
 }
 
 .note-container{
+  margin: auto 50px auto 50px;
+  max-width: 100%;
   display: flex;
   flex-wrap:wrap;
   width: fit-content;
-  max-width: 100%;
   justify-content: center;
-  margin: auto 50px auto 50px;
 }
 
 </style>

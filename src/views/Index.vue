@@ -1,7 +1,4 @@
 <template lang="pug">
-MainLayout
-  template(v-slot:footer)
-    Footer
   IndexCard
 </template>
 
