@@ -1,5 +1,6 @@
 <template lang="pug">
 .note
+  el-link.link-to(:underline="false" @click="ClicknoteUrl()")
     .note-head
       .note-title()
         i#note-icon.el-icon-notebook-2
@@ -33,7 +34,7 @@ export default {
     Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, "/notes/" + this.id), {
     })
     .then((res)=>{
-      if (res.data.title.length>10) this.noteTitle = res.data.title.substring(0,9)+"......";
+      if (res.data.title.length>10) this.noteTitle = res.data.title.substring(0,9)+"......"
       else this.noteTitle = res.data.title
       if (res.data.content.length > 49) this.noteMd = res.data.content.substring(0,49)+"......"
       else this.noteMd = res.data.content
@@ -42,20 +43,25 @@ export default {
       this.updatatime = res.data.updatedAt.substring(0,10)
     })
   },
+  methods: {
+    ClicknoteUrl() {this.$router.push("/note/" + this.id)}
+  }
 }
 </script>
 
 <style scoped>
 .note {
+  width: 360px;
   height: 225px;
   border-radius: 4px;
-  background: rgba(255, 255, 255, 0.747);
-  border: solid 1px rgb(77, 77, 77);
+  background: rgb #ffffff;
+  border: solid 1px rgb(142, 186, 252);
+  box-shadow: rgba(161, 194, 245, 0.658) 0px 2px 12px 0px;
 }
 
 .note-head {
-  height: 40px;
   width: inherit;
+  height: 40px;
 }
 
 #note-icon {
@@ -67,7 +73,6 @@ export default {
   margin-left: 6px;
 }
 .note-title {
-  width: 300px;
   font-size: 20px;
   line-height: 40px;
   float: left;
@@ -89,7 +94,7 @@ export default {
 
 .note-content {
   width: 280px;
-  font-size: 18px;
+  font-size: 16px;
   display: block;
   padding-left: 10px;
   margin: 10px 0 10px 0;
@@ -97,6 +102,13 @@ export default {
 
 #content {
   margin-top: 15px;
+}
+
+.link-to{
+  cursor: pointer;
+  display: block;
+  width: 360px;
+  height: 225px;
 }
 </style>
 
