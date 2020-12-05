@@ -36,7 +36,6 @@ export default {
     Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, "/notes/" + this.id), {
     })
     .then((res)=>{
-      console.log(res.data)
       if (res.data.title.length>10) this.noteTitle = res.data.title.substring(0,9)+"......";
       else this.noteTitle = res.data.title
       if (res.data.content.length > 49) this.noteMd = res.data.content.substring(0,49)+"......"

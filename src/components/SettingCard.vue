@@ -1,6 +1,5 @@
 <template lang="pug">
-.setting
-  el-border()
+div.setting
     el-card(show="hover" style = "width : 350px").avatar-card
       img.avatar(:src="user.avatar", style="width: 250px; height: 250px")
     el-card(show="hover" style = "width : 350px").info-card
@@ -11,11 +10,11 @@
           el-input(v-model="user.email", @input="")
         el-form-item(label="性别", prop="user.gender")
           el-input(v-model="user.gender", @input="")
-  el-button.save(
-    type="button",
-    @click="",
-    style="width: 100px; height: 50px; background: #8fbbfd3a"
-  ) 保存
+    el-button.save(
+      type="button",
+      @click="saveinfo()",
+      style="width: 100px; height: 50px; background: #8fbbfd3a"
+    ) 保存
 </template>
 
 
@@ -31,13 +30,9 @@ export default {
         headers: Vue.$getAuthorizedHeader(),
       })
       .then((res) => {
-        this.$set(this.user, "name", res.data.username);
-        this.$set(this.user, "gender", res.data.gender);
-        this.$set(this.user, "followees", res.data.followees);
-        this.$set(this.user, "followers", res.data.followers);
-        this.$set(this.user, "email", res.data.email);
-        this.$set(this.user, "likes", res.data.likes);
-        this.$set(this.user, "notes", res.data.notes);
+        this.user.name = res.data.username
+        this.user.gender = res.data.gender
+        this.user.email = res.data.email
         if (res.data.avatar)
           this.$set(
             this.user,
@@ -53,25 +48,40 @@ export default {
           );
       })
       .catch(() => {
-        // 失败
       });
   },
+  methods:{
+    saveinfo(){
+      console.log("dsadasd")
+      Vue.$axios.put(Vue.$composeUrl(Vue.$baseUrl,"/users/"+Vue.$info.get()),{
+        "username" : this.user.name,
+        "email" : this.user.email,
+        "gender" : this.user.gender
+      },{
+        headers: Vue.$getAuthorizedHeader(),
+      })
+      .then(() =>{
+        this.$message({
+          message: "已保存",
+          type: "success"
+        });
+      })
+      .catch(() =>{
+        this.$message({
+          message: "保存失败",
+          type: "error"
+        });
+      })
+    }
+  },
   props :{
-    noteTitle:String
   },
   data() {
     return {
       user: {
         name: "",
-        avatar: "",
-        followees: "",
-        followers: "",
         gender: "",
-        likes: "",
-        notes: "",
-        stard_notes: "",
         email: "",
-        noteTitle: "",
       },
     };
   },
@@ -84,8 +94,5 @@ export default {
 }
 .save {
   margin-top: 100px;
-}
-.avatar-card{
-  bottom: 0;
 }
 </style>

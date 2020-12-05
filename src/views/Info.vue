@@ -38,7 +38,7 @@ div.info
       div(v-else-if="this.Setting")
         SettingCard.setting
       div(v-else)
-        p 这是你的小屋
+        MyNoteCard
     template(slot="footer")
       Footer
 </template>
