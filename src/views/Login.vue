@@ -71,7 +71,7 @@ export default {
               // TODO
               console.log(res.data);
             });
-          this.$router.push("/index");
+          this.$router.push("/home");
         })
         .catch((error) => {
           loading.close();
