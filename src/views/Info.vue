@@ -35,8 +35,8 @@ div.info
         FollowersCard
       div(v-else-if="this.Followee")
         FolloweesCard
-      div(v-else-if="this.Setting")
-        SettingCard.setting
+      div(v-else-if="this.Setting").setting
+        SettingCard
       div(v-else)
         MyNoteCard
     template(slot="footer")
@@ -136,5 +136,7 @@ export default {
 .el-menu{
   width: 100%;
 }
-
+.setting{
+  margin: auto;
+}
 </style>
