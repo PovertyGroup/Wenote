@@ -65,6 +65,7 @@ export default {
           message: "已保存",
           type: "success"
         });
+        location.reload()
       })
       .catch(() =>{
         this.$message({

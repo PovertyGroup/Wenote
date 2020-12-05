@@ -2,18 +2,19 @@
 el-container().main-container
   el-container.home
       div(v-for="note in user.stared_notes" :key="note.id").note-card
-        ShowNoteCard(:id="note.id")
-        el-link(type = "info" :href="'/note/'+ note.id").linknote 查看
+        ShowViewNoteCard(:id="note.id")
 </template>
 
 
 <script>
 import Vue from 'vue';
 import ShowNoteCard from "@/components/ShowNoteCard";
+import ShowViewNoteCard from "@/components/ShowViewNoteCard";
 export default {
   name: "MyNoteCard",
   components :{
     ShowNoteCard,
+    ShowViewNoteCard,
   },
   created (){
     Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl,'/users/me'),{
@@ -69,12 +70,12 @@ export default {
   justify-content: center;
   margin: auto 50px auto 50px;
 }
-.linknote{
-  margin: auto;
-  font-size: 20px;
-}
 .note-card{
   margin: 0 40px 30px 0;
+}
+.linknote{
+  font-size: 20px;
+  margin: auto;
 }
 
 </style>>

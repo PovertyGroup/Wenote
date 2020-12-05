@@ -107,9 +107,9 @@ export default {
             if(this.noteStarers && this.noteStarers.indexOf(Vue.$info.get()) >= 0){
               this.starNote = true;
             }
-            if(this.noteTags && this.noteTags.length == 0){
-              this.Tags = false;
-            }
+            // if(this.noteTags && this.noteTags.length == 0){
+            //   this.Tags = false;
+            // }
             if(res.data.author.id === Vue.$info.get()){
               this.isAuthor = true;
             }

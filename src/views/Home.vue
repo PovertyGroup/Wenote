@@ -7,7 +7,7 @@ MainLayout
   div.note-container-wrap
     div.note-container
       div(v-for = "note in notes" :key="note")
-        NoteCard(:id="note").note-card
+        ShowViewNoteCard(:id="note").note-card
 
 </template>
 
@@ -15,7 +15,7 @@ MainLayout
 import Vue from 'vue'
 import Header from '../layouts/Header'
 import MainLayout from '../layouts/MainLayout'
-import NoteCard from '../components/NoteCard'
+import ShowViewNoteCard from '../components/ShowViewNoteCard'
 import Footer from '../layouts/Footer'
 
 export default {
@@ -23,7 +23,7 @@ export default {
     components: {
         MainLayout,
         Header,
-        NoteCard,
+        ShowViewNoteCard,
         Footer
     },
     data(){

@@ -1,6 +1,6 @@
 <template lang="pug">
 .home-note
-  el-link.link-to(:underline="false" @click.native="noteUrl")
+  el-link.link-to(:underline="false" @click="ClicknoteUrl()")
     .home-note-head
       .home-note-title
         i#home-note-icon.el-icon-notebook-2
@@ -13,12 +13,10 @@
       span#content.home-note-content 概要: {{this.noteMd}}
 </template>
 
-
-
 <script>
 import Vue from 'vue'
 export default {
-  name: "NoteCard",
+  name: "ShowViewNoteCard",
   data() {
     return {
       noteTitle: "",
@@ -52,7 +50,7 @@ export default {
     })
   },
   methods: {
-    noteUrl: function() {this.$router.push("viewnote/"+this.noteId)}
+    ClicknoteUrl() {this.$router.push("/viewnote/"+this.noteId)}
   }
 };
 </script>
