@@ -32,7 +32,7 @@ export default {
   created() {
     Vue.$axios
     .get(Vue.$composeUrl(Vue.$baseUrl, '/notes/' + this.id),{
-      headers: Vue.$getAuthorizedHeader()
+                         headers: Vue.$getAuthorizedHeader()
     })
     .then((res)=>{
       this.noteTitle = res.data.title

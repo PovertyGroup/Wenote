@@ -47,6 +47,9 @@
                     el-button(type="button"  class="op-icon fa fa-eye"
                             aria-hidden="true" :title="`查看前记得保存哦`" @click="viewnote()"
                             style="width: 70px;height: 30px; background: #8fbbfd3a; margin: 0 0 0 10px;") 查看
+                    el-button(type="button"  class="op-icon fa fa-trash "
+                            aria-hidden="true" :title="`真的要删除吗`" @click="delnote()"
+                            style="width: 70px;height: 30px; background:#ff607359; margin: 0 0 0 10px;") 删除
         NoSuchNoteCard(v-if="this.noSuchNote").not-such-note-card
     template(v-slot:footer)
         Footer
@@ -77,6 +80,8 @@ export default {
             noteTitle: '',
             noteAuthor: '',
             inputValue: '',
+            noteId: '',
+            noteAutherId: '',
             noteTags:[],
             timer: null,
             inputVisible: false,
@@ -127,7 +132,9 @@ export default {
             this.noteAuthor = res.data.author;
             this.noteTags = res.data.tags;
             this.notePublic = res.data.public;
-            console.log(this.noteTags)
+            this.noteId = res.data.id;
+            this.noteAutherId = res.data.author.id;
+            console.log(res.data.author.id)
         })
         .catch(() => {
             this.noSuchNote = true;
@@ -145,6 +152,45 @@ export default {
         }
     },
     methods: {
+        delnote(){
+            this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+        })
+        .then(() => {
+            this.del()
+            this.$message({
+                type: 'success',
+                message: '删除成功!'
+            });
+        })
+        .catch(() => {
+            this.$message({
+            type: 'info',
+            message: '已取消删除'
+            });
+        });
+        },
+        del(){
+            Vue.$axios.delete(Vue.$composeUrl(Vue.$baseUrl, '/notes/'+this.noteId),{
+                headers: Vue.$getAuthorizedHeader()
+            })
+            .then(()=>{
+                this.$message({
+                    type: 'success',
+                    message: '删除成功!'
+                })
+                this.$router.push('/info/'+this.noteAutherId)
+            })
+            .catch((error)=>{
+                console.log(error)
+            })
+            // this.$message({
+            //     type: 'success',
+            //     message: '删除成功!'
+            // });
+        },
         viewnote(){
             this.$router.push('/viewnote/' + this.$route.params.id)
         },
