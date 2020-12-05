@@ -17,7 +17,7 @@ const routes = [
     { path: '/note/:id', component: Note },
     { path: '/viewnote/:id', component: ViewNote },
     { path: '/index', component: Index },
-    { path: '/', redirect: '/index' },
+    { path: '/', redirect: '/home' },
     { path: '/about', redirect: '/viewnote/5fb922d85703375b1ccf28dc' },
     { path: '/problem', redirect: '/viewnote/5fbe48fb43facc04e2ddd7a7' },
     { path: '/register', component: Register },
