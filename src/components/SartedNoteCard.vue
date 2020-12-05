@@ -1,9 +1,9 @@
 <template lang="pug">
 el-container().main-container
   el-container.home
-      div(v-for="note in user.stared_notes" :key="note").note-card
-        ShowNoteCard(:id="note")
-        el-link(type = "info" :href="'/note/'+note").linknote 查看
+      div(v-for="note in user.stared_notes" :key="note.id").note-card
+        ShowNoteCard(:id="note.id")
+        el-link(type = "info" :href="'/note/'+ note.id").linknote 查看
 </template>
 
 
@@ -27,7 +27,6 @@ export default {
         this.$set(this.user,"email",res.data.email)
         this.$set(this.user,"likes",res.data.likes)
         this.user.stared_notes = res.data.stared_notes
-        console.log(res.data.stared_notes)
         if(res.data.avatar)
           this.$set(this.user,"avatar",Vue.$baseUrl.substring(0,Vue.$baseUrl.length-1)+res.data.avatar.url)
         else

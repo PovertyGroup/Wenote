@@ -41,7 +41,7 @@ export default {
           this.$router.push("/login")
         }
         if(command=="info"){
-          this.$router.push("/info");
+          this.$router.push("/info/"+Vue.$info.get());
         }
         if(command=="creat-note"){
           // this.$message.error("dnmd把接口给我！")

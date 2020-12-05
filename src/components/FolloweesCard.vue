@@ -1,19 +1,18 @@
 <template lang="pug">
 el-container().main-container
   el-container.home
-      div(v-for="note in user.notes" :key="note").note-card
-        ShowNoteCard(:id="note")
-        el-link(type = "info" :href="'/note/'+note").linknote 查看
+      div(v-for="fe in user.followees" :key="fe").fe-card
+        ShowUserCard(:id="fe")
 </template>
 
 
 <script>
 import Vue from 'vue';
-import ShowNoteCard from "@/components/ShowNoteCard";
+import ShowUserCard from "@/components/ShowUserCard";
 export default {
-  name: "MyNoteCard",
+  name: "FolloweesCard",
   components :{
-    ShowNoteCard,
+    ShowUserCard,
   },
   created (){
     Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl,'/users/me'),{

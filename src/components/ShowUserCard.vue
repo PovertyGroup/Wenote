@@ -1,9 +1,6 @@
 <template lang="pug">
-.note
-    .note-head
-      .note-title()
-        i#note-icon.el-icon-notebook-2
-        span() 用户名:{{noteTitle}}
+div
+  p() {{followees}}
 </template>
 
 <script>
@@ -17,8 +14,8 @@ export default {
         createdtime:"",
         updatatime:"",
         author:"",
-        noteUrl:""
-
+        noteUrl:"",
+        followees:""
     }
   },
   props : {
@@ -28,14 +25,7 @@ export default {
     Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, "/notes/" + this.id), {
     })
     .then((res)=>{
-      console.log(res.data)
-      if (res.data.title.length>10) this.noteTitle = res.data.title.substring(0,9)+"......";
-      else this.noteTitle = res.data.title
-      if (res.data.content.length > 49) this.noteMd = res.data.content.substring(0,49)+"......"
-      else this.noteMd = res.data.content
-      this.author = res.data.author.username
-      this.createdtime = res.data.createdAt.substring(0,10)
-      this.updatatime = res.data.updatedAt.substring(0,10)
+      this.followees = res.data.followees
     })
   },
 }
