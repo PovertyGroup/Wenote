@@ -98,8 +98,9 @@ export default {
             this.likeNum = res.data.likers.length
             this.starNum = res.data.starers.length
             this.noteTags = res.data.tags ? res.data.tags : [];
-            if(res.data.avatar){
-              this.noteAvatar = Vue.$baseUrl.substring(0,Vue.$baseUrl.length-1)+res.data.avatar.url
+            console.log(res.data.author.avatar)
+            if(res.data.author.avatar){
+              this.noteAvatar = Vue.$baseUrl.substring(0,Vue.$baseUrl.length-1)+res.data.author.avatar.url
             }
             else{
               this.noteAvatar = "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
