@@ -10,9 +10,9 @@ div.setting
           el-input(v-model="user.email", @input="")
         el-form-item(label="性别", prop="user.gender")
           el-select(v-model="user.gender")
-            el-option(label="boy" value="boy")
-            el-option(label="girl" value="girl")
-            el-option(label="unkown" value="unkown")
+            el-option(label="小哥哥" value="boy")
+            el-option(label="小姐姐" value="girl")
+            el-option(label="隐藏" value="unkown")
     el-button.save(
       type="button",
       @click="saveinfo()",
