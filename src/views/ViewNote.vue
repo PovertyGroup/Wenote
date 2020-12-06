@@ -88,18 +88,22 @@ export default {
       Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, '/notes/' + this.$route.params.id),{
           headers: Vue.$getAuthorizedHeader()
         }).then((res) => {
+            console.log("dsad")
             this.noteTitle = res.data.title;
             this.noteMd = res.data.content;
             this.noteAuthor = res.data.author;
             this.noteId = res.data.id;
-            this.noteAvatar = Vue.$baseUrl.substring(0,Vue.$baseUrl.length-1)+res.data.author.avatar.url;
             this.noteLikers = res.data.likers
             this.noteStarers = res.data.starers
             this.likeNum = res.data.likers.length
             this.starNum = res.data.starers.length
             this.noteTags = res.data.tags ? res.data.tags : [];
-            console.log(res.data.author.id)
-            console.log(Vue.$info.get())
+            if(res.data.avatar){
+              this.noteAvatar = Vue.$baseUrl.substring(0,Vue.$baseUrl.length-1)+res.data.avatar.url
+            }
+            else{
+              this.noteAvatar = "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
+            }
             if(this.noteAuthor.followers && this.noteAuthor.followers.indexOf(Vue.$info.get()) >= 0){
               this.followed = true;
             }
