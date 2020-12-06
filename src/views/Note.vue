@@ -41,15 +41,15 @@
         div.editor-wrap(v-if="!this.noSuchNote")
             mavon-editor(v-model="noteMd" language="zh-CN" :toolbars="toolbars" @save="saveNote")
                 template(slot="left-toolbar-after")
-                    el-button(type="button"  class="op-icon fa fa-mavon-floppy-o"
-                            aria-hidden="true" :title="`点击保存`" @click="() => saveNote(this.noteMd)"
-                            style="width: 100px;height: 30px; background:  #8fbbfd3a") 保存更改
-                    el-button(type="button"  class="op-icon fa fa-eye"
-                            aria-hidden="true" :title="`查看前记得保存哦`" @click="viewnote()"
-                            style="width: 70px;height: 30px; background: #8fbbfd3a; margin: 0 0 0 10px;") 查看
                     el-button(type="button"  class="op-icon fa fa-trash "
                             aria-hidden="true" :title="`真的要删除吗`" @click="delnote()"
                             style="width: 70px;height: 30px; background:#ff607359; margin: 0 0 0 10px;") 删除
+                    el-button(type="button"  class="op-icon fa fa-mavon-floppy-o"
+                            aria-hidden="true" :title="`点击保存`" @click="() => saveNote(this.noteMd)"
+                            style="width: 100px;height: 30px; background:#8fbbfd3a; margin: 0 0 0 10px;") 保存更改
+                    el-button(type="button"  class="op-icon fa fa-eye"
+                            aria-hidden="true" :title="`查看前记得保存哦`" @click="viewnote()"
+                            style="width: 70px;height: 30px; background: #8fbbfd3a; margin: 0 0 0 10px;") 查看
         NoSuchNoteCard(v-if="this.noSuchNote").not-such-note-card
     template(v-slot:footer)
         Footer
