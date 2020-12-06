@@ -12,7 +12,7 @@ div.setting
           el-select(v-model="user.gender")
             el-option(label="小哥哥" value="boy")
             el-option(label="小姐姐" value="girl")
-            el-option(label="隐藏" value="unkown")
+            el-option(label="隐藏" value="unknown")
     el-button.save(
       type="button",
       @click="saveinfo()",
@@ -68,7 +68,7 @@ export default {
           message: "已保存",
           type: "success"
         });
-        location.reload()
+        // location.reload()
       })
       .catch(() =>{
         this.$message({
