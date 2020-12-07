@@ -1,9 +1,14 @@
 <template lang="pug">
 div.setting
     el-card(show="hover" style = "width : 350px").avatar-card
-      img.avatar(:src="user.avatar", style="width: 250px; height: 250px")
-    el-card(show="hover" style = "width : 350px").info-card
-      el-form(:model="form", label-width="80px", :rules="rules", ref="ruleForm")
+      img.avatar(:src="user.avatar", style="width: 250px; height: 250px" @click="handleAvatarSelect()")
+      form(ref="avatar-form" @submit="uploadAvatar()").hidden-form
+        input(type="text" name="ref" value="user")
+        input(type="text" name="refId" :value="this.id")
+        input(type="text" name="field" value="avatar")
+        input(type="file" name="files" ref="file-selector")
+    el-card(show="hover" style = "width : 350px" :model="form").info-card
+      el-form(label-width="80px")
         el-form-item(label="用户名", prop="user.name")
           el-input(v-model="user.name", placeholder="用户名或邮箱", @input="")
         el-form-item(label="邮箱", prop="user.mail")
@@ -23,6 +28,7 @@ div.setting
 
 <script>
 import Vue from "vue";
+
 export default {
   name: "SettingCard",
   components :{
@@ -51,11 +57,14 @@ export default {
           );
       })
       .catch(() => {
+        // TODO
       });
   },
   methods:{
     saveinfo(){
-      console.log("dsadasd")
+      console.log('submit')
+      this.uploadAvatar();
+      console.log('submit end')
       Vue.$axios.put(Vue.$composeUrl(Vue.$baseUrl,"/users/"+Vue.$info.get()),{
         "username" : this.user.name,
         "email" : this.user.email,
@@ -76,6 +85,18 @@ export default {
           type: "error"
         });
       })
+    },
+    handleAvatarSelect(){
+      this.$refs['file-selector'].click();
+      // if(this.$refs['file-selector'].value)
+      //   this.$refs['avatar-form'].submit();
+    },
+    uploadAvatar() {
+      const request = new XMLHttpRequest();
+      request.open('POST', '/upload');
+      request.setRequestHeader('Authorization', 'Bearer ' + Vue.$jwt.get());
+      console.log("submitting...");
+      request.send(new FormData(this.$refs['avatar-form']));
     }
   },
   props :{
@@ -87,6 +108,7 @@ export default {
         gender: "",
         email: "",
       },
+      id: Vue.$info.get(),
     };
   },
 }
@@ -98,5 +120,11 @@ export default {
 }
 .save {
   margin-top: 100px;
+}
+.avatar{
+  cursor: pointer;
+}
+.hidden-form{
+  visibility: hidden;
 }
 </style>

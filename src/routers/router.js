@@ -22,6 +22,7 @@ const routes = [
     { path: '/problem', redirect: '/viewnote/5fbe48fb43facc04e2ddd7a7' },
     { path: '/register', component: Register },
     { path: '/info/:uid', component: Info },
+    { path: '/info/:uid/:tab', component: Info },
     { path: '/404', component: PageNotFound },
     { path: '*', redirect: '/404' },
 ]
