@@ -61,7 +61,7 @@ export default {
   margin: auto;
   font-size: 20px;
 }
-.note-card {
-  margin: 0 40px 30px 0;
+.fe-card {
+  margin: 0 20px 20px;
 }
 </style>

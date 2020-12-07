@@ -4,13 +4,13 @@
     .home-note-head
       .home-note-title
         i#home-note-icon.el-icon-notebook-2
-        span {{this.noteTitle}}
+        span {{ this.noteTitle }}
     .line
     .home-note-info
       .home-note-info-warp
-      span.home-note-content 作者: {{this.noteAuthor}}
-      span.home-note-content 日期: {{this.noteDate}}
-      span#content.home-note-content 概要: {{this.noteMd}}
+      span.home-note-content 作者: {{ this.noteAuthor }}
+      span.home-note-content 日期: {{ this.noteDate }}
+      span#content.home-note-content 概要: {{ this.noteMd }}
 </template>
 
 <script>
@@ -22,7 +22,6 @@ export default {
       noteTitle: "",
       noteDate: "",
       noteMd: "",
-      noteId: "",
       noteAuthor: "",
     };
   },
@@ -30,8 +29,7 @@ export default {
     "id": String
   },
   created() {
-    Vue.$axios
-    .get(Vue.$composeUrl(Vue.$baseUrl, '/notes/' + this.id),{
+    Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, '/notes/' + this.id),{
       headers: Vue.$getAuthorizedHeader()
     })
     .then((res)=>{
@@ -39,8 +37,7 @@ export default {
       this.noteMd = res.data.content.substring(0,50)+"......"
       this.noteDate = res.data.createdAt.substring(0,10)
       this.noteAuthor = res.data.author.username
-      this.noteId = res.data.id
-      if(this.noteTitle.length>14){
+      if(this.noteTitle.length > 14){
         this.noteTitle = this.noteTitle.substring(0,12)+"......"
       }
     })
@@ -49,7 +46,9 @@ export default {
     })
   },
   methods: {
-    ClicknoteUrl() {this.$router.push("/viewnote/"+this.noteId)}
+    ClicknoteUrl() {
+      this.$router.push("/viewnote/" + this.id);
+    }
   }
 };
 </script>

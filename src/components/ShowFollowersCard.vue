@@ -1,21 +1,19 @@
 <template lang="pug">
 div
-  div.c1
-    img.avatar(:src="avatar")
-  div.c2
-    p {{ this.username }}
-    p {{ this.bio }}
-  div.c3
+  img.avatar(:src="avatar")
+  div.info
+    p(style="padding-bottom:5px") {{this.username}}
+    p() {{this.bio}}
+  div.button
     el-button.button(v-if="!this.followed",
                     type="primary",
                     icon="el-icon-plus",
                     size="mini",
-                    @click="follow()") 关注
+                    @click="follow()") 未关注
     el-button.button(v-if="this.followed" 
                     icon="el-icon-check"
                     size="mini" 
                     @click="unfollow()") 已互粉
-    
 </template>
 
 <script>
@@ -34,7 +32,6 @@ export default {
     frid: String
   },
   created() {
-    console.log(this.followed)
     Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, "/users/" + this.frid),
                    {headers: Vue.$getAuthorizedHeader()})
     .then((res) => {
@@ -45,11 +42,11 @@ export default {
       else
         this.avatar ="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png";
       for (var fri = 0; fri<res.data.followers.length; fri++){
-        if(res.data.followers[fri] == this.frid)
+        if(res.data.followers[fri] == Vue.$info.get()){
           this.followed = true;
           break
+        }
       }
-      console.log(this.followed)
     });
   },
   methods: {
@@ -88,15 +85,22 @@ export default {
   margin: 5px;
   padding: 2px;
   border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  vertical-align: middle;
-  display: inline-block;
   align-items: center;
-  justify-content: center;
   overflow: hidden;
   width:60px;
-  height:60px
+  height:60px;
+  float: left;
+}
+.info{
+  padding: 0 1000px 0 0;
+  position: relative;
+  margin-left: 20px;
+  margin-top: 15px;
+  float: left;
+}
+.button{
+  float: right;
+  margin: 10px 30px 0px 0px;
 }
 </style>
 

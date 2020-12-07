@@ -1,8 +1,8 @@
 <template lang="pug">
 el-container().main-container
   el-container.home
-    div(v-for="fr in followers" :key="fr").fe-card
-      div(v-if="val")
+    div(v-for="fr in followers" :key="fr").fr-card
+      div(v-if="val").fr-list
         ShowFollowersCard(:frid="fr")
     div(v-if="!val")
       NothingCard
@@ -62,5 +62,8 @@ export default {
 }
 .note-card{
   margin: 0 40px 30px 0;
+}
+.fr-card{
+  padding:0 20px 20px;
 }
 </style>

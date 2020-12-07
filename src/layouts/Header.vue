@@ -2,7 +2,6 @@
 .header
   el-col(:span="8" type="flex" justify="start").left
     el-link.sitename(:underline="false" href="/home") Wenote 📝
-    el-link(:underline="false" href="/problem") 熊宝的笔记(镇站之宝)
     el-link(:underline="false" href="/about") 关于
   el-col(:span="8" type="flex" justify="end").center
     el-autocomplete.search-input(placeholder="请输入内容" v-model="searchText" suffix-icon="el-icon-search"

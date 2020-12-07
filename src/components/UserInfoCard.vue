@@ -40,10 +40,10 @@ export default {
           localStorage.removeItem('id')
           this.$router.push("/login")
         }
-        if(command=="info"){
-          this.$router.push("/info/"+Vue.$info.get());
+        if(command == "info"){
+          this.$router.push(`/info/${Vue.$info.get()}/notes`);
         }
-        if(command=="creat-note"){
+        if(command == "creat-note"){
           // this.$message.error("dnmd把接口给我！")
           Vue.$axios.post(Vue.$composeUrl(Vue.$baseUrl, '/notes'), {"title": "新笔记","content":"# ~~请在这儿输入你的笔记内容~~"}, { headers: Vue.$getAuthorizedHeader() })
           .then((res => {

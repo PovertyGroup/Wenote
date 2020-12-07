@@ -19,7 +19,7 @@
             i.far.fa-star.star-icon
             p.like-num 收藏 {{starNum}}
             i.el-icon-collection-tag.tag-icon(v-if="Tags")
-            el-tag.tags(v-for="tag in noteTags" type="info" effect="dark" size="mini") {{tag}}
+            el-tag.tags(v-for="tag in noteTags" :key="tag" type="info" effect="dark" size="mini") {{tag}}
           .update-time
             el-button.edit-note(v-if="this.isAuthor" type="primary" size="mini"
                                 icon="el-icon-edit-outline" @click="editnote()") 编辑
@@ -161,6 +161,7 @@ export default {
         .then(()=>{
           this.$message.success("点赞成功~");
           this.likeNote = true;
+          this.likeNum++;
         })
         .catch((error)=>{
           if(error.response.data.statusCode == 403){
@@ -175,6 +176,7 @@ export default {
         .then(()=>{
           this.$message.warning("取消对这篇文章点赞了呢");
           this.likeNote = false;
+          this.likeNum = this.likeNum > 0 ? this.likeNum - 1 : 0;
         })
       },
       star(){
@@ -184,6 +186,7 @@ export default {
         .then(()=>{
           this.$message.success("收藏成功~");
           this.starNote = true;
+          this.starNum++;
         })
         .catch((error)=>{
           if(error.response.data.statusCode == 403){
@@ -198,6 +201,7 @@ export default {
         .then(()=>{
           this.$message.warning("取消收藏了");
           this.starNote = false;
+          this.starNum = this.starNum > 0 ? this.starNum - 1 : 0;
         })
       },
       editnote(){
