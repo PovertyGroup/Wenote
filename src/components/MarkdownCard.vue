@@ -6,8 +6,12 @@ div
 </template>
 
 <script>
-var md = require('markdown-it')(),
-    mk = require('markdown-it-katex');
+// var md = require('markdown-it')(),
+
+import {mavonEditor} from 'mavon-editor'
+const md = mavonEditor.getMarkdownIt()
+const mk = require('markdown-it-katex');
+
 md.use(mk);
 
 export default {
