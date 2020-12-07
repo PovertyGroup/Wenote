@@ -2,7 +2,7 @@
 div
   img.avatar(:src="avatar")
   div.info
-    p(style="padding-bottom:5px") {{this.username}}
+    p(style="padding-bottom:5px; font-size:20px") {{this.username}}
     p() {{this.bio}}
   div.button
     el-button.button(v-if="this.followed" 

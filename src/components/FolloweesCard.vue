@@ -4,6 +4,7 @@ el-container().main-container
     div(v-for="fe in followees" :key="fe").fe-card
       div(v-if="val")
         ShowFolloweesCard(:feid="fe")
+        .line
     div(v-if="!val")
       NothingCard
 </template>
@@ -63,5 +64,11 @@ export default {
 }
 .fe-card {
   margin: 0 20px 20px;
+}
+.line {
+  width: 97% ;
+  height: 0.5px;
+  margin: 1px;
+  background: #000;
 }
 </style>

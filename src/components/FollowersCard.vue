@@ -4,6 +4,7 @@ el-container().main-container
     div(v-for="fr in followers" :key="fr").fr-card
       div(v-if="val").fr-list
         ShowFollowersCard(:frid="fr")
+        .line
     div(v-if="!val")
       NothingCard
 </template>
@@ -65,5 +66,11 @@ export default {
 }
 .fr-card{
   padding:0 20px 20px;
+}
+.line {
+  width: 97% ;
+  height: 0.5px;
+  margin: 1px;
+  background: #000;
 }
 </style>

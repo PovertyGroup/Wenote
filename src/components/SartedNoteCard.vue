@@ -1,7 +1,7 @@
 <template lang="pug">
 el-container().main-container
   el-container.home
-    div(v-for="note in stared_notes" :key="note.id").note-card
+    div(v-for="note in stared_notes" :key="note.id")
       div(v-if="val")
         ShowViewNoteCard(:id="note.id")
     div(v-if="!val")
