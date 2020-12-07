@@ -3,7 +3,7 @@ el-container().main-container
   el-container.home
     div(v-for="fe in followees" :key="fe").fe-card
       div(v-if="val")
-        ShowUserCard(:id="fe")
+        ShowFolloweesCard(:feid="fe")
     div(v-if="!val")
       NothingCard
 </template>
@@ -11,13 +11,13 @@ el-container().main-container
 
 <script>
 import Vue from "vue";
-import ShowUserCard from "@/components/ShowUserCard";
+import ShowFolloweesCard from "@/components/ShowFolloweesCard";
 import NothingCard from "@/components/NothingCard";
 
 export default {
   name: "FolloweesCard",
   components: {
-    ShowUserCard,
+    ShowFolloweesCard,
     NothingCard,
   },
   created() {

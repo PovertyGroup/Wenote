@@ -85,38 +85,39 @@ export default {
         }
     },
     created(){
-      Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, '/notes/' + this.$route.params.id)).then((res) => {
-            this.noteTitle = res.data.title;
-            this.noteMd = res.data.content;
-            this.noteAuthor = res.data.author;
-            this.noteId = res.data.id;
-            this.noteAvatar = Vue.$baseUrl.substring(0,Vue.$baseUrl.length-1)+res.data.author.avatar.url;
-            this.noteLikers = res.data.likers
-            this.noteStarers = res.data.starers
-            this.likeNum = res.data.likers.length
-            this.starNum = res.data.starers.length
-            this.noteTags = res.data.tags ? res.data.tags : [];
-            console.log(res.data.author.id)
-            console.log(Vue.$info.get())
-            if(this.noteAuthor.followers && this.noteAuthor.followers.indexOf(Vue.$info.get()) >= 0){
-              this.followed = true;
-            }
-            if(this.noteLikers && this.noteLikers.indexOf(Vue.$info.get()) >= 0){
-              this.likeNote = true;
-            }
-            if(this.noteStarers && this.noteStarers.indexOf(Vue.$info.get()) >= 0){
-              this.starNote = true;
-            }
-            // if(this.noteTags && this.noteTags.length == 0){
-            //   this.Tags = false;
-            // }
-            if(res.data.author.id === Vue.$info.get()){
-              this.isAuthor = true;
-            }
-        })
-        .catch(() => {
-            this.noSuchNote = true;
-        })
+      Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, '/notes/' + this.$route.params.id))
+      .then((res) => {
+        this.noteTitle = res.data.title;
+        this.noteMd = res.data.content;
+        this.noteAuthor = res.data.author;
+        this.noteId = res.data.id;
+        this.noteAvatar = Vue.$baseUrl.substring(0,Vue.$baseUrl.length-1)+res.data.author.avatar.url;
+        this.noteLikers = res.data.likers
+        this.noteStarers = res.data.starers
+        this.likeNum = res.data.likers.length
+        this.starNum = res.data.starers.length
+        this.noteTags = res.data.tags ? res.data.tags : [];
+        console.log(res.data.author.id)
+        console.log(Vue.$info.get())
+        if(this.noteAuthor.followers && this.noteAuthor.followers.indexOf(Vue.$info.get()) >= 0){
+          this.followed = true;
+        }
+        if(this.noteLikers && this.noteLikers.indexOf(Vue.$info.get()) >= 0){
+          this.likeNote = true;
+        }
+        if(this.noteStarers && this.noteStarers.indexOf(Vue.$info.get()) >= 0){
+          this.starNote = true;
+        }
+        // if(this.noteTags && this.noteTags.length == 0){
+        //   this.Tags = false;
+        // }
+        if(res.data.author.id === Vue.$info.get()){
+          this.isAuthor = true;
+        }
+      })
+      .catch(() => {
+          this.noSuchNote = true;
+      })
     },
     mounted() {
     },
@@ -268,7 +269,18 @@ export default {
 .avatar{
   vertical-align:middle;
   display: inline-block;
+  margin: 5px;
+  padding: 2px;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  vertical-align:middle;
+  display: inline-block;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
+
 .note-author-name{
   vertical-align:middle;
   display: inline-block;

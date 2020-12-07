@@ -3,7 +3,7 @@ el-container().main-container
   el-container.home
     div(v-for="fr in followers" :key="fr").fe-card
       div(v-if="val")
-        ShowUserCard(:id="fr")
+        ShowFollowersCard(:frid="fr")
     div(v-if="!val")
       NothingCard
 </template>
@@ -11,19 +11,18 @@ el-container().main-container
 
 <script>
 import Vue from 'vue';
-import ShowUserCard from "@/components/ShowUserCard";
+import ShowFollowersCard from "@/components/ShowFollowersCard";
 import NothingCard from "@/components/NothingCard"
 
 export default {
   name: "FolloweesCard",
   components :{
-    ShowUserCard,
+    ShowFollowersCard,
     NothingCard
   },
   created (){
-    Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl,'/users/me'),{
-      headers: Vue.$getAuthorizedHeader(),
-    })
+    Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl,'/users/me'),
+                  {headers: Vue.$getAuthorizedHeader(),})
     .then((res) => {
       if (res.data.followers.length == 0)
         this.val = false
