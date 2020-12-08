@@ -62,14 +62,11 @@ export default {
           });
           Vue.$jwt.set(response.data.jwt);
           Vue.$info.set(response.data.user.id)
-          console.log(response);
           Vue.$axios
             .get(Vue.$composeUrl(Vue.$baseUrl, "/notes/mine"), {
               headers: Vue.$getAuthorizedHeader(),
             })
-            .then((res) => {
-              // TODO
-              console.log(res.data);
+            .then(() => {
             });
           this.$router.push("/home");
         })

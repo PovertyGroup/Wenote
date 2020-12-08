@@ -50,7 +50,7 @@ export default {
             this.$message.success('创建新笔记成功')
             setTimeout(() => {
               this.$router.push('/note/' + res.data.id)
-            }, 2000);
+            }, 100);
           }))
           .catch(err => {
             this.$message.error(err.data.message);

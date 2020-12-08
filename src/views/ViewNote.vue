@@ -97,8 +97,6 @@ export default {
         this.likeNum = res.data.likers.length
         this.starNum = res.data.starers.length
         this.noteTags = res.data.tags ? res.data.tags : [];
-        console.log(res.data.author.id)
-        console.log(Vue.$info.get())
         if(this.noteAuthor.followers && this.noteAuthor.followers.indexOf(Vue.$info.get()) >= 0){
           this.followed = true;
         }
