@@ -134,7 +134,6 @@ export default {
             this.notePublic = res.data.public;
             this.noteId = res.data.id;
             this.noteAutherId = res.data.author.id;
-            console.log(res.data.author.id)
         })
         .catch(() => {
             this.noSuchNote = true;
@@ -144,7 +143,6 @@ export default {
         if(Vue.$jwt.get() == undefined || Vue.$jwt.get() === null){
             this.$router.push('/viewnote/'+this.$route.params.id);
         }
-        this.timer.unref();
     },
     computed: {
         updateTime() {

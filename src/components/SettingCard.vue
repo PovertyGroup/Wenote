@@ -53,9 +53,7 @@ export default {
   },
   methods:{
     saveinfo(){
-      console.log('submit')
       this.uploadAvatar();
-      console.log('submit end')
       Vue.$axios.put(Vue.$composeUrl(Vue.$baseUrl,"/users/"+Vue.$info.get()),{
         "username" : this.user.name,
         "bio" : this.user.bio,
