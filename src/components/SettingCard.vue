@@ -84,7 +84,7 @@ export default {
     },
     uploadAvatar() {
       const request = new XMLHttpRequest();
-      request.open('POST', '/upload');
+      request.open('PUT', '/upload');
       request.setRequestHeader('Authorization', 'Bearer ' + Vue.$jwt.get());
       console.log("submitting...");
       request.send(new FormData(this.$refs['avatar-form']));
