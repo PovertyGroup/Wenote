@@ -14,7 +14,9 @@
 </template>
 
 <script>
-import Vue from 'vue'
+import axios from 'axios'
+import utils from '../util/utils'
+
 export default {
   name :"ShowNoteCard",
   data(){
@@ -31,8 +33,8 @@ export default {
     id: String,
   },
   created(){
-    Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, "/notes/" + this.id),
-                   {headers: Vue.$getAuthorizedHeader()})
+    axios.get(utils.composeUrl(this.$store.state.serverUrl, "/notes/" + this.id),
+                   {headers: utils.getAuthorizedHeader()})
     .then((res)=>{
       if (res.data.title.length>10) this.noteTitle = res.data.title.substring(0,9)+"......"
       else this.noteTitle = res.data.title

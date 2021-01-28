@@ -16,10 +16,12 @@ div.user-info-card
 </template>
 
 <script scoped>
-import Vue from "vue";
+import axios from 'axios'
+import utils from '../util/utils'
+
 export default {
   data() {
-    if (Vue.$jwt.get() != undefined) {
+    if (utils.store.jwt != undefined) {
       return {
         user:{
           name: '',
@@ -41,11 +43,11 @@ export default {
           this.$router.push("/login")
         }
         if(command == "info"){
-          this.$router.push(`/info/${Vue.$info.get()}/notes`);
+          this.$router.push(`/info/${utils.store.info}/notes`);
         }
         if(command == "creat-note"){
           // this.$message.error("dnmd把接口给我！")
-          Vue.$axios.post(Vue.$composeUrl(Vue.$baseUrl, '/notes'), {"title": "新笔记","content":"# ~~请在这儿输入你的笔记内容~~"}, { headers: Vue.$getAuthorizedHeader() })
+          axios.post(utils.composeUrl(this.$store.state.serverUrl, '/notes'), {"title": "新笔记","content":"# ~~请在这儿输入你的笔记内容~~"}, { headers: utils.getAuthorizedHeader() })
           .then((res => {
             this.$message.success('创建新笔记成功')
             setTimeout(() => {
@@ -60,12 +62,12 @@ export default {
       }
   },
   mounted(){
-    Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, '/users/me'), {
-                   headers: Vue.$getAuthorizedHeader(),})
+    axios.get(utils.composeUrl(this.$store.state.serverUrl, '/users/me'), {
+                   headers: utils.getAuthorizedHeader(),})
     .then((res) => {
       this.$set(this.user,"name",res.data.username)
       if(res.data.avatar)
-        this.$set(this.user,"avatar",Vue.$composeUrl(Vue.$baseUrl,res.data.avatar.url))
+        this.$set(this.user,"avatar",utils.composeUrl(this.$store.state.serverUrl,res.data.avatar.url))
       else
         this.$set(this.user,"avatar","https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png") 
     })

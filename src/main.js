@@ -1,48 +1,49 @@
 import Vue from 'vue'
 import App from './App.vue'
+import store from './store/index'
 
 // axios configuration and utils
-import axios from 'axios'
+// import axios from 'axios'
 
-Vue.$baseUrl = 'http://172.21.4.9:1337/'
-Vue.$siteUrl = '172.21.4.9:1080'
-Vue.$axios = axios
-Vue.$composeUrl = function(baseUrl, path) {
-    if (baseUrl.endsWith('/') && !path.startsWith('/'))
-        return baseUrl + path
-    else if (baseUrl.endsWith('/') && path.startsWith('/'))
-        return baseUrl.substring(0, baseUrl.length - 1) + path
-    else if (!baseUrl.endsWith('/') && path.startsWith('/'))
-        return baseUrl + path
-    else
-        return baseUrl + '/' + path
-}
+// Vue.$baseUrl = 'http://8.131.62.225:443/'
+// Vue.$siteUrl = 'http://8.131.62.225/'
+// axios = axios
+// utils.composeUrl = function(baseUrl, path) {
+//     if (baseUrl.endsWith('/') && !path.startsWith('/'))
+//         return baseUrl + path
+//     else if (baseUrl.endsWith('/') && path.startsWith('/'))
+//         return baseUrl.substring(0, baseUrl.length - 1) + path
+//     else if (!baseUrl.endsWith('/') && path.startsWith('/'))
+//         return baseUrl + path
+//     else
+//         return baseUrl + '/' + path
+// }
 
-Vue.$jwt = {
-    set: function(value) {
-        window.localStorage.setItem('jwt', value)
-    },
-    get: function() {
-        return window.localStorage.getItem('jwt')
-    }
-}
+// Vue.$jwt = {
+//     set: function(value) {
+//         window.localStorage.setItem('jwt', value)
+//     },
+//     get: function() {
+//         return window.localStorage.getItem('jwt')
+//     }
+// }
 
-Vue.$info = {
-    set: function(value) {
-        window.localStorage.setItem('id', value)
-    },
-    get: function() {
-        return window.localStorage.getItem('id')
-    }
-}
+// Vue.$info = {
+//     set: function(value) {
+//         window.localStorage.setItem('id', value)
+//     },
+//     get: function() {
+//         return window.localStorage.getItem('id')
+//     }
+// }
 
-Vue.$getAuthorizedHeader = function() {
-    if (localStorage.getItem('jwt'))
-        return {
-            Authorization: 'Bearer ' + Vue.$jwt.get(),
-        }
-    return {};
-}
+// utils.getAuthorizedHeader = function() {
+//     if (localStorage.getItem('jwt'))
+//         return {
+//             Authorization: 'Bearer ' + utils.store.jwt,
+//         }
+//     return {};
+// }
 
 
 Vue.config.productionTip = false
@@ -64,6 +65,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css'
 // router and vue setup
 import router from './routers/router'
 new Vue({
+    store,
     router,
     render: h => h(App)
 }).$mount('#app')

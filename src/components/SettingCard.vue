@@ -27,23 +27,24 @@ div.setting
 
 
 <script>
-import Vue from "vue";
+import axios from 'axios'
+import utils from '../util/utils'
 
 export default {
   name: "SettingCard",
   components :{
   },
   created() {
-    Vue.$axios
-      .get(Vue.$composeUrl(Vue.$baseUrl, "/users/me"), {
-        headers: Vue.$getAuthorizedHeader(),
+    axios
+      .get(utils.composeUrl(this.$store.state.serverUrl, "/users/me"), {
+        headers: utils.getAuthorizedHeader(),
       })
       .then((res) => {
         this.user.bio = res.data.bio
         this.user.name = res.data.username
         this.user.gender = res.data.gender
         if (res.data.avatar)
-          this.user.avatar = Vue.$composeUrl(Vue.$baseUrl, res.data.avatar.url);
+          this.user.avatar = utils.composeUrl(this.$store.state.serverUrl, res.data.avatar.url);
         else
           this.user.avatar ="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png";
       })
@@ -54,12 +55,12 @@ export default {
   methods:{
     saveinfo(){
       this.uploadAvatar();
-      Vue.$axios.put(Vue.$composeUrl(Vue.$baseUrl,"/users/"+Vue.$info.get()),{
+      axios.put(utils.composeUrl(this.$store.state.serverUrl,"/users/" + utils.store.info),{
         "username" : this.user.name,
         "bio" : this.user.bio,
         "gender" : this.user.gender
       },{
-        headers: Vue.$getAuthorizedHeader(),
+        headers: utils.getAuthorizedHeader(),
       })
       .then(() =>{
         this.$message({
@@ -83,7 +84,7 @@ export default {
     uploadAvatar() {
       const request = new XMLHttpRequest();
       request.open('PUT', '/upload');
-      request.setRequestHeader('Authorization', 'Bearer ' + Vue.$jwt.get());
+      request.setRequestHeader('Authorization', 'Bearer ' + utils.store.jwt);
       console.log("submitting...");
       request.send(new FormData(this.$refs['avatar-form']));
     }
@@ -97,7 +98,7 @@ export default {
         gender: "",
         bio: "",
       },
-      id: Vue.$info.get(),
+      id: utils.store.info,
     };
   },
 }

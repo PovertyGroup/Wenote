@@ -12,7 +12,9 @@ div
 </template>
 
 <script>
-import Vue from "vue";
+import axios from 'axios'
+import utils from '../util/utils'
+
 export default {
   name: "ShowFolloweesCard",
   data() {
@@ -27,13 +29,13 @@ export default {
     feid: String
   },
   created() {
-    Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, "/users/" + this.feid),
-                   {headers: Vue.$getAuthorizedHeader()})
+    axios.get(utils.composeUrl(this.$store.state.serverUrl, "/users/" + this.feid),
+                   {headers: utils.getAuthorizedHeader()})
     .then((res) => {
       this.username = res.data.username;
       this.bio = res.data.bio;
       if (res.data.avatar)
-        this.avatar = Vue.$composeUrl(Vue.$baseUrl, res.data.avatar.url);
+        this.avatar = utils.composeUrl(this.$store.state.serverUrl, res.data.avatar.url);
       else
         this.avatar ="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png";
       for (var fei = 0; fei<res.data.followees.length; fei++){
@@ -46,8 +48,8 @@ export default {
   },
   methods: {
     unfollow() {
-      Vue.$axios.post(Vue.$composeUrl(Vue.$baseUrl,"/users/unfollow/" + this.feid),{},
-                                      {headers: Vue.$getAuthorizedHeader()})
+      axios.post(utils.composeUrl(this.$store.state.serverUrl,"/users/unfollow/" + this.feid),{},
+                                      {headers: utils.getAuthorizedHeader()})
       .then(() => {
         this.$message.warning("取消关注对方了呢，哭唧唧~,你还会再来的对吧？");
         this.followed = false;

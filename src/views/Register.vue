@@ -8,7 +8,9 @@ MainLayout
 </template>
 
 <script>
-import Vue from "vue";
+import axios from 'axios'
+import utils from '../util/utils'
+
 import Header from "@/layouts/Header";
 import MainLayout from "@/layouts/MainLayout";
 import RegisterCard from "@/components/RegisterCard";
@@ -42,8 +44,8 @@ export default {
         spinner: "el-icon-loading",
         background: "rgba(217,229, 247, 0.9)",
       });
-      Vue.$axios
-        .post(Vue.$composeUrl(Vue.$baseUrl, "/auth/local/register"), {
+      axios
+        .post(utils.composeUrl(this.$store.state.serverUrl, "/auth/local/register"), {
           username: this.username,
           email: this.email,
           password: this.password,
@@ -55,9 +57,9 @@ export default {
             type: "success",
           });
           // console.log(response.data);
-          // Vue.$axios
-          //   .get(Vue.$composeUrl(Vue.$baseUrl, "/notes/mine"), {
-          //     headers: Vue.$getAuthorizedHeader(),
+          // axios
+          //   .get(utils.composeUrl(this.$store.state.serverUrl, "/notes/mine"), {
+          //     headers: utils.getAuthorizedHeader(),
           //   })
           //   .then((res) => {
           //     // TODO

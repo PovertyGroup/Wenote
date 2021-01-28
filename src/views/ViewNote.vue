@@ -41,12 +41,13 @@
 </template>
 
 <script >
-import Vue from "vue";
 import Header from "../layouts/Header";
 import MainLayout from "../layouts/MainLayout";
 import MarkdownCard from "../components/MarkdownCard.vue";
 import NoSuchNoteCard from "../components/NoSuchNoteCard.vue";
 import Footer from "../layouts/Footer";
+import axios from 'axios'
+import utils from '../util/utils'
 
 import { format } from 'timeago.js';
 
@@ -85,31 +86,32 @@ export default {
         }
     },
     created(){
-      Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, '/notes/' + this.$route.params.id))
+      axios.get(utils.composeUrl(this.$store.state.serverUrl, '/notes/' + this.$route.params.id))
       .then((res) => {
         this.noteTitle = res.data.title;
         this.noteMd = res.data.content;
         this.noteAuthor = res.data.author;
         this.noteId = res.data.id;
-        this.noteAvatar = Vue.$baseUrl.substring(0,Vue.$baseUrl.length-1)+res.data.author.avatar.url;
+        // this.noteAvatar = Vue.$baseUrl.substring(0,Vue.$baseUrl.length-1)+res.data.author.avatar.url;
+        this.noteAvatar = utils.composeUrl(this.$store.state.serverUrl, res.data.author.avatar.url)
         this.noteLikers = res.data.likers
         this.noteStarers = res.data.starers
         this.likeNum = res.data.likers.length
         this.starNum = res.data.starers.length
         this.noteTags = res.data.tags ? res.data.tags : [];
-        if(this.noteAuthor.followers && this.noteAuthor.followers.indexOf(Vue.$info.get()) >= 0){
+        if(this.noteAuthor.followers && this.noteAuthor.followers.indexOf(utils.store.info) >= 0){
           this.followed = true;
         }
-        if(this.noteLikers && this.noteLikers.indexOf(Vue.$info.get()) >= 0){
+        if(this.noteLikers && this.noteLikers.indexOf(utils.store.info) >= 0){
           this.likeNote = true;
         }
-        if(this.noteStarers && this.noteStarers.indexOf(Vue.$info.get()) >= 0){
+        if(this.noteStarers && this.noteStarers.indexOf(utils.store.info) >= 0){
           this.starNote = true;
         }
         // if(this.noteTags && this.noteTags.length == 0){
         //   this.Tags = false;
         // }
-        if(res.data.author.id === Vue.$info.get()){
+        if(res.data.author.id === utils.store.info){
           this.isAuthor = true;
         }
       })
@@ -121,8 +123,8 @@ export default {
     },
     methods:{
       follow(){
-        Vue.$axios.post(Vue.$composeUrl(Vue.$baseUrl,"/users/follow/"+this.noteAuthor.id),{},{
-          headers: Vue.$getAuthorizedHeader()
+        axios.post(utils.composeUrl(this.$store.state.serverUrl,"/users/follow/"+this.noteAuthor.id),{},{
+          headers: utils.getAuthorizedHeader()
         })
         .then(()=>{
           this.$message.success("已成功关注该作者~");
@@ -139,8 +141,8 @@ export default {
         })
       },
       unfollow(){
-        Vue.$axios.post(Vue.$composeUrl(Vue.$baseUrl,"/users/unfollow/"+this.noteAuthor.id),{},{
-          headers: Vue.$getAuthorizedHeader()
+        axios.post(utils.composeUrl(this.$store.state.serverUrl,"/users/unfollow/"+this.noteAuthor.id),{},{
+          headers: utils.getAuthorizedHeader()
         })
         .then(()=>{
           this.$message.warning("取消关注对方了呢，哭唧唧~");
@@ -153,8 +155,8 @@ export default {
         })
       },
       like(){
-        Vue.$axios.post(Vue.$composeUrl(Vue.$baseUrl,"/notes/like/"+this.noteId),{},{
-          headers: Vue.$getAuthorizedHeader()
+        axios.post(utils.composeUrl(this.$store.state.serverUrl,"/notes/like/"+this.noteId),{},{
+          headers: utils.getAuthorizedHeader()
         })
         .then(()=>{
           this.$message.success("点赞成功~");
@@ -168,8 +170,8 @@ export default {
         })
       },
       unlike(){
-        Vue.$axios.post(Vue.$composeUrl(Vue.$baseUrl,"/notes/unlike/"+this.noteId),{},{
-          headers: Vue.$getAuthorizedHeader()
+        axios.post(utils.composeUrl(this.$store.state.serverUrl,"/notes/unlike/"+this.noteId),{},{
+          headers: utils.getAuthorizedHeader()
         })
         .then(()=>{
           this.$message.warning("取消对这篇文章点赞了呢");
@@ -178,8 +180,8 @@ export default {
         })
       },
       star(){
-        Vue.$axios.post(Vue.$composeUrl(Vue.$baseUrl,"/notes/star/"+this.noteId),{},{
-          headers: Vue.$getAuthorizedHeader()
+        axios.post(utils.composeUrl(this.$store.state.serverUrl,"/notes/star/"+this.noteId),{},{
+          headers: utils.getAuthorizedHeader()
         })
         .then(()=>{
           this.$message.success("收藏成功~");
@@ -193,8 +195,8 @@ export default {
         })
       },
       unstar(){
-        Vue.$axios.post(Vue.$composeUrl(Vue.$baseUrl,"/notes/unstar/"+this.noteId),{},{
-          headers: Vue.$getAuthorizedHeader()
+        axios.post(utils.composeUrl(this.$store.state.serverUrl,"/notes/unstar/"+this.noteId),{},{
+          headers: utils.getAuthorizedHeader()
         })
         .then(()=>{
           this.$message.warning("取消收藏了");
@@ -203,7 +205,7 @@ export default {
         })
       },
       editnote(){
-        this.$router.push(Vue.$composeUrl("/note/",this.noteId))
+        this.$router.push(utils.composeUrl("/note/",this.noteId))
       },
     }
 };

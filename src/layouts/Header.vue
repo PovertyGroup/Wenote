@@ -13,7 +13,8 @@
 
 <script>
 import UserInfoCard from "@/components/UserInfoCard";
-import Vue from 'vue'
+import axios from 'axios'
+import utils from '../util/utils'
 
 export default{
   name: "Header",
@@ -32,9 +33,9 @@ export default{
       if(queryString.replaceAll(' ', '') == '') return cb([]);
       let notes = [];
       let fetchNote = this.fetchNote;
-      Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, "/notes?title_contains=" + queryString),
+      axios.get(utils.composeUrl(this.$store.state.serverUrl, "/notes?title_contains=" + queryString),
         {
-          headers: Vue.$getAuthorizedHeader(),
+          headers: utils.getAuthorizedHeader(),
         })
       .then(async function(res) {
         for(var noteid of res.data){
@@ -59,9 +60,9 @@ export default{
     },
     fetchNote: async function(id){
       let note = undefined;
-      await Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, "/notes/" + id),
+      await axios.get(utils.composeUrl(this.$store.state.serverUrl, "/notes/" + id),
         {
-          headers: Vue.$getAuthorizedHeader(),
+          headers: utils.getAuthorizedHeader(),
         })
         .then((res) => {
           note = res.data;

@@ -61,7 +61,8 @@ import Footer from '../layouts/Footer'
 import MainLayout from '../layouts/MainLayout'
 import MarkdownCard from '../components/MarkdownCard.vue'
 import NoSuchNoteCard from '../components/NoSuchNoteCard.vue'
-import Vue from 'vue'
+import axios from 'axios'
+import utils from '../util/utils'
 
 import { format } from 'timeago.js';
 
@@ -122,8 +123,8 @@ export default {
         }
     },
     created(){
-        Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, '/notes/' + this.$route.params.id), {
-            headers: Vue.$getAuthorizedHeader()
+        axios.get(utils.composeUrl(this.$store.state.serverUrl, '/notes/' + this.$route.params.id), {
+            headers: utils.getAuthorizedHeader()
         })
         .then((res) => {
             this.isAuthor(res)
@@ -140,7 +141,7 @@ export default {
         })
     },
     mounted(){
-        if(Vue.$jwt.get() == undefined || Vue.$jwt.get() === null){
+        if(utils.store.jwt == undefined || utils.store.jwt === null){
             this.$router.push('/viewnote/'+this.$route.params.id);
         }
     },
@@ -167,8 +168,8 @@ export default {
         });
         },
         del(){
-            Vue.$axios.delete(Vue.$composeUrl(Vue.$baseUrl, '/notes/'+this.noteId),{
-                headers: Vue.$getAuthorizedHeader()
+            axios.delete(utils.composeUrl(this.$store.state.serverUrl, '/notes/'+this.noteId),{
+                headers: utils.getAuthorizedHeader()
             })
             .then(()=>{
                 this.$message({
@@ -189,10 +190,10 @@ export default {
             this.$router.push('/viewnote/' + this.$route.params.id)
         },
         saveNote(value){
-            Vue.$axios.put(Vue.$composeUrl(Vue.$baseUrl, '/notes/' + this.$route.params.id), {
+            axios.put(utils.composeUrl(this.$store.state.serverUrl, '/notes/' + this.$route.params.id), {
                 "content": value,
                 "tags": this.noteTags,
-            }, { headers: Vue.$getAuthorizedHeader() })
+            }, { headers: utils.getAuthorizedHeader() })
             .then(() => {
                 this.$message({
                     message: "已保存",
@@ -207,9 +208,9 @@ export default {
             })
         },
         saveTitle(){
-            Vue.$axios.put(Vue.$composeUrl(Vue.$baseUrl, '/notes/' + this.$route.params.id), {
+            axios.put(utils.composeUrl(this.$store.state.serverUrl, '/notes/' + this.$route.params.id), {
                 "title": this.noteTitle,
-            }, { headers: Vue.$getAuthorizedHeader() })
+            }, { headers: utils.getAuthorizedHeader() })
             .then(() => {
                 this.$message({
                     message: "已保存",
@@ -228,8 +229,8 @@ export default {
             return this.canEdit = !this.canEdit
         },
         isAuthor(res){
-            Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, '/users/me'),{
-                headers: Vue.$getAuthorizedHeader(),
+            axios.get(utils.composeUrl(this.$store.state.serverUrl, '/users/me'),{
+                headers: utils.getAuthorizedHeader(),
             })
             .then((user) => {
                 if(res.data.author.id!=user.data.id){
@@ -260,9 +261,9 @@ export default {
         },
 
         updatePublic(){
-            Vue.$axios.put(Vue.$composeUrl(Vue.$baseUrl, '/notes/' + this.$route.params.id), {
+            axios.put(utils.composeUrl(this.$store.state.serverUrl, '/notes/' + this.$route.params.id), {
                 "public": this.notePublic,
-            }, { headers: Vue.$getAuthorizedHeader() })
+            }, { headers: utils.getAuthorizedHeader() })
             .then(() => {
                 this.$message({
                     message: "已保存",

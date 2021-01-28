@@ -11,9 +11,11 @@ el-container().main-container
 
 
 <script>
-import Vue from "vue";
+// import Vue from "vue";
 import ShowFolloweesCard from "@/components/ShowFolloweesCard";
 import NothingCard from "@/components/NothingCard";
+import axios from 'axios'
+import utils from '../util/utils'
 
 export default {
   name: "FolloweesCard",
@@ -22,9 +24,9 @@ export default {
     NothingCard,
   },
   created() {
-    Vue.$axios
-      .get(Vue.$composeUrl(Vue.$baseUrl, "/users/me"), {
-        headers: Vue.$getAuthorizedHeader(),
+    axios
+      .get(utils.composeUrl(this.$store.state.serverUrl, "/users/me"), {
+        headers: utils.getAuthorizedHeader(),
       })
       .then((res) => {
         if (res.data.followees.length == 0) this.val = false;
@@ -35,7 +37,7 @@ export default {
       });
   },
   data() {
-    if (Vue.$jwt.get() != undefined) {
+    if (utils.store.jwt != undefined) {
       return {
         followees: "",
         val: true,

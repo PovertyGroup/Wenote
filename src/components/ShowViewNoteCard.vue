@@ -14,7 +14,9 @@
 </template>
 
 <script>
-import Vue from 'vue'
+import axios from 'axios'
+import utils from '../util/utils'
+
 export default {
   name: "ShowViewNoteCard",
   data() {
@@ -29,8 +31,8 @@ export default {
     "id": String
   },
   created() {
-    Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, '/notes/' + this.id),{
-      headers: Vue.$getAuthorizedHeader()
+    axios.get(utils.composeUrl(this.$store.state.serverUrl, '/notes/' + this.id),{
+      headers: utils.getAuthorizedHeader()
     })
     .then((res)=>{
       this.noteTitle = res.data.title

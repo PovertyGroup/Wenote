@@ -12,7 +12,8 @@ MainLayout
 </template>
 
 <script>
-import Vue from 'vue'
+import axios from 'axios'
+import utils from '../util/utils'
 import Header from '../layouts/Header'
 import MainLayout from '../layouts/MainLayout'
 import ShowViewNoteCard from '../components/ShowViewNoteCard'
@@ -32,7 +33,7 @@ export default {
       }
     },
     mounted(){
-      Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl, '/recommand'))
+      axios.get(utils.composeUrl(this.$store.state.serverUrl, '/recommand'))
       .then((res)=>{
         this.notes = res.data
       })

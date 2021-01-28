@@ -9,9 +9,11 @@ el-container().main-container
 </template>
 
 <script>
-import Vue from 'vue'
 import ShowNoteCard from "@/components/ShowNoteCard"
 import NothingCard from "@/components/NothingCard"
+import axios from 'axios'
+import utils from '../util/utils'
+
 export default {
   name: "MyNoteCard",
   components :{
@@ -19,8 +21,8 @@ export default {
     NothingCard
   },
   created (){
-    Vue.$axios.get(Vue.$composeUrl(Vue.$baseUrl,'/users/me'),{
-      headers: Vue.$getAuthorizedHeader(),
+    axios.get(utils.composeUrl(this.$store.state.serverUrl, '/users/me'),{
+      headers: utils.getAuthorizedHeader(),
     })
     .then((res) => {
       if (res.data.notes.length === 0)
