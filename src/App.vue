@@ -4,6 +4,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'App',
 }
@@ -11,6 +12,9 @@ export default {
 
 <style>
 @import "./common/font/font.css";
+@import 'element-ui/lib/theme-chalk/index.css';
+@import 'mavon-editor/dist/css/index.css';
+@import '@fortawesome/fontawesome-free/css/all.min.css';
 
 html {
   height: 100%;

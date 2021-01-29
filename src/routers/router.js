@@ -27,7 +27,9 @@ const routes = [
     { path: '*', redirect: '/404' },
 ]
 
-export default new VueRouter({
-    mode: 'history',
-    routes: routes,
-})
+export function createRouter(){
+    return new VueRouter({
+        mode: 'history',
+        routes: routes,
+    })
+}

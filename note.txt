@@ -1,1 +1,0 @@
-yarn add @vue/cli-plugin-babel @vue/cli-plugin-eslint eslint-plugin-vue  vue-server-renderer babel-eslint
