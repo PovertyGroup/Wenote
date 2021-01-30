@@ -6,7 +6,10 @@ export default context => {
 
     // store.state.serverUrl = '127.0.0.1'
 
-    router.push(context.url)
+    if(router.currentRoute.path !== context.url){
+      console.log(`We are ${router.currentRoute.path}, and heading to ${context.url}.`)
+      router.push(context.url)
+    }
 
     router.onReady(() => {
       const matchedComponents = router.getMatchedComponents()

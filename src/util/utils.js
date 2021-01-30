@@ -3,12 +3,16 @@ let store = {
         window.localStorage.setItem('jwt', value)
     },
     get jwt() {
+        if(window.isEmulated)
+            return window.jwt
         return window.localStorage.getItem('jwt')
     },
     set info(value) {
         window.localStorage.setItem('id', value)
     },
     get info() {
+        if(window.isEmulated)
+            return window.userId
         return window.localStorage.getItem('id')
     }
 }
@@ -31,7 +35,7 @@ let composeUrl = function(serverUrl, path) {
         return serverUrl + '/' + path
 }
 
-export default {
+module.exports = {
     store,
     composeUrl,
     getAuthorizedHeader

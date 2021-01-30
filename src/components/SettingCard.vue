@@ -4,7 +4,7 @@ div.setting
       img.avatar(:src="user.avatar", style="width: 250px; height: 250px" @click="handleAvatarSelect()")
       form(ref="avatar-form" @submit="uploadAvatar()").hidden-form
         input(type="text" name="ref" value="user")
-        input(type="text" name="refId" :value="this.id")
+        input(type="text" name="refId" :value="id")
         input(type="text" name="field" value="avatar")
         input(type="file" name="files" ref="file-selector")
     el-card(show="hover" style = "width : 350px" :model="form").info-card
@@ -43,6 +43,7 @@ export default {
         this.user.bio = res.data.bio
         this.user.name = res.data.username
         this.user.gender = res.data.gender
+        this.id = res.data.id;
         if (res.data.avatar)
           this.user.avatar = utils.composeUrl(this.$store.state.serverUrl, res.data.avatar.url);
         else

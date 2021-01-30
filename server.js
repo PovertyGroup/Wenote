@@ -14,13 +14,52 @@ const renderer = createRenderer(bundle, {
     clientManifest
 })
 
+const axios = require("axios")
+const utils = require("./src/util/utils")
+const config = require("./src/config")
+
+const { JSDOM } = require("jsdom");
+const dom = new JSDOM('', {
+  url: config.siteUrl
+});
+global.window = dom.window
+global.document = window.document
+global.navigator = window.navigator
+window.isEmulated = true
+
 const express = require("express")
 const server = express()
 
 server.use(express.static('./dist'))
 
+
+server.get('/404', (req, res) => {
+  res.status(500).end('404');
+})
+
 server.get('*', (req, res) => {
-    const context = { url: req.url, title: '12312' }
+    window.jwt = undefined
+    let auth = req.headers.authorization
+    if(auth && auth != ''){
+      let jwt = auth.split(' ');
+      if(jwt.length == 2)
+        window.jwt = jwt[1]
+    }
+
+    if(window.jwt){
+      axios
+      .get(utils.composeUrl(config.serverUrl, "/users/me"), {
+        headers: utils.getAuthorizedHeader(),
+      })
+      .then((res) => {
+        window.userId = res.data.id
+      })
+      .catch(() => {
+
+      });
+    }
+
+    const context = { url: req.url, title: '' }
     renderer.renderToString(context, (err, html) => {
       if (err) {
         console.log(err)

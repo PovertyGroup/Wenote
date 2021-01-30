@@ -60,7 +60,7 @@ export default {
         this.followed = true;
       })
       .catch((error) => {
-        if (error.response.status == 403) 
+        if (error.response.status == 403)
           this.$message.error("你还没有登陆！");
         else
           this.$message.error("发生了一点错误...请重试!");
