@@ -39,16 +39,17 @@
                     i.far.fa-calendar-alt
                     p.note-pudate-time {{ this.updateTime }}
         div.editor-wrap(v-if="!this.noSuchNote")
+          no-ssr
             mavon-editor(v-model="noteMd" language="zh-CN" :toolbars="toolbars" @save="saveNote")
                 template(slot="left-toolbar-after")
-                    el-button(type="button"  class="op-icon fa fa-trash "
-                            aria-hidden="true" :title="`真的要删除吗`" @click="delnote()"
+                    el-button.op-icon.fa.fa-trash(type="button" aria-hidden="true"
+                            :title="`真的要删除吗`" @click="delnote()"
                             style="width: 70px;height: 30px; background:#ff607359; margin: 0 0 0 10px;") 删除
-                    el-button(type="button"  class="op-icon fa fa-mavon-floppy-o"
-                            aria-hidden="true" :title="`点击保存`" @click="() => saveNote(this.noteMd)"
+                    el-button.op-icon.fa.fa-mavon-floppy-o(type="button" aria-hidden="true"
+                            :title="`点击保存`" @click="() => saveNote(this.noteMd)"
                             style="width: 100px;height: 30px; background:#8fbbfd3a; margin: 0 0 0 10px;") 保存更改
-                    el-button(type="button"  class="op-icon fa fa-eye"
-                            aria-hidden="true" :title="`查看前记得保存哦`" @click="viewnote()"
+                    el-button.op-icon.fa.fa-eye(type="button" aria-hidden="true"
+                            :title="`查看前记得保存哦`" @click="viewnote()"
                             style="width: 70px;height: 30px; background: #8fbbfd3a; margin: 0 0 0 10px;") 查看
         NoSuchNoteCard(v-if="this.noSuchNote").not-such-note-card
     template(v-slot:footer)
@@ -130,7 +131,7 @@ export default {
       return format(this.noteAuthor.updatedAt, 'zh_CN')
     }
   },
-  created () {
+  mounted () {
     axios.get(utils.composeUrl(this.$store.state.serverUrl, '/notes/' + this.$route.params.id), {
       headers: utils.getAuthorizedHeader()
     })
@@ -148,7 +149,7 @@ export default {
         this.noSuchNote = true
       })
   },
-  mounted () {
+  created () {
     if (!utils.store.jwt || !utils.store.jwt) {
       this.$router.push('/viewnote/' + this.$route.params.id)
     }
