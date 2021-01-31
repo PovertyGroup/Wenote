@@ -6,7 +6,8 @@
       el-input.input(v-model="form.username" placeholder="用户名或邮箱" @input="notifyCreditChanged()")
     el-form-item.label(label="密码", prop="password")
       el-input.input(v-model="form.password" placeholder="密码" @keyup.enter.native="keydown()" type="submit" :show-password="true" @input="notifyCreditChanged()")
-    el-button.login-button(type="primary" :underline="false" @click="notifySubmit()" @keyup.enter.native="keydown()") 登陆
+    div.login-button-warp
+      el-button.login-button(type="primary" :underline="false" @click="notifySubmit()" @keyup.enter.native="keydown()") 登陆
   el-link.register-link(type="primary" :underline="false", href="/register") 没有账号？注册一个
 </template>
 
@@ -68,9 +69,9 @@ export default {
   max-width: 400px;
 }
 .login-button {
-  width: 60%;
   width: 200px;
-  margin: 10px 15px auto 25px;
+  display: block;
+  margin: 0 auto;
   text-align: center;
 }
 .input {
