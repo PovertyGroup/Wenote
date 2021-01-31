@@ -54,7 +54,7 @@ export default {
         this.user.bio = res.data.bio
         this.user.name = res.data.username
         this.user.gender = res.data.gender
-        if (res.data.avatar) { this.user.avatar = utils.composeUrl(this.$store.state.serverUrl, res.data.avatar.url) } else { this.user.avatar = 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png' }
+        if (res.data.avatar) { this.user.avatar = utils.composeUrl(this.$store.state.serverUrl, res.data.avatar.url) } else { this.user.avatar = this.$store.state.defaultAvatar }
       })
       .catch(() => {
         // TODO
