@@ -47,9 +47,13 @@ export default {
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
+    icon: {
+      source: '@/static/icon.png'
+    },
     meta: {
-      name: 'Wenote',
-      description: 'Wenote 是一个在线笔记平台。'
+      name: 'Wenote - 在线笔记',
+      short_name: 'Wenote',
+      description: '在线笔记平台。'
     },
     manifest: {
       name: 'Wenote',
@@ -62,11 +66,17 @@ export default {
     transpile: [/^element-ui/]
   },
 
-  extendRoutes (routes, resolve) {
-    routes.push({
-      name: 'about',
-      path: '/about',
-      redirect: '/viewnote/5fb922d85703375b1ccf28dc'
-    })
+  server: {
+    host: '0' // default: localhost
+  },
+
+  router: {
+    extendRoutes (routes, resolve) {
+      routes.push({
+        name: 'about',
+        path: '/about',
+        redirect: '/viewnote/5fb922d85703375b1ccf28dc'
+      })
+    }
   }
 }
