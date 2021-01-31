@@ -54,13 +54,23 @@ export default {
       source: '@/static/icon.png'
     },
     meta: {
-      name: 'Wenote - 在线笔记',
-      short_name: 'Wenote',
+      name: 'Wenote',
       description: '在线笔记平台。'
     },
     manifest: {
       name: 'Wenote',
-      lang: 'zh'
+      short_name: 'Wenote',
+      lang: 'zh',
+      background_color: '#ffffff',
+      theme_color: 'blue',
+      start_url: '/home',
+      display: 'standalone'
+    },
+    workbox: {
+      enabled: true,
+      autoRegister: true,
+      offlineAssets: ['@/assets/font/Dream.ttf'],
+      offline: true
     }
   },
 
