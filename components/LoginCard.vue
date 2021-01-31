@@ -60,7 +60,7 @@ export default {
 .login-card {
   border-radius: 15px;
   background-clip: border-box;
-  margin: 50px 0;
+  /* margin: 50px 0; */
   padding: 30px 35px;
   background: rgb(246, 246, 246);
   border: 1px solid #5c9cfd41;
