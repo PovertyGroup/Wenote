@@ -71,7 +71,7 @@
         p(style="margin: 10px 0") 试一试
         div(style="margin: 20px 0")
           no-ssr
-            mavon-editor(v-model="markdown" language="zh-CN" style="height: 400px")
+            mavon-editor(:autofocus = "false" v-model="markdown" language="zh-CN" style="height: 400px")
     .simple.clearfix
       .wrap
         .simple-content
