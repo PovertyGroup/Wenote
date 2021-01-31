@@ -16,12 +16,15 @@ export default {
   css: [
     '@/assets/css/font.css',
     '@/assets/css/style.css',
-    'element-ui/lib/theme-chalk/index.css'
+    'element-ui/lib/theme-chalk/index.css',
+    'mavon-editor/dist/css/index.css',
+    '@fortawesome/fontawesome-free/css/all.min.css'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    '@/plugins/element-ui'
+    '@/plugins/element-ui',
+    '@/plugins/mavon-editor'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
