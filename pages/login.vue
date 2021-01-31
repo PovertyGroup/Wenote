@@ -64,6 +64,7 @@ export default {
             message: '登陆成功',
             type: 'success'
           })
+          utils.initStore(this.$store)
           utils.store.jwt = response.data.jwt
           utils.store.info = response.data.user.id
           this.$router.push('/home')

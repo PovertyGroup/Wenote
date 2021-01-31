@@ -2,7 +2,9 @@ let vuexStore = {}
 
 const store = {
   set jwt (value) {
-    vuexStore.commit('alterUserId', { value })
+    if (vuexStore.commit) {
+      vuexStore.commit('alterUserId', { value })
+    }
     window.localStorage.setItem('jwt', value)
   },
   get jwt () {
@@ -12,7 +14,9 @@ const store = {
     return vuexStore.state.jwt
   },
   set info (value) {
-    vuexStore.commit('alterUserId', { value })
+    if (vuexStore.commit) {
+      vuexStore.commit('alterUserId', { value })
+    }
     window.localStorage.setItem('id', value)
   },
   get info () {
