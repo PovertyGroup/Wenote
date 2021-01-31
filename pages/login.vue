@@ -66,12 +66,6 @@ export default {
           })
           utils.store.jwt = response.data.jwt
           utils.store.info = response.data.user.id
-          axios
-            .get(utils.composeUrl(this.$store.state.serverUrl, '/notes/mine'), {
-              headers: utils.getAuthorizedHeader()
-            })
-            .then(() => {
-            })
           this.$router.push('/home')
         })
         .catch((error) => {
