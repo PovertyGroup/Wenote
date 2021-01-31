@@ -93,7 +93,11 @@ export default {
         this.noteAuthor = res.data.author
         this.noteId = res.data.id
         // this.noteAvatar = Vue.$baseUrl.substring(0,Vue.$baseUrl.length-1)+res.data.author.avatar.url;
-        this.noteAvatar = utils.composeUrl(this.$store.state.serverUrl, res.data.author.avatar.url)
+        if (res.data.author.avatar && res.data.author.avatar.url) {
+          this.noteAvatar = utils.composeUrl(this.$store.state.serverUrl, res.data.author.avatar.url)
+        } else {
+          this.noteAvatar = this.$store.state.defaultAvatar
+        }
         this.noteLikers = res.data.likers
         this.noteStarers = res.data.starers
         this.likeNum = res.data.likers.length
