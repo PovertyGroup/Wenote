@@ -127,8 +127,14 @@ export default {
     }
   },
   computed: {
+    noteUpdatedLocalTime () {
+      if (!this.noteAuthor.updatedAt) {
+        return undefined
+      }
+      return Date.parse(this.noteAuthor.updatedAt)
+    },
     updateTime () {
-      return format(this.noteAuthor.updatedAt, 'zh_CN')
+      return format(this.noteUpdatedLocalTime, 'zh_CN')
     }
   },
   mounted () {
@@ -249,8 +255,7 @@ export default {
 
     showInput () {
       this.inputVisible = true
-      this.$nextTick((_) => {
-        console.log(_)
+      this.$nextTick(() => {
         this.$refs.saveTagInput.$refs.input.focus()
       })
     },

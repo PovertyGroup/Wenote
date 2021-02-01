@@ -28,14 +28,8 @@
         MarkdownCard.note(:mdSource="this.noteMd")
       NoSuchNoteCard(v-if="this.noSuchNote").not-such-note-card
     .buttons
-      el-button(v-if="!this.likeNote && !this.noSuchNote" type="primary"
-                plain round icon="el-icon-circle-check" @click="like()").like 点赞
-      el-button(v-if="this.likeNote" type="primary" round
-                icon="el-icon-circle-check" @click="unlike()").like 已点赞
-      el-button(v-if="!this.starNote && !this.noSuchNote" type="success"
-                plain round  icon="el-icon-star-off" @click="star()").star 收藏
-      el-button(v-if="this.starNote" type="success"
-                round icon="el-icon-star-off" @click="unstar()").star 已收藏
+      el-button(v-if="showLikeButton" type="primary" :plain="likeNote" round icon="far fa-thumbs-up like-icon" @click="alterLike").like {{ this.likeNote ? ' 已': ' ' }}点赞
+      el-button(v-if="showStarButton" type="success" :plain="starNote" round icon="far fa-star star-icon" @click="alterStar").star {{ this.likeNote ? ' 已': ' ' }}收藏
     template(v-slot:footer)
       Footer
 </template>
@@ -83,6 +77,12 @@ export default {
   computed: {
     updateTime () {
       return format(this.noteAuthor.updatedAt, 'zh_CN')
+    },
+    showLikeButton () {
+      return !this.likeNote && !this.noSuchNote
+    },
+    showStarButton () {
+      return !this.starNote && !this.noSuchNote
     }
   },
   created () {
@@ -158,55 +158,56 @@ export default {
           }
         })
     },
-    like () {
-      axios.post(utils.composeUrl(this.$store.state.serverUrl, '/notes/like/' + this.noteId), {}, {
-        headers: utils.getAuthorizedHeader()
-      })
-        .then(() => {
-          this.$message.success('点赞成功~')
-          this.likeNote = true
-          this.likeNum++
+    alterLike () {
+      if (!this.likeNote) {
+        axios.post(utils.composeUrl(this.$store.state.serverUrl, '/notes/like/' + this.noteId), {}, {
+          headers: utils.getAuthorizedHeader()
         })
-        .catch((error) => {
-          if (error.response.data.statusCode === 403) {
-            this.$message.error('您还没有登陆...')
-          }
-        })
-    },
-    unlike () {
-      axios.post(utils.composeUrl(this.$store.state.serverUrl, '/notes/unlike/' + this.noteId), {}, {
-        headers: utils.getAuthorizedHeader()
-      })
-        .then(() => {
+          .then(() => {
+            this.$message.success('点赞成功~')
+            this.likeNote = true
+            this.likeNum++
+          })
+          .catch((error) => {
+            if (error.response.data.statusCode === 403) {
+              this.$message.error('您还没有登陆...')
+            }
+          })
+      } else {
+        axios.post(utils.composeUrl(this.$store.state.serverUrl, '/notes/unlike/' + this.noteId), {}, {
+          headers: utils.getAuthorizedHeader()
+        }).then(() => {
           this.$message.warning('取消对这篇文章点赞了呢')
           this.likeNote = false
           this.likeNum = this.likeNum > 0 ? this.likeNum - 1 : 0
         })
+      }
     },
-    star () {
-      axios.post(utils.composeUrl(this.$store.state.serverUrl, '/notes/star/' + this.noteId), {}, {
-        headers: utils.getAuthorizedHeader()
-      })
-        .then(() => {
-          this.$message.success('收藏成功~')
-          this.starNote = true
-          this.starNum++
+    alterStar () {
+      if (!this.likeNote) {
+        axios.post(utils.composeUrl(this.$store.state.serverUrl, '/notes/star/' + this.noteId), {}, {
+          headers: utils.getAuthorizedHeader()
         })
-        .catch((error) => {
-          if (error.response.data.statusCode === 403) {
-            this.$message.error('您还没有登陆...')
-          }
+          .then(() => {
+            this.$message.success('收藏成功~')
+            this.starNote = true
+            this.starNum++
+          })
+          .catch((error) => {
+            if (error.response.data.statusCode === 403) {
+              this.$message.error('您还没有登陆...')
+            }
+          })
+      } else {
+        axios.post(utils.composeUrl(this.$store.state.serverUrl, '/notes/unstar/' + this.noteId), {}, {
+          headers: utils.getAuthorizedHeader()
         })
-    },
-    unstar () {
-      axios.post(utils.composeUrl(this.$store.state.serverUrl, '/notes/unstar/' + this.noteId), {}, {
-        headers: utils.getAuthorizedHeader()
-      })
-        .then(() => {
-          this.$message.warning('取消收藏了')
-          this.starNote = false
-          this.starNum = this.starNum > 0 ? this.starNum - 1 : 0
-        })
+          .then(() => {
+            this.$message.warning('取消收藏了')
+            this.starNote = false
+            this.starNum = this.starNum > 0 ? this.starNum - 1 : 0
+          })
+      }
     },
     editnote () {
       this.$router.push(utils.composeUrl('/note/', this.noteId))
@@ -351,10 +352,14 @@ export default {
   margin: auto 0 auto 20px;
 }
 
-.buttons{
-  position:fixed;
-  bottom:4%;
-  left:80%;
+.buttons {
+  position: fixed;
+  bottom: 4%;
+  left: 80%;
+}
+
+.buttons * {
+  margin: 0 20px;
 }
 
 .like{
