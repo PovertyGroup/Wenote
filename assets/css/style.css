@@ -6,12 +6,12 @@ html {
 body {
   background: rgb(246, 246, 246);
   min-height: 100%;
-}
-
-* {
-  font-family: NewFont, Avenir, Helvetica, Arial, sans-serif;
   padding: 0;
   margin: 0;
+}
+
+body {
+  font-family: NewFont, Avenir, Helvetica, Arial, sans-serif;
 }
 
 #app {

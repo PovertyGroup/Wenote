@@ -85,7 +85,5 @@ export default {
 <style scoped>
 .login-card {
   margin :auto;
-  display: flex;
-  flex-direction: column;
 }
 </style>
