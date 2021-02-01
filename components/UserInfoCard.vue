@@ -11,8 +11,11 @@ div.user-info-card
             el-dropdown-item(icon="el-icon-user" command="info") 个人信息
             el-dropdown-item(icon="el-icon-close" command="logout") 退出登录
   .notLogin(v-else)
-    el-link.doc(:underline="false", href="/about") 关于
-    el-link.regist(:underline="false", href="/login") 登录
+    ul.action
+      li.action-item
+        el-link.doc(:underline="false", href="/about") 关于
+      li.action-item
+        el-link.regist(:underline="false", href="/login") 登录
 </template>
 
 <script scoped>
@@ -121,4 +124,12 @@ export default {
   vertical-align:middle;
   display: inline-block;
 }
+
+.action-item {
+  float: left;
+  list-style: none;
+  position: relative;
+  margin: 0;
+}
+
 </style>

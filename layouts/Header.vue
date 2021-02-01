@@ -1,14 +1,16 @@
 <template lang="pug">
 .header
-  el-col(:span="8" type="flex" justify="start").left
-    el-link.sitename(:underline="false" href="/home") Wenote 📝
-    el-link(:underline="false" href="/about") 关于
-  el-col(:span="8" type="flex" justify="end").center
-    el-autocomplete.search-input(placeholder="请输入内容" v-model="searchText" suffix-icon="el-icon-search"
-                                 :fetch-suggestions="querySearch" @select="handleSelect")
-  el-col(:span="8" type="flex" justify="end").right
-
-    UserInfoCard
+  ul.nav
+    li.nav-item
+      el-link.sitename(:underline="false" href="/home") Wenote 📝
+    li.nav-item
+      el-link(:underline="false" href="/about") 关于
+  ul.action
+    li.action-item
+      el-autocomplete.search-input(placeholder="搜索笔记" v-model="searchText" suffix-icon="el-icon-search" :class="searchBoxFocused ? 'focused' : ''"
+        :fetch-suggestions="querySearch" @select="handleSelect" size="mini" @focus="searchBoxFocused = true" @blur="searchBoxFocused = false")
+    li.action-item
+      UserInfoCard
 </template>
 
 <script>
@@ -25,7 +27,8 @@ export default {
     return {
       notes: [],
       searchText: '',
-      timeout: null
+      timeout: null,
+      searchBoxFocused: false
     }
   },
   methods: {
@@ -78,50 +81,52 @@ export default {
 
 <style scoped>
 .header {
-  height: 50px;
+  line-height: 60px;
+  height: 60px;
   background: #ffffff;
-  box-shadow: 0 3px 2px #6ba9f0c0;
-  display: flex;
+  box-shadow: 0 2px 2px 0 rgb(0 0 0 / 20%);
 }
 
-.header * {
-  margin: auto;
+.nav {
+  float: left;
+  padding: 0;
+  height: 100%;
+  margin: 0;
 }
 
-.left {
-  width: auto;
-  margin-left: 2%;
+.nav .nav-item {
+  float: left;
+  list-style: none;
+  position: relative;
+  margin: 0 20px 0 0;
+  height: 100%;
 }
 
-.left * {
-  margin: auto 10px;
-  font-size: 15px;
+.action{
+  float: right;
+  padding: 0;
+  height: 100%;
+  margin: 0;
 }
 
-.left :first-child {
-  margin-left: 0;
+.action-item{
+  float: left;
+  list-style: none;
+  position: relative;
+  margin: 0;
 }
 
 .sitename {
   font-size: 30px;
   margin-left: 30px;
 }
-.right {
-  width: auto;
-  margin-right: 1%;
-  margin-left: auto;
+
+.search-input {
+  width: 100px;
+  transition: 0.5s;
 }
 
-.right :last-child{
-  margin-right: 0;
-}
-
-.center{
-  width: auto;
-  margin: auto;
-}
-
-.search-input{
-  width: 300px;
+.search-input.focused {
+  width: 200px;
 }
 </style>
