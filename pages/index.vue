@@ -176,6 +176,12 @@ img {
   overflow: hidden;
   display: block;
 }
+.tech-stack.clearfix{
+  height: 500px;
+}
+.simple.clearfix {
+  height: 500px;
+}
 
 body {
   height: 100%;
@@ -374,11 +380,12 @@ header .buttons-wrapper .button-stripe {
 
 .promo-wrapper {
   margin: 0 -15px;
+  display: flex;
 }
 
 .promo-column {
   padding: 0 15px 60px;
-  float: left;
+  /* float: left; */
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
