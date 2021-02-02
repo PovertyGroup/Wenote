@@ -78,7 +78,7 @@ export default {
 }
 </script>
 
-<style>
+<style  scoped>
 .side{
   width: 100%;
   display: flex;

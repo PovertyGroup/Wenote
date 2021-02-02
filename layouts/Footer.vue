@@ -9,10 +9,12 @@
 /* can not set the height */
 .footer {
   padding: 10px;
-  height: 30px;
 }
 .center{
   text-align: center;
   font-size: 15px;
+}
+p{
+  margin: 0;
 }
 </style>

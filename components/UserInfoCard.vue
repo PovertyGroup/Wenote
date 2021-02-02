@@ -102,7 +102,7 @@ export default {
 
 .avatar{
   margin: 5px;
-  padding: 2px;
+  padding: 2px 2px 5px 2px;
   border-radius: 50%;
   width: 36px;
   height: 36px;
@@ -119,7 +119,8 @@ export default {
 }
 
 .name{
-  margin: 5px;
+  margin: 0 5px 0 10px;
+  padding-bottom: 5px;
   font-size: 20px;
   vertical-align:middle;
   display: inline-block;

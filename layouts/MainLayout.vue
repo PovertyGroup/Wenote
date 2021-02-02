@@ -19,6 +19,7 @@ header {
     display: flex;
 }
 .el-footer{
+    height: 100%;
     min-height: 30px;
     bottom: 0;
 }
