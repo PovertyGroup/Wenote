@@ -3,7 +3,7 @@
     template(v-slot:header)
       Header
     .note-wrap
-      .note-wrap(v-if="!this.noSuchNote")
+      .note-title-wrap(v-if="!this.noSuchNote")
           h1.note-title {{ this.noteTitle }}
       .md-card(v-if="!this.noSuchNote")
         .noteinfo
@@ -230,10 +230,8 @@ export default {
 }
 
 .note-title-wrap{
+    width: 100%;
     line-height: 1;
-    flex-direction: column;
-    padding-bottom: 30px;
-    padding-left: 10px;
 }
 
 .note-title-wrap * {
@@ -242,10 +240,8 @@ export default {
 
 .note-title{
     font-size: 45px;
-    margin: auto 20% auto 20%;
+    margin: auto;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    vertical-align:middle;
-    display: inline-block;
 }
 
 .note-info-wrap{
