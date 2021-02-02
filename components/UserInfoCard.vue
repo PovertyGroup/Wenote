@@ -1,6 +1,6 @@
 <template lang="pug">
 div.user-info-card
-  .isLogin(v-if="isLogedIn")
+  .logged-in(v-if="isLogedIn")
     div.userinfo
       p.name {{user.name}}
       el-dropdown(trigger="click" @command="handleCommand")
@@ -10,12 +10,12 @@ div.user-info-card
             el-dropdown-item(icon="el-icon-plus" command="creat-note") 新建笔记
             el-dropdown-item(icon="el-icon-user" command="info") 个人信息
             el-dropdown-item(icon="el-icon-close" command="logout") 退出登录
-  .notLogin(v-else)
+  .not-logged-in(v-else)
     ul.action
-      li.action-item
-        el-link.doc(:underline="false", href="/about") 关于
-      li.action-item
-        el-link.regist(:underline="false", href="/login") 登录
+      li.action-item.login
+        el-link(:underline="false", href="/login") 登录
+      li.action-item.register
+        el-link(:underline="false", href="/register") 注册
 </template>
 
 <script scoped>
@@ -64,7 +64,8 @@ export default {
           })
           .catch((err) => {
             this.$message.error(err.data.message)
-            console.log(err.data)
+            // console.log(err.data)
+            throw err
           })
       }
     },
@@ -78,26 +79,13 @@ export default {
 </script>
 
 <style scoped>
-.user-info-card{
-  width: fit-content;
-}
-.regist {
-  margin-right: 20px;
-  font-size: 17px;
-}
-.doc {
-  margin-right: 20px;
-  font-size: 17px;
-}
-
-.isLogin{
-  width: fit-content;
-  margin-right: 0;
-}
 
 .userinfo{
-  height: 50px;
-  width: fit-content;
+  height: 60px;
+}
+
+.action {
+  padding: 0;
 }
 
 .avatar{
@@ -130,6 +118,17 @@ export default {
   list-style: none;
   position: relative;
   margin: 0;
+  margin-right: 20px;
+  font-size: 17px;
+}
+
+@media screen and (max-width: 610px) {
+  .register{
+    display: none;
+  }
+  .action-item{
+    margin-right: 10px;
+  }
 }
 
 </style>

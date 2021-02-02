@@ -2,7 +2,7 @@
 .header
   ul.nav
     li.nav-item
-      el-link.sitename(:underline="false" href="/home") Wenote 📝
+      el-link.sitename(:underline="false" href="/home") Wenote
     li.nav-item
       el-link(:underline="false" href="/about") 关于
   ul.action
@@ -116,6 +116,10 @@ export default {
   margin: 0;
 }
 
+.action-item:first-child{
+  margin-right: 30px;
+}
+
 .sitename {
   font-size: 30px;
   margin-left: 30px;
@@ -129,4 +133,18 @@ export default {
 .search-input.focused {
   width: 200px;
 }
+
+@media screen and (max-width: 520px) {
+  .sitename {
+    font-size: 20px;
+    margin-left: 30px;
+  }
+  .action-item:first-child{
+    margin-right: 10px;
+  }
+  .search-input.focused {
+    width: 150px;
+  }
+}
+
 </style>

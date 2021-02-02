@@ -81,4 +81,11 @@ export default {
   line-height: 50px;
   text-align: center;
 }
+
+@media screen and (max-width: 610px) {
+  .login-card {
+    padding: 20px 0;
+    width: 350px;
+  }
+}
 </style>

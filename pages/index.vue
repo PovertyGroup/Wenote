@@ -28,33 +28,33 @@
             img(src='../assets/manage.svg' height='36' width='336' alt='')
             h5 风格简约
             p 简约的网站设计，让用户专注笔记书写
-    .discover.clearfix
+    .tech-stack.clearfix
       .wrap
-        .discover-content.clearfix
+        .tech-stack-content.clearfix
           .opensource-title
             p 所用技术栈
           p Wenote 基于开源框架 —— NuxtJS 和 Strapi 构建开发而成，使用了 SSR（服务端渲染）技术，在保证安全性的同时也提高了访问速度。源码使用 GitHub 托管，方便协作。
-          .discover-button.clearfix
-            a.button.button-download(href='https://github.com/nuxt/nuxt.js' target='_blank')
+          .tech-stack-button.clearfix
+            a.button.button-github(href='https://github.com/nuxt/nuxt.js' target='_blank')
               img.button-icon(src='../assets/github.svg')
-              span.button-download-title 链接：
+              span.button-github-title 链接：
               span.common-button NuxtJS
-            a.button.button-download.android(href='https://github.com/strapi/strapi' target='_blank')
+            a.button.button-github.android(href='https://github.com/strapi/strapi' target='_blank')
               img.button-icon(src='../assets/github.svg')
-              span.button-download-title 链接：
+              span.button-github-title 链接：
               span.common-button Strapi
-        .discover-img
-          .discover-img-inside
-            img(src='../assets/show.png' width='550px' alt='')
-    .video.clearfix
+        .tech-stack-img
+          .tech-stack-img-inside
+            img(src='../assets/show.png' alt='').tech-stack-all-img
+    .deploy.clearfix
       .wrap
-        .video-title 便于部署
-        .video-subtitle 前后端均基于 Node.js 构建，只需要一个环境就可以部署整个项目
-        .video-block(style='text-align: center')
-          img(src='../assets/icon9.svg' width='550px' alt='')
-        .video-share-wrapper.clearfix
-          ul.social-list.clearfix
-            li.video-share-title 无论你是：
+        .deploy-title 便于部署
+        .deploy-subtitle 前后端均基于 Node.js 构建，只需要一个环境就可以部署整个项目
+        .deploy-block(style='text-align: center')
+          img(src='../assets/icon9.svg' alt='').common-img
+        .deploy-platform-wrapper.clearfix
+          ul.deploy-list.clearfix
+            li.deploy-platform-title 无论你是：
             li
               div
                 strong Windows
@@ -68,48 +68,49 @@
       .wrap.tab.box.visible
         h4 Markdown 书写
         p 书写便捷、功能强大的 Markdown 文档编辑器，可快速创建排版优美的笔记。
-        p(style="margin: 10px 0") 试一试
-        div(style="margin: 20px 0")
-          no-ssr
-            mavon-editor(:autofocus = "false" v-model="markdown" language="zh-CN" style="height: 400px")
+        .try-editor-wrap
+          p(style="margin: 10px 0") 试一试
+          div(style="margin: 20px 0")
+            no-ssr
+              mavon-editor(:autofocus = "false" v-model="markdown" language="zh-CN" style="height: 400px")
     .simple.clearfix
       .wrap
         .simple-content
           h3 Wenote 可以用来做什么？
           ul
             li.clearfix
-              img(src='../assets/icon1.svg' height='32' width='32' alt='')
+              img(src='../assets/icon1.svg' height='32' width='32')
               span 个人知识管理
             li.clearfix
-              img(src='../assets/icon3.svg' height='32' width='32' alt='')
+              img(src='../assets/icon3.svg' height='32' width='32')
               span 说明手册
             li.clearfix
-              img(src='../assets/icon4.svg' height='32' width='32' alt='')
+              img(src='../assets/icon4.svg' height='32' width='32')
               span 教程书籍
             li.clearfix
               span ……
         .simple-img
-          img(src='../assets/example.png' height='508' width='587' alt='')
+          img(src='../assets/example.png')
     .newsletter.clearfix
       .wrap
-        .newsletter-title 遇到问题？
-        .video-share-wrapper.clearfix
-          ul.social-list.clearfix
+        .deploy-title 遇到问题
+        .deploy-platform-wrapper.clearfix
+          ul.deploy-list.clearfix
             li
               a.blue-button(href='/about' target='_blank') 查看文档
-    .video.clearfix
+    .deploy.clearfix
       .wrap
-        .video-title 支持项目发展
-        .video-subtitle
+        .deploy-title 支持项目发展
+        .deploy-subtitle
           | 球球评委给个高分叭！
-        .discover-button.clearfix
-          a.button.button-download(href='https://sheey.moe' target='_blank')
+        .tech-stack-button.clearfix
+          a.button.button-github(href='https://sheey.moe' target='_blank')
             img.site-icon(src='../assets/sheey.svg')
-            span.common-button(style='padding-top: 15px; font-size:18px;') Sheey的杂货铺
-          a.button.button-download(href='https://codgi.xin' target='_blank')
+            span.blog-link-button Sheey的杂货铺
+          a.button.button-github(href='https://codgi.xin' target='_blank')
             img.site-icon(src='../assets/codgi.svg')
-            span.common-button(style='padding-top: 15px; font-size:18px;') Codgi的小屋
-  Footer(style="margin-bottom: 30px")
+            span.blog-link-button Codgi的小屋
+  Footer
 </template>
 
 <script>
@@ -153,6 +154,10 @@ img {
   max-width: 100%;
   width: auto;
   height: auto;
+}
+
+.common-img{
+  width: 250px;
 }
 
 .clearfix:after,
@@ -326,7 +331,7 @@ header .buttons-wrapper .button-stripe {
   clear: both;
 }
 .opensource-title {
-  font: bold 48px/48px "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font: bold 36px "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
   text-transform: uppercase;
   margin-bottom: 25px;
 }
@@ -412,9 +417,8 @@ header .buttons-wrapper .button-stripe {
 }
 
 .simple-content h3 {
-  font: 700 48px/48px "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font: 500 36px/46px "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
   text-transform: uppercase;
-  border-bottom: solid 6px #f4f4f4;
   padding-bottom: 43px;
   margin-bottom: 43px;
 }
@@ -479,47 +483,47 @@ header .buttons-wrapper .button-stripe {
   font-weight: 300;
 }
 
-.video-title {
+.deploy-title {
   font: bold 48px/48px "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
   text-align: center;
   text-transform: uppercase;
   margin-bottom: 25px;
 }
 
-.video-subtitle {
+.deploy-subtitle {
   font-size: 19px;
   line-height: 25px;
   color: #919191;
   text-align: center;
 }
 
-.video {
+.deploy {
   padding: 108px 0 116px;
 }
 
-.video-block {
+.deploy-block {
   padding-top: 34px;
   margin: 0 auto 32px;
   max-width: 760px;
 }
 
-.video-share-wrapper {
+.deploy-platform-wrapper {
   clear: both;
   text-align: center;
 }
 
-.social-list {
+.deploy-list {
   display: inline-block;
 }
 
-.social-list li {
+.deploy-list li {
   font-size: 19px;
   line-height: 38px;
   float: left;
   margin: 0 9px;
 }
 
-.social-list li * {
+.deploy-list li * {
   font-size: 15px;
   line-height: 38px;
   display: block;
@@ -533,12 +537,12 @@ header .buttons-wrapper .button-stripe {
   text-align: center;
 }
 
-.discover {
+.tech-stack {
   padding: 31px 0 25px;
   background: #fafafa;
 }
 
-.discover-content {
+.tech-stack-content {
   float: right;
   width: 50%;
   padding: 77px 97px 50px 15px;
@@ -547,7 +551,7 @@ header .buttons-wrapper .button-stripe {
   box-sizing: border-box;
 }
 
-.discover-button {
+.tech-stack-button {
   padding-top: 68px;
   margin: 0 -10px;
   clear: both;
@@ -569,7 +573,7 @@ header .buttons-wrapper .button-stripe {
   height: 30px;
 }
 
-.button-download {
+.button-github {
   height: 62px;
   float: left;
   font: 500 11px/13px "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -582,7 +586,7 @@ header .buttons-wrapper .button-stripe {
   box-sizing: border-box;
 }
 
-.button-download-title {
+.button-github-title {
   padding: 11px 0 1px;
   display: block;
   font-size: 11px;
@@ -597,16 +601,201 @@ header .buttons-wrapper .button-stripe {
   text-align: left;
 }
 
-.discover-img {
+.tech-stack-img {
   float: left;
   width: 50%;
 }
 
-.discover-img img {
+.tech-stack-img img {
   display: block;
 }
 
-.discover-img-inside {
+.tech-stack-img-inside {
   margin-top: 70px;
 }
+
+.blog-link-button {
+  padding-top: 15px;
+  font-size:18px;
+}
+
+ul {
+  padding: 0;
+}
+
+.footer{
+    min-height: 30px;
+    bottom: 0;
+    background: #3e3e3e;
+    color: #ffffff;
+    height: fit-content !important;
+}
+
+@media screen and (max-width: 1100px) {
+  header h1[data-v-2a183b29] {
+    font-size: 48px;
+  }
+  a.button{
+    line-height: 48px;
+  }
+  .button[data-v-2a183b29] {
+    height: 48px;
+    font-size: 22px;
+  }
+  .try-editor-wrap{
+    display: none;
+  }
+  .comments .box{
+    padding: 0 130px 25px;
+  }
+  .deploy-title {
+    font-size: 36px;
+    margin-bottom: 15px;
+  }
+  .deploy-subtitle{
+    font-size: 15px;
+    line-height: 20px;
+  }
+  .tech-stack-all-img{
+    width: 100%
+  }
+  .common-img{
+    width: 150px;
+    height: 100%;
+  }
+  .deploy-list li{
+    font-size: 15px;
+    margin: 0 5px;
+  }
+  .deploy-list li *{
+    font-size: 15px;
+    line-height: 30px;
+    width: 100px;
+    height: 30px;
+  }
+  .simple-img{
+    display: none;
+  }
+
+  .simple-content {
+    float: unset;
+    width: 100%;
+  }
+
+  .simple-content ul {
+    text-align: center;
+    width: fit-content;
+    margin: auto;
+  }
+
+  .simple-content ul li span {
+    font-size: 19px;
+  }
+
+  .simple-content h3 {
+    text-align: center;
+    text-transform: uppercase;
+    padding-bottom: 43px;
+    margin-bottom: 43px;
+  }
+
+  .tech-stack-img{
+    display: none;
+  }
+  .tech-stack-content {
+    padding: 50px;
+    text-align: center;
+    float: unset;
+    width: unset;
+  }
+  .button-github-title{
+    padding: 6px 0 1px;
+  }
+  .button-icon{
+    padding: 6px 15px;
+  }
+
+  .common-button{
+    font-size: 13px;
+  }
+  .blog-link-button {
+    padding-top: 13px;
+    font-size:15px;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .promo-wrapper.clearfix{
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .promo-column{
+    padding: 0 40px;
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .promo-wrapper.clearfix{
+    display: flex;
+    flex-direction: column;
+  }
+  .promo-column{
+    text-align: center;
+    padding: 0 60px;
+    width: 100%;
+  }
+  .promo-column > img{
+    margin: auto;
+  }
+  .header-wrapper p{
+    font-size: 18px;
+  }
+  .try-editor-wrap{
+    display: none;
+  }
+  .button[data-v-2a183b29] {
+    font-size: 15px;
+    padding: 0 15px;
+  }
+  .comments .box{
+    padding: 0 50px 25px;
+  }
+
+  .tech-stack-content {
+    padding: 30px;
+  }
+
+  .common-img{
+    width: 100px;
+  }
+  .deploy-list li{
+    font-size: 13px;
+  }
+  .deploy-list li *{
+    font-size: 13px;
+    line-height: 30px;
+    width: 80px;
+    height: 30px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .header-wrapper p{
+    font-size: 15px;
+  }
+  header h1[data-v-2a183b29] {
+    font-size: 32px;
+    line-height: 60px;
+    font-weight: 500;
+    margin-bottom: 38px;
+  }
+  .try-editor-wrap{
+    display: none;
+  }
+  .comments .box{
+    padding: 0 25px;
+  }
+}
+
 </style>

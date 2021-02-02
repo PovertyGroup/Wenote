@@ -8,7 +8,6 @@
 </template>
 
 <style scoped>
-/* can not set the height */
 .footer {
   padding: 40px 60px;
   font-size: 15px;
@@ -34,5 +33,22 @@ h1 {
 
 .contrib{
   font-family: 'Times New Roman', Times, serif;
+}
+
+@media screen and (max-width: 610px) {
+  .footer {
+    padding: 20px 20px;
+    font-size: 15px;
+  }
+  h1{
+    font-size: 24px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .footer {
+    padding: 20px 10px;
+    font-size: 14px;
+  }
 }
 </style>
