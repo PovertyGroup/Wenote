@@ -31,6 +31,9 @@ header {
 .el-footer{
     min-height: 30px;
     bottom: 0;
+    background: #3e3e3e;
+    color: #ffffff;
+    height: fit-content !important;
 }
 .con{
     min-height: 100vh;

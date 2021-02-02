@@ -56,7 +56,7 @@ export default {
 <style scoped>
 .login-card {
   padding: 30px 35px;
-  width: 400px;
+  width: 350px;
   /* flex: 1; */
 }
 
@@ -72,6 +72,7 @@ export default {
 }
 
 .input {
+  width: 80%;
   max-width: 300px;
   min-width: 200px;
 }

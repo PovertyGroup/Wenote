@@ -4,10 +4,9 @@ MainLayout
     Header
   template(slot="footer")
     Footer
-  div.note-container-wrap
-    div.note-container
-      div(v-for = "note in notes" :key="note")
-        ShowViewNoteCard(:id="note").note-card
+  div.note-container
+    div(v-for = "note in notes" :key="note")
+      ShowViewNoteCard(:id="note")
 
 </template>
 
@@ -49,22 +48,35 @@ export default {
 </script>
 
 <style scoped>
-.note-card{
-  margin:0 40px 30px 0;
-
-}
-
-.note-container-wrap{
-  margin:auto;
-}
-
 .note-container{
-  margin: auto 50px auto 50px;
+  margin: auto;
   max-width: 100%;
   display: flex;
-  flex-wrap:wrap;
-  width: fit-content;
-  justify-content: center;
+  flex: 0.5;
+  flex-direction: column;
 }
 
+@media screen and (max-width: 1400px) {
+  .note-container{
+    flex: 0.6;
+  }
+}
+
+@media screen and (max-width: 1300px) {
+  .note-container{
+    flex: 0.7;
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .note-container{
+    flex: 0.8;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .note-container{
+    flex: 1;
+  }
+}
 </style>

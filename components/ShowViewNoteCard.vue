@@ -1,21 +1,33 @@
 <template lang="pug">
-.home-note
-  el-link.link-to(:underline="false" @click="ClicknoteUrl()")
-    .home-note-head
-      .home-note-title
-        i#home-note-icon.el-icon-notebook-2
-        span {{ this.noteTitle }}
-    .line
-    .home-note-info
-      .home-note-info-warp
-      span.home-note-content 作者: {{ this.noteAuthor }}
-      span.home-note-content 日期: {{ this.noteDate }}
-      span#content.home-note-content 概要: {{ this.noteMd }}
+el-card.home-note(:class="cardExpanded ? 'expanded' : 'folded'")
+  div(slot="header").note-info
+    el-link(:underline="false" @click="ClicknoteUrl()")
+      i.note-title.el-icon-notebook-2
+      span.note-title {{ noteTitle }}
+    .info-wrap
+      div.info-item
+        i.fas.fa-calendar-alt
+        span {{ dateFormatted }}
+      div.info-item
+        i.fas.fa-user
+        span {{ noteAuthor }}
+  link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css")
+  link(rel="stylesheet" href="https://cdn.jsdelivr.net/github-markdown-css/2.2.1/github-markdown.css")
+  div(v-html="cardExpanded ? renderedMd : stripedMd" :class="cardExpanded ? 'markdown-body' : 'markdown-body-minimized'")
 </template>
 
 <script>
 import axios from 'axios'
+import remark from 'remark'
+import strip from 'strip-markdown'
+import { mavonEditor } from 'mavon-editor'
+import { format } from 'timeago.js'
 import utils from '../util/utils'
+
+const md = mavonEditor.getMarkdownIt()
+const mk = require('markdown-it-katex')
+
+md.use(mk)
 
 export default {
   name: 'ShowViewNoteCard',
@@ -31,7 +43,17 @@ export default {
       noteTitle: '',
       noteDate: '',
       noteMd: '',
-      noteAuthor: ''
+      noteAuthor: '',
+      stripedMd: '',
+      cardExpanded: false
+    }
+  },
+  computed: {
+    renderedMd () {
+      return md.render(this.noteMd)
+    },
+    dateFormatted () {
+      return format(Date.parse(this.noteDate), 'zh_CN')
     }
   },
   created () {
@@ -40,20 +62,46 @@ export default {
     })
       .then((res) => {
         this.noteTitle = res.data.title
-        this.noteMd = res.data.content.substring(0, 50) + '......'
-        this.noteDate = res.data.createdAt.substring(0, 10)
+        // this.noteMd = res.data.content.substring(0, 50) + '......'
+        // this.noteDate = res.data.createdAt.substring(0, 10)
+        this.noteMd = res.data.content
+        this.stripeMd()
+        this.noteDate = res.data.createdAt
         this.noteAuthor = res.data.author.username
         if (this.noteTitle.length > 14) {
           this.noteTitle = this.noteTitle.substring(0, 12) + '......'
         }
       })
       .catch((error) => {
-        console.log(error)
+        throw error
       })
   },
   methods: {
     ClicknoteUrl () {
       this.$router.push('/viewnote/' + this.id)
+    },
+    stripeMd () {
+      const component = this
+      remark()
+        .use(strip)
+        .process(this.noteMd)
+        .then((file, err) => {
+          if (err) { throw err }
+          component.stripedMd = md.render(component.takeFirstNLines(file.contents, 10))
+        })
+    },
+    takeFirstNLines (txt, l) {
+      let ret = ''
+      let n = 0
+      const lines = txt.split('\n')
+      for (let i = 0; i < lines.length && n < l; i++) {
+        if (lines[i] !== '') {
+          ret += lines[i]
+          ret += '\n'
+          n++
+        }
+      }
+      return ret
     }
   }
 }
@@ -61,63 +109,62 @@ export default {
 
 <style scoped>
 .home-note {
-  width: 360px;
+  width: 100%;
+}
+
+.home-note.folded{
   height: 225px;
-  border-radius: 4px;
-  background: rgb #ffffff;
-  border: solid 1px rgb(142, 186, 252);
-  box-shadow: rgba(161, 194, 245, 0.658) 0px 2px 12px 0px;
 }
 
-.home-note-head {
-  width: inherit;
-  height: 40px;
+.home-note.expanded{
+  height: fit-content;
 }
 
-#home-note-icon {
-  font-size: 22px;
+.info-wrap {
+  display: flex;
+  float: right;
+  color: #757575;
+  font-size: 10px;
 }
 
-.home-note-title span {
-  display: inline-block;
-  margin-left: 6px;
+.note-info{
+  display: flex;
+  justify-content: space-between;
+  font-family: '微软雅黑', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
-.home-note-title {
+
+.note-title{
+  font-weight: bold;
   font-size: 20px;
-  line-height: 40px;
-  float: left;
-  text-align: left;
-  padding-left: 10px;
 }
 
-.line {
-  width: 355px;
-  height: 0.5px;
-  margin: 2px;
-  background: #000;
+.markdown-body-minimized {
+  overflow: hidden;
+  max-height: 140px;
 }
 
-.home-note-info {
-  width: 300px;
-  text-align: left;
+.info-item i {
+  margin: 0 10px;
 }
 
-.home-note-content {
-  width: 280px;
-  font-size: 16px;
-  display: block;
-  padding-left: 10px;
-  margin: 10px 0 10px 0;
+.info-item{
+  margin: auto 10px;
 }
 
-#content {
-  margin-top: 15px;
+@media screen and (max-width: 610px) {
+  .info-item * {
+    width: fit-content;
+    margin: auto;
+    display: block;
+  }
+  i.note-title{
+    display: none;
+  }
 }
+</style>
 
-.link-to{
-  cursor: pointer;
-  display: block;
-  width: 360px;
-  height: 225px;
+<style>
+.home-note .markdown-body-minimized p {
+  margin: 0;
 }
 </style>
