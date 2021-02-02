@@ -89,6 +89,11 @@ export default {
         name: 'about',
         path: '/about',
         redirect: '/viewnote/5fb922d85703375b1ccf28dc'
+      }),
+      routes.push({
+        name: '404',
+        path: '/*',
+        redirect: '/404'
       })
     }
   }
