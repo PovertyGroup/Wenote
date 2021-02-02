@@ -89,14 +89,9 @@ export default {
         name: 'about',
         path: '/about',
         redirect: '/viewnote/5fb922d85703375b1ccf28dc'
-      }),
-      routes.push({
-        name: '404',
-        path: '/*',
-        redirect: '/404'
       })
       routes.push({
-        name: 'custom',
+        name: '404',
         path: '*',
         component: resolve(__dirname, 'pages/404.vue')
       })

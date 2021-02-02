@@ -226,7 +226,7 @@ export default {
     width: 100%;
     bottom: 0;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: space-around;
 }
 
 .note-title-wrap{
@@ -349,13 +349,14 @@ export default {
 }
 
 .buttons {
+  display: flex;
   position: fixed;
-  bottom: 4%;
-  left: 80%;
+  bottom: 5%;
+  left: 82%;
 }
 
 .buttons * {
-  margin: 0 20px;
+  margin: 10px;
 }
 
 .like{
@@ -380,5 +381,38 @@ export default {
 .edit-note{
   vertical-align: middle;
   margin: 5px 15px 5px 15px;
+}
+
+@media screen and (max-width: 1300px) {
+  .md-card{
+    width: 80%;
+  }
+  .buttons {
+    flex-direction: column;
+    left: 85%;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .md-card{
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .buttons {
+    left: 80%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .buttons {
+    left: 75%;
+  }
+}
+@media screen and (max-width: 380px) {
+  .buttons {
+    left: 70%;
+  }
 }
 </style>
