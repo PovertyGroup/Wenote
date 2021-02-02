@@ -1,124 +1,128 @@
 <template lang="pug">
-.main
-  header
-    .wrap
-      .header-wrapper
-        h1.site-name Wenote笔记平台
-        p(style='background-color: rgba(0, 0, 0, 0.3); padding: 10px')   一个Markdown笔记社交平台，书写强大简洁，适合作为个人的笔记和知识管理工具。
-        .buttons-wrapper
-          a.button.button-stripe(href='/home' target='_blank') 进入Wenote
-          a.button.button-stripe(href='/about' target='_blank') 查看文档
-  .spanning
-    .promo.clearfix
+NoHeaderLayout
+  .main(style="width: 100%")
+    header
       .wrap
-        .promo-wrapper.clearfix
-          .promo-column
-            img(src='../assets/write.svg' height='32' width='24' alt='')
-            h5 便捷书写
-            p Wenote 采用 Markdown 作为书写语法，专注于核心内容而非排版样式，使得笔记的书写简便且高效
-          .promo-column
-            img(src='../assets/read.svg' height='40px' width='36px' alt='')
-            h5 沉浸编辑
-            p 双栏式阅读界面，左侧大纲，右方内容，像阅读一本书籍一样阅读文档，带来非凡的阅读体验
-          .promo-column
-            img(src='../assets/function.svg' height='32' width='34' alt='')
-            h5 引入社交
-            p 让你的笔记能够被更多人看见，在学习的同时找到志同道合的朋友
-          .promo-column
-            img(src='../assets/manage.svg' height='36' width='336' alt='')
-            h5 风格简约
-            p 简约的网站设计，让用户专注笔记书写
-    .tech-stack.clearfix
-      .wrap
-        .tech-stack-content.clearfix
-          .opensource-title
-            p 所用技术栈
-          p Wenote 基于开源框架 —— NuxtJS 和 Strapi 构建开发而成，使用了 SSR（服务端渲染）技术，在保证安全性的同时也提高了访问速度。源码使用 GitHub 托管，方便协作。
+        .header-wrapper
+          h1.site-name Wenote笔记平台
+          p(style='background-color: rgba(0, 0, 0, 0.3); padding: 10px')   一个Markdown笔记社交平台，书写强大简洁，适合作为个人的笔记和知识管理工具。
+          .buttons-wrapper
+            a.button.button-stripe(href='/home' target='_blank') 进入Wenote
+            a.button.button-stripe(href='/about' target='_blank') 查看文档
+    .spanning
+      .promo.clearfix
+        .wrap
+          .promo-wrapper.clearfix
+            .promo-column
+              img(src='../assets/write.svg' height='32' width='24' alt='')
+              h5 便捷书写
+              p Wenote 采用 Markdown 作为书写语法，专注于核心内容而非排版样式，使得笔记的书写简便且高效
+            .promo-column
+              img(src='../assets/read.svg' height='40px' width='36px' alt='')
+              h5 沉浸编辑
+              p 双栏式阅读界面，左侧大纲，右方内容，像阅读一本书籍一样阅读文档，带来非凡的阅读体验
+            .promo-column
+              img(src='../assets/function.svg' height='32' width='34' alt='')
+              h5 引入社交
+              p 让你的笔记能够被更多人看见，在学习的同时找到志同道合的朋友
+            .promo-column
+              img(src='../assets/manage.svg' height='36' width='336' alt='')
+              h5 风格简约
+              p 简约的网站设计，让用户专注笔记书写
+      .tech-stack.clearfix
+        .wrap
+          .tech-stack-content.clearfix
+            .opensource-title
+              p 所用技术栈
+            p Wenote 基于开源框架 —— NuxtJS 和 Strapi 构建开发而成，使用了 SSR（服务端渲染）技术，在保证安全性的同时也提高了访问速度。源码使用 GitHub 托管，方便协作。
+            .tech-stack-button.clearfix
+              a.button.button-github(href='https://github.com/nuxt/nuxt.js' target='_blank')
+                img.button-icon(src='../assets/github.svg')
+                span.button-github-title 链接：
+                span.common-button NuxtJS
+              a.button.button-github.android(href='https://github.com/strapi/strapi' target='_blank')
+                img.button-icon(src='../assets/github.svg')
+                span.button-github-title 链接：
+                span.common-button Strapi
+          .tech-stack-img
+            .tech-stack-img-inside
+              img(src='../assets/show.png' alt='').tech-stack-all-img
+      .deploy.clearfix
+        .wrap
+          .deploy-title 便于部署
+          .deploy-subtitle 前后端均基于 Node.js 构建，只需要一个环境就可以部署整个项目
+          .deploy-block(style='text-align: center')
+            img(src='../assets/icon9.svg' alt='').common-img
+          .deploy-platform-wrapper.clearfix
+            ul.deploy-list.clearfix
+              li.deploy-platform-title 无论你是：
+              li
+                div
+                  strong Windows
+              li
+                div
+                  strong Linux
+              li
+                div
+                  strong macOS
+      .comments.clearfix
+        .wrap.tab.box.visible
+          h4 Markdown 书写
+          p 书写便捷、功能强大的 Markdown 文档编辑器，可快速创建排版优美的笔记。
+          .try-editor-wrap
+            p(style="margin: 10px 0") 试一试
+            div(style="margin: 20px 0")
+              no-ssr
+                mavon-editor(:autofocus = "false" v-model="markdown" language="zh-CN" style="height: 400px")
+      .simple.clearfix
+        .wrap
+          .simple-content
+            h3 Wenote 可以用来做什么？
+            ul
+              li.clearfix
+                img(src='../assets/icon1.svg' height='32' width='32')
+                span 个人知识管理
+              li.clearfix
+                img(src='../assets/icon3.svg' height='32' width='32')
+                span 说明手册
+              li.clearfix
+                img(src='../assets/icon4.svg' height='32' width='32')
+                span 教程书籍
+              li.clearfix
+                span ……
+          .simple-img
+            img(src='../assets/example.png')
+      .newsletter.clearfix
+        .wrap
+          .deploy-title 遇到问题
+          .deploy-platform-wrapper.clearfix
+            ul.deploy-list.clearfix
+              li
+                a.blue-button(href='/about' target='_blank') 查看文档
+      .deploy.clearfix
+        .wrap
+          .deploy-title 支持项目发展
+          .deploy-subtitle
+            | 球球评委给个高分叭！
           .tech-stack-button.clearfix
-            a.button.button-github(href='https://github.com/nuxt/nuxt.js' target='_blank')
-              img.button-icon(src='../assets/github.svg')
-              span.button-github-title 链接：
-              span.common-button NuxtJS
-            a.button.button-github.android(href='https://github.com/strapi/strapi' target='_blank')
-              img.button-icon(src='../assets/github.svg')
-              span.button-github-title 链接：
-              span.common-button Strapi
-        .tech-stack-img
-          .tech-stack-img-inside
-            img(src='../assets/show.png' alt='').tech-stack-all-img
-    .deploy.clearfix
-      .wrap
-        .deploy-title 便于部署
-        .deploy-subtitle 前后端均基于 Node.js 构建，只需要一个环境就可以部署整个项目
-        .deploy-block(style='text-align: center')
-          img(src='../assets/icon9.svg' alt='').common-img
-        .deploy-platform-wrapper.clearfix
-          ul.deploy-list.clearfix
-            li.deploy-platform-title 无论你是：
-            li
-              div
-                strong Windows
-            li
-              div
-                strong Linux
-            li
-              div
-                strong macOS
-    .comments.clearfix
-      .wrap.tab.box.visible
-        h4 Markdown 书写
-        p 书写便捷、功能强大的 Markdown 文档编辑器，可快速创建排版优美的笔记。
-        .try-editor-wrap
-          p(style="margin: 10px 0") 试一试
-          div(style="margin: 20px 0")
-            no-ssr
-              mavon-editor(:autofocus = "false" v-model="markdown" language="zh-CN" style="height: 400px")
-    .simple.clearfix
-      .wrap
-        .simple-content
-          h3 Wenote 可以用来做什么？
-          ul
-            li.clearfix
-              img(src='../assets/icon1.svg' height='32' width='32')
-              span 个人知识管理
-            li.clearfix
-              img(src='../assets/icon3.svg' height='32' width='32')
-              span 说明手册
-            li.clearfix
-              img(src='../assets/icon4.svg' height='32' width='32')
-              span 教程书籍
-            li.clearfix
-              span ……
-        .simple-img
-          img(src='../assets/example.png')
-    .newsletter.clearfix
-      .wrap
-        .deploy-title 遇到问题
-        .deploy-platform-wrapper.clearfix
-          ul.deploy-list.clearfix
-            li
-              a.blue-button(href='/about' target='_blank') 查看文档
-    .deploy.clearfix
-      .wrap
-        .deploy-title 支持项目发展
-        .deploy-subtitle
-          | 球球评委给个高分叭！
-        .tech-stack-button.clearfix
-          a.button.button-github(href='https://sheey.moe' target='_blank')
-            img.site-icon(src='../assets/sheey.svg')
-            span.blog-link-button Sheey的杂货铺
-          a.button.button-github(href='https://codgi.xin' target='_blank')
-            img.site-icon(src='../assets/codgi.svg')
-            span.blog-link-button Codgi的小屋
-  Footer
+            a.button.button-github(href='https://sheey.moe' target='_blank')
+              img.site-icon(src='../assets/sheey.svg')
+              span.blog-link-button Sheey的杂货铺
+            a.button.button-github(href='https://codgi.xin' target='_blank')
+              img.site-icon(src='../assets/codgi.svg')
+              span.blog-link-button Codgi的小屋
+  template(v-slot:footer)
+    Footer
 </template>
 
 <script>
 import Footer from '@/layouts/Footer'
+import NoHeaderLayout from '@/layouts/NoHeaderLayout'
 
 export default {
   components: {
-    Footer
+    Footer,
+    NoHeaderLayout
   },
   data () {
     return {
@@ -158,20 +162,6 @@ img {
 
 .common-img{
   width: 250px;
-}
-
-.clearfix:after,
-.wrap:after,
-.spanning:after,
-.content:after,
-.main:after{
-  content: ".";
-  display: block;
-  clear: both;
-  visibility: hidden;
-  line-height: 0;
-  height: 0;
-  font-size: 0;
 }
 
 .align-left {
@@ -621,14 +611,6 @@ header .buttons-wrapper .button-stripe {
 
 ul {
   padding: 0;
-}
-
-.footer{
-    min-height: 30px;
-    bottom: 0;
-    background: #3e3e3e;
-    color: #ffffff;
-    height: fit-content !important;
 }
 
 @media screen and (max-width: 1100px) {
