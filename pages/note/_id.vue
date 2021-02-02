@@ -189,7 +189,7 @@ export default {
           this.$router.push('/info/' + this.noteAutherId)
         })
         .catch((error) => {
-          console.log(error)
+          throw error
         })
       // this.$message({
       //     type: 'success',

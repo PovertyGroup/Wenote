@@ -40,8 +40,8 @@ export default {
         this.notes = res.data
       })
       .catch((error) => {
-        console.log(error)
         this.$message.error('发生了未知错误...')
+        throw error
       })
   }
 }

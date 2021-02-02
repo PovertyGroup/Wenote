@@ -93,7 +93,6 @@ export default {
       const request = new XMLHttpRequest()
       request.open('PUT', '/upload')
       request.setRequestHeader('Authorization', 'Bearer ' + utils.store.jwt)
-      console.log('submitting...')
       request.send(new FormData(this.$refs['avatar-form']))
     }
   }
