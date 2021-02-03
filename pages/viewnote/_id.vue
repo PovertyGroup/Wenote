@@ -102,20 +102,22 @@ export default {
         this.likeNum = res.data.likers.length
         this.starNum = res.data.starers.length
         this.noteTags = res.data.tags ? res.data.tags : []
-        if (this.noteAuthor.followers && this.noteAuthor.followers.includes(this.$auth.user.id)) {
-          this.followed = true
-        }
-        if (this.noteLikers && this.noteLikers.includes(this.$auth.user.id)) {
-          this.likeNote = true
-        }
-        if (this.noteStarers && this.noteStarers.includes(this.$auth.user.id)) {
-          this.starNote = true
-        }
-        // if(this.noteTags && this.noteTags.length == 0){
-        //   this.Tags = false;
-        // }
-        if (res.data.author.id === this.$auth.user.id) {
-          this.isAuthor = true
+        if (this.$auth.loggedIn) {
+          if (this.noteAuthor.followers && this.noteAuthor.followers.includes(this.$auth.user.id)) {
+            this.followed = true
+          }
+          if (this.noteLikers && this.noteLikers.includes(this.$auth.user.id)) {
+            this.likeNote = true
+          }
+          if (this.noteStarers && this.noteStarers.includes(this.$auth.user.id)) {
+            this.starNote = true
+          }
+          // if(this.noteTags && this.noteTags.length == 0){
+          //   this.Tags = false;
+          // }
+          if (res.data.author.id === this.$auth.user.id) {
+            this.isAuthor = true
+          }
         }
       })
       .catch(() => {
