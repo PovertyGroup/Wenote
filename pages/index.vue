@@ -7,8 +7,8 @@ NoHeaderLayout
           h1.site-name Wenote笔记平台
           p(style='background-color: rgba(0, 0, 0, 0.3); padding: 10px')   一个Markdown笔记社交平台，书写强大简洁，适合作为个人的笔记和知识管理工具。
           .buttons-wrapper
-            a.button.button-stripe(href='/home' target='_blank') 进入Wenote
-            a.button.button-stripe(href='/about' target='_blank') 查看文档
+            NuxtLink.button.button-stripe(to='/home') 进入Wenote
+            NuxtLink.button.button-stripe(to='/about') 查看文档
     .spanning
       .promo.clearfix
         .wrap

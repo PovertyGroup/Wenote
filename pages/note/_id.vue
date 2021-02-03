@@ -151,7 +151,7 @@ export default {
         this.noteId = res.data.id
       })
       .catch((e) => {
-        if (e.response && e.response.statusCode === 400) {
+        if (e.response && e.response.status === 400) {
           this.noSuchNote = true
         } else {
           throw e
@@ -173,12 +173,6 @@ export default {
         .then(() => {
           this.del()
         })
-        .catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          })
-        })
     },
     del () {
       axios.delete(utils.composeUrl(this.$store.state.serverUrl, '/notes/' + this.noteId))
@@ -187,6 +181,7 @@ export default {
             type: 'success',
             message: '删除成功!'
           })
+          this.$auth.fetchUser()
           this.$router.push('/info/' + this.noteAutherId)
         })
         .catch((error) => {

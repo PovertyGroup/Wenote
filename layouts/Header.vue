@@ -2,9 +2,9 @@
 .header
   ul.nav
     li.nav-item
-      el-link.sitename(:underline="false" href="/home") Wenote
-    li.nav-item
-      el-link(:underline="false" href="/about") 关于
+      NuxtLink.nuxtlink.sitename.black-link(to="/home") Wenote
+    li.nav-item.about
+      NuxtLink.nuxtlink.black-link(to="/about") 关于
   ul.action
     li.action-item
       el-autocomplete.search-input(placeholder="搜索笔记" v-model="searchText" suffix-icon="el-icon-search" :class="searchBoxFocused ? 'focused' : ''"
@@ -56,7 +56,6 @@ export default {
     },
     handleSelect (item) {
       this.$router.push('/viewnote/' + item.id)
-      location.reload()
     },
     async fetchNote (id) {
       let note
@@ -138,6 +137,12 @@ export default {
   }
   .search-input.focused {
     width: 150px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .about{
+    display: none;
   }
 }
 

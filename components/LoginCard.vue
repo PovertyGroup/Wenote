@@ -6,15 +6,20 @@ el-card.login-card
       el-input.input(v-model="form.username" placeholder="用户名或邮箱" @input="notifyCreditChanged()")
     el-form-item.label(label="密码", prop="password")
       el-input.input(v-model="form.password" placeholder="密码" @keyup.enter.native="keydown()" type="submit" :show-password="true" @input="notifyCreditChanged()")
-  .login-button
-    el-button.login-button(type="primary" :underline="false" @click="notifySubmit()" @keyup.enter.native="keydown()") 登陆
-  .register-link
-    el-link(type="primary" :underline="false", href="/register") 没有账号？注册一个
+    el-button.login-button(type="primary" :underline="false" @click="notifySubmit()" @keyup.enter.native="keydown()" :loading="loading") 登陆
+  NuxtLink.nuxtlink.register-link(to="/register") 没有账号？注册一个
 </template>
 
 <script>
 export default {
   name: 'LoginCard',
+  props: {
+    loading: {
+      type: Boolean,
+      required: true,
+      default: false
+    }
+  },
   data () {
     return {
       form: {
@@ -67,6 +72,7 @@ export default {
 }
 
 .login-button{
+  display: block;
   width: 200px;
   margin: auto;
 }
@@ -77,7 +83,8 @@ export default {
   min-width: 200px;
 }
 
-.register-link{
+.register-link {
+  display: block;
   line-height: 50px;
   text-align: center;
 }

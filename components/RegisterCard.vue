@@ -1,5 +1,5 @@
 <template lang="pug">
-.register-card
+el-card.register-card
   el-form(:model="form", label-width="80px", :rules="rules", ref="ruleForm")
     .register-title 加入 Wenote
     el-form-item(label="用户名", prop="username")
@@ -10,8 +10,12 @@
       el-input.input(v-model="form.password" placeholder="请输入密码" :show-password="true" @input="notifyUserCreditChanged()")
     el-form-item(label="确认密码", prop="passwordagain")
       el-input.input(v-model="form.passwordagain" placeholder="请再次输入密码" :show-password="true")
-    el-button.register-button(type="primary" :underline = "false" @click="notifySubmit()") 注册
-  el-link.login-link(type="primary", :underline="false", href="/login") 已有账号？前往登录
+    el-form-item(prop="tou")
+      el-checkbox(v-model="form.touAgreed")
+        span 我同意
+        el-link.tou-link(:underline="false" href="/terms-of-use" :class="form.touAgreed ? 'blue' : ''" target="__black") 《Wenote 用户使用协议》
+    el-button.register-button(type="primary" :underline = "false" @click="notifySubmit()" :disabled="!form.touAgreed") 注册
+  NuxtLink.nuxtlink.login-link(to="/login") 已有账号？前往登录
 </template>
 
 <script>
@@ -32,7 +36,8 @@ export default {
         username: '',
         email: '',
         password: '',
-        passwordagain: ''
+        passwordagain: '',
+        touAgreed: false
       },
       rules: {
         username: [
@@ -78,21 +83,15 @@ export default {
 
 <style scoped>
 .register-button{
-  max-width: 60%;
+  display: block;
+  max-width: 80%;
   width: 200px;
-  margin: 10px 15px auto 25px;
-  float: center;
+  margin: auto;
 }
 .register-card{
-  max-width: 400px;
-  border-radius: 15px;
-  background-clip: border-box;
+  padding: 30px 35px;
+  width: 350px;
   margin: auto;
-  padding: 35px 35px;
-  background: rgb(246, 246, 246);
-  border: 1px solid  #5c9cfd41;
-  box-shadow: 2px 2px 25px #8fbbfd3a;
-  width: 100vh;
 }
 .register-title{
   margin: 20px 8px 30px 8px;
@@ -106,5 +105,16 @@ export default {
 
 .login-link {
   margin-top: 10px;
+  display: block;
+  text-align: center;
+}
+
+.tou-link{
+  vertical-align: unset !important;
+}
+
+.blue{
+  transition: 0s;
+  color: #409EFF;
 }
 </style>

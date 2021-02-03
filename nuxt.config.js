@@ -51,12 +51,19 @@ export default {
     '@nuxtjs/auth-next'
   ],
 
+  loading: {
+    color: '#1e95f8',
+    throttle: 0,
+    continuous: true
+  },
+
   auth: {
-    redirect: {
-      login: '/login',
-      callback: '/home',
-      home: '/home'
-    },
+    redirect: false,
+    // redirect: {
+    //   login: '/login',
+    //   callback: '/home',
+    //   home: '/home'
+    // },
     strategies: {
       local: {
         token: {

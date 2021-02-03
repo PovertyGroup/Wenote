@@ -27,16 +27,6 @@ export default {
   created () {
     if (this.$auth.user.notes.length === 0) { this.val = false }
     this.notes = this.$auth.user.notes
-    // axios.get(utils.composeUrl(this.$store.state.serverUrl, '/users/me'), {
-    //   headers: utils.getAuthorizedHeader()
-    // })
-    //   .then((res) => {
-    //     if (res.data.notes.length === 0) { this.val = false }
-    //     this.notes = res.data.notes
-    //   })
-    //   .catch(() => {
-    //   // 失败
-    //   })
   }
 }
 </script>
