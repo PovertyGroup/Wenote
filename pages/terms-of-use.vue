@@ -30,7 +30,6 @@ export default {
   },
   computed: {
     touHtml () {
-      console.log(tou)
       return md.render(tou)
     }
   }
