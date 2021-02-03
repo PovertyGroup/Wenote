@@ -11,8 +11,6 @@ el-container().main-container
 <script>
 import ShowNoteCard from '@/components/ShowNoteCard'
 import NothingCard from '@/components/NothingCard'
-import axios from 'axios'
-import utils from '../util/utils'
 
 export default {
   name: 'MyNoteCard',
@@ -20,35 +18,25 @@ export default {
     ShowNoteCard,
     NothingCard
   },
-  props: {
-    id: {
-      type: String,
-      default: '',
-      required: true
-    },
-    noteTitle: {
-      type: String,
-      default: '',
-      required: true
-    }
-  },
   data () {
     return {
       val: true,
-      notes: ''
+      notes: []
     }
   },
   created () {
-    axios.get(utils.composeUrl(this.$store.state.serverUrl, '/users/me'), {
-      headers: utils.getAuthorizedHeader()
-    })
-      .then((res) => {
-        if (res.data.notes.length === 0) { this.val = false }
-        this.notes = res.data.notes
-      })
-      .catch(() => {
-      // 失败
-      })
+    if (this.$auth.user.notes.length === 0) { this.val = false }
+    this.notes = this.$auth.user.notes
+    // axios.get(utils.composeUrl(this.$store.state.serverUrl, '/users/me'), {
+    //   headers: utils.getAuthorizedHeader()
+    // })
+    //   .then((res) => {
+    //     if (res.data.notes.length === 0) { this.val = false }
+    //     this.notes = res.data.notes
+    //   })
+    //   .catch(() => {
+    //   // 失败
+    //   })
   }
 }
 </script>

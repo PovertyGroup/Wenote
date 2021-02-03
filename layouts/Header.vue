@@ -36,10 +36,7 @@ export default {
       if (queryString.replaceAll(' ', '') === '') { return cb_([]) }
       const notes = []
       const fetchNote = this.fetchNote
-      axios.get(utils.composeUrl(this.$store.state.serverUrl, '/notes?title_contains=' + queryString),
-        {
-          headers: utils.getAuthorizedHeader()
-        })
+      axios.get(utils.composeUrl(this.$store.state.serverUrl, '/notes?title_contains=' + queryString))
         .then(async function (res) {
           for (const noteid of res.data) {
             const note = await fetchNote(noteid)
@@ -63,10 +60,7 @@ export default {
     },
     async fetchNote (id) {
       let note
-      await axios.get(utils.composeUrl(this.$store.state.serverUrl, '/notes/' + id),
-        {
-          headers: utils.getAuthorizedHeader()
-        })
+      await axios.get(utils.composeUrl(this.$store.state.serverUrl, '/notes/' + id))
         .then((res) => {
           note = res.data
         })

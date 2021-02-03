@@ -39,8 +39,7 @@
                     i.far.fa-calendar-alt
                     p.note-pudate-time {{ this.updateTime }}
         div.editor-wrap(v-if="!this.noSuchNote")
-          no-ssr
-            mavon-editor(v-model="noteMd" language="zh-CN" :toolbars="toolbars" @save="saveNote")
+          mavon-editor(v-model="noteMd" language="zh-CN" :toolbars="toolbars" @save="saveNote" :externalLink="externalLink")
                 template(slot="left-toolbar-after")
                     el-button.op-icon.fa.fa-trash(type="button" aria-hidden="true"
                             :title="`真的要删除吗`" @click="delnote()"
@@ -65,6 +64,8 @@ import NoSuchNoteCard from '@/components/NoSuchNoteCard.vue'
 import axios from 'axios'
 import utils from '@/util/utils'
 
+import config from '@/config'
+
 import { format } from 'timeago.js'
 
 export default {
@@ -75,9 +76,6 @@ export default {
     MainLayout,
     Header,
     Footer
-  },
-  asyncData ({ store }) {
-    utils.initStore(store)
   },
   data () {
     return {
@@ -93,6 +91,7 @@ export default {
       noSuchNote: false,
       canEdit: false,
       notePublic: true,
+      externalLink: config.mavonEditorExternalLink,
       toolbars: {
         bold: true, // 粗体
         italic: true, // 斜体
@@ -138,25 +137,29 @@ export default {
     }
   },
   mounted () {
-    axios.get(utils.composeUrl(this.$store.state.serverUrl, '/notes/' + this.$route.params.id), {
-      headers: utils.getAuthorizedHeader()
-    })
+    axios.get(utils.composeUrl(this.$store.state.serverUrl, '/notes/' + this.$route.params.id))
       .then((res) => {
-        this.isAuthor(res)
+        this.noteAuthor = res.data.author
+        this.noteAutherId = res.data.author.id
+        if (!this.$auth.loggedIn || this.$auth.user.id !== this.noteAutherId) {
+          this.$router.push('/viewnote/' + this.$route.params.id)
+        }
         this.noteTitle = res.data.title
         this.noteMd = res.data.content
-        this.noteAuthor = res.data.author
         this.noteTags = res.data.tags
         this.notePublic = res.data.public
         this.noteId = res.data.id
-        this.noteAutherId = res.data.author.id
       })
-      .catch(() => {
-        this.noSuchNote = true
+      .catch((e) => {
+        if (e.response && e.response.statusCode === 400) {
+          this.noSuchNote = true
+        } else {
+          throw e
+        }
       })
   },
   created () {
-    if (!utils.store.jwt || !utils.store.jwt) {
+    if (!this.$auth.loggedIn) {
       this.$router.push('/viewnote/' + this.$route.params.id)
     }
   },
@@ -178,9 +181,7 @@ export default {
         })
     },
     del () {
-      axios.delete(utils.composeUrl(this.$store.state.serverUrl, '/notes/' + this.noteId), {
-        headers: utils.getAuthorizedHeader()
-      })
+      axios.delete(utils.composeUrl(this.$store.state.serverUrl, '/notes/' + this.noteId))
         .then(() => {
           this.$message({
             type: 'success',
@@ -203,7 +204,7 @@ export default {
       axios.put(utils.composeUrl(this.$store.state.serverUrl, '/notes/' + this.$route.params.id), {
         content: value,
         tags: this.noteTags
-      }, { headers: utils.getAuthorizedHeader() })
+      })
         .then(() => {
           this.$message({
             message: '已保存',
@@ -220,7 +221,7 @@ export default {
     saveTitle () {
       axios.put(utils.composeUrl(this.$store.state.serverUrl, '/notes/' + this.$route.params.id), {
         title: this.noteTitle
-      }, { headers: utils.getAuthorizedHeader() })
+      })
         .then(() => {
           this.$message({
             message: '已保存',
@@ -238,17 +239,6 @@ export default {
     editTitle () {
       this.canEdit = !this.canEdit
     },
-    isAuthor (res) {
-      axios.get(utils.composeUrl(this.$store.state.serverUrl, '/users/me'), {
-        headers: utils.getAuthorizedHeader()
-      })
-        .then((user) => {
-          if (res.data.author.id !== user.data.id) {
-            this.$router.push('/viewnote/' + this.$route.params.id)
-          }
-        })
-    },
-
     handleClose (tag) {
       this.noteTags.splice(this.noteTags.indexOf(tag), 1)
     },
@@ -272,7 +262,7 @@ export default {
     updatePublic () {
       axios.put(utils.composeUrl(this.$store.state.serverUrl, '/notes/' + this.$route.params.id), {
         public: this.notePublic
-      }, { headers: utils.getAuthorizedHeader() })
+      })
         .then(() => {
           this.$message({
             message: '已保存',

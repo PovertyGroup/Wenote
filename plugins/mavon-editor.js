@@ -1,4 +1,7 @@
 import Vue from 'vue'
-import mavonEditor from 'mavon-editor'
+import mavonEditorComponent, { mavonEditor } from 'mavon-editor'
+const md = mavonEditor.getMarkdownIt()
+const mk = require('@iktakahiro/markdown-it-katex')
 
-Vue.use(mavonEditor)
+md.use(mk)
+Vue.use(mavonEditorComponent)

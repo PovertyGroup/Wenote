@@ -12,8 +12,6 @@ el-container().main-container
 <script>
 import ShowFolloweesCard from '@/components/ShowFolloweesCard'
 import NothingCard from '@/components/NothingCard'
-import axios from 'axios'
-import utils from '../util/utils'
 
 export default {
   name: 'FolloweesCard',
@@ -28,25 +26,19 @@ export default {
     }
   },
   data () {
-    if (utils.store.jwt) {
-      return {
-        followees: '',
-        val: true
-      }
+    return {
+      followees: '',
+      val: true
     }
   },
   created () {
-    axios
-      .get(utils.composeUrl(this.$store.state.serverUrl, '/users/me'), {
-        headers: utils.getAuthorizedHeader()
-      })
-      .then((res) => {
-        if (res.data.followees.length === 0) { this.val = false }
-        this.followees = res.data.followees
-      })
-      .catch(() => {
-        // 失败
-      })
+    try {
+      // TO BE VERIFY
+      if (this.$auth.user.followees.length === 0) { this.val = false }
+      this.followees = this.$auth.user.followees
+    } catch (e) {
+      // 失败
+    }
   }
 }
 </script>

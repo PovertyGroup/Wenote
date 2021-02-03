@@ -1,3 +1,6 @@
+import config from './config'
+import utils from './util/utils'
+
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -24,7 +27,9 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     '@/plugins/element-ui',
-    '@/plugins/mavon-editor'
+    '~/plugins/nuxt-client-init.client.js',
+    { src: '@/plugins/mavon-editor', ssr: false },
+    { src: '@/plugins/vuex-persist', ssr: false }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -42,8 +47,41 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
-    '@nuxtjs/pwa'
+    '@nuxtjs/pwa',
+    '@nuxtjs/auth-next'
   ],
+
+  auth: {
+    redirect: {
+      login: '/login',
+      callback: '/home',
+      home: '/home'
+    },
+    strategies: {
+      local: {
+        token: {
+          property: 'jwt',
+          required: true,
+          type: 'Bearer',
+          maxAge: 2592000 // 30 days
+        },
+        user: {
+          property: false
+        },
+        endpoints: {
+          login: {
+            url: utils.composeUrl(config.serverUrl, '/auth/local'),
+            method: 'post'
+          },
+          logout: false,
+          user: {
+            url: utils.composeUrl(config.serverUrl, '/users/me'),
+            method: 'get'
+          }
+        }
+      }
+    }
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},
@@ -84,6 +122,7 @@ export default {
   },
 
   router: {
+    middleware: ['auth'],
     extendRoutes (routes, resolve) {
       routes.push({
         name: 'about',

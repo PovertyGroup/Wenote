@@ -26,9 +26,6 @@ export default {
     ShowViewNoteCard,
     Footer
   },
-  asyncData ({ store }) {
-    utils.initStore(store)
-  },
   data () {
     return {
       notes: []

@@ -8,8 +8,6 @@ MainLayout
 </template>
 
 <script>
-import axios from 'axios'
-import utils from '@/util/utils'
 import LoginCard from '@/components/LoginCard'
 import MainLayout from '@/layouts/MainLayout'
 import Header from '@/layouts/Header'
@@ -23,22 +21,10 @@ export default {
     Header,
     Footer
   },
-  asyncData ({ store }) {
-    utils.initStore(store)
-  },
   data () {
     return {
       username: '',
       password: ''
-    }
-  },
-  mounted () {
-    if (utils.store.jwt) {
-      this.$message({
-        message: '你已经登陆过了',
-        info: 'success'
-      })
-      this.$router.push('/home')
     }
   },
   methods: {
@@ -46,37 +32,36 @@ export default {
       this.username = username
       this.password = password
     },
-    submit () {
+    async submit () {
       const loading = this.$loading({
         lock: true,
         text: 'Wenote书写登录中...',
         spinner: 'el-icon-loading',
         background: 'rgba(217,229, 247, 0.9)'
       })
-      axios
-        .post(utils.composeUrl(this.$store.state.serverUrl, '/auth/local'), {
-          identifier: this.username,
-          password: this.password
-        })
-        .then((response) => {
-          loading.close()
-          this.$message({
-            message: '登陆成功',
-            type: 'success'
-          })
-          utils.initStore(this.$store)
-          utils.store.jwt = response.data.jwt
-          utils.store.info = response.data.user.id
-          this.$router.push('/home')
-        })
-        .catch((error) => {
-          loading.close()
-          if (error.message === 'Network Error') {
-            this.$message.error('网络不太行呢~')
-          } else {
-            this.$message.error(error.response.data.message.message)
+      try {
+        await this.$auth.loginWith('local', {
+          data: {
+            identifier: this.username,
+            password: this.password
           }
         })
+        loading.close()
+        this.$message({
+          message: '登陆成功',
+          type: 'success'
+        })
+        this.$router.push('/home')
+      } catch (e) {
+        loading.close()
+        if (e.message === 'Network Error') {
+          this.$message.error('网络不太行呢~')
+        } else if (!e.response || !e.response.data || !e.response.data.message) {
+          this.$message.error(e.message)
+        } else {
+          this.$message.error(e.response.data.message.message)
+        }
+      }
     }
   }
 }

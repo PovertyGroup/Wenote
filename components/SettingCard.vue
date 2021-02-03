@@ -7,7 +7,7 @@ div.setting
         input(type="text" name="refId" :value="this.id")
         input(type="text" name="field" value="avatar")
         input(type="file" name="files" ref="file-selector")
-    el-card(show="hover" style = "width : 350px" :model="form").info-card
+    el-card(show="hover" style = "width : 350px").info-card
       el-form(label-width="80px")
         el-form-item(label="用户名", prop="user.name")
           el-input(v-model="user.name" @input="")
@@ -31,10 +31,6 @@ import utils from '../util/utils'
 
 export default {
   name: 'SettingCard',
-  components: {
-  },
-  props: {
-  },
   data () {
     return {
       user: {
@@ -42,33 +38,35 @@ export default {
         gender: '',
         bio: ''
       },
-      id: utils.store.info
+      id: this.$auth.user.id
     }
   },
   created () {
-    axios
-      .get(utils.composeUrl(this.$store.state.serverUrl, '/users/me'), {
-        headers: utils.getAuthorizedHeader()
-      })
-      .then((res) => {
-        this.user.bio = res.data.bio
-        this.user.name = res.data.username
-        this.user.gender = res.data.gender
-        if (res.data.avatar) { this.user.avatar = utils.composeUrl(this.$store.state.serverUrl, res.data.avatar.url) } else { this.user.avatar = this.$store.state.defaultAvatar }
-      })
-      .catch(() => {
-        // TODO
-      })
+    this.user.bio = this.$auth.user.bio
+    this.user.name = this.$auth.user.username
+    this.user.gender = this.$auth.user.gender
+    if (this.$auth.user.avatar) { this.user.avatar = utils.composeUrl(this.$store.state.serverUrl, this.$auth.user.avatar.url) } else { this.user.avatar = this.$store.state.defaultAvatar }
+    // axios
+    //   .get(utils.composeUrl(this.$store.state.serverUrl, '/users/me'), {
+    //     headers: utils.getAuthorizedHeader()
+    //   })
+    //   .then((res) => {
+    //     this.user.bio = res.data.bio
+    //     this.user.name = res.data.username
+    //     this.user.gender = res.data.gender
+    //     if (res.data.avatar) { this.user.avatar = utils.composeUrl(this.$store.state.serverUrl, res.data.avatar.url) } else { this.user.avatar = this.$store.state.defaultAvatar }
+    //   })
+    //   .catch(() => {
+    //     // TODO
+    //   })
   },
   methods: {
     saveinfo () {
       this.uploadAvatar()
-      axios.put(utils.composeUrl(this.$store.state.serverUrl, '/users/' + utils.store.info), {
+      axios.put(utils.composeUrl(this.$store.state.serverUrl, '/users/' + this.$auth.user.id), {
         username: this.user.name,
         bio: this.user.bio,
         gender: this.user.gender
-      }, {
-        headers: utils.getAuthorizedHeader()
       })
         .then(() => {
           this.$message({
@@ -92,7 +90,7 @@ export default {
     uploadAvatar () {
       const request = new XMLHttpRequest()
       request.open('PUT', '/upload')
-      request.setRequestHeader('Authorization', 'Bearer ' + utils.store.jwt)
+      request.setRequestHeader('Authorization', this.$auth.strategy.token.get())
       request.send(new FormData(this.$refs['avatar-form']))
     }
   }

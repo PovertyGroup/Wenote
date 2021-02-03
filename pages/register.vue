@@ -24,9 +24,6 @@ export default {
     RegisterCard,
     Footer
   },
-  asyncData ({ store }) {
-    utils.initStore(store)
-  },
   data () {
     return {
       username: '',

@@ -1,7 +1,7 @@
 <template lang="pug">
 div
-    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css")
-    link(rel="stylesheet" href="https://cdn.jsdelivr.net/github-markdown-css/2.2.1/github-markdown.css")
+    link(rel="stylesheet" :href="katexCss")
+    link(rel="stylesheet" :href="githubMarkdownCss")
     div(v-html="this.mdHtml").md-wrap.markdown-body
 </template>
 
@@ -9,8 +9,9 @@ div
 // var md = require('markdown-it')(),
 
 import { mavonEditor } from 'mavon-editor'
+import config from '@/config'
 const md = mavonEditor.getMarkdownIt()
-const mk = require('markdown-it-katex')
+const mk = require('@iktakahiro/markdown-it-katex')
 
 md.use(mk)
 
@@ -21,6 +22,12 @@ export default {
       type: String,
       default: '',
       required: false
+    }
+  },
+  data () {
+    return {
+      githubMarkdownCss: config.mavonEditorExternalLink.markdown_css(),
+      katexCss: config.mavonEditorExternalLink.katex_css()
     }
   },
   computed: {

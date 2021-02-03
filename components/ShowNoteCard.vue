@@ -37,8 +37,7 @@ export default {
     }
   },
   created () {
-    axios.get(utils.composeUrl(this.$store.state.serverUrl, '/notes/' + this.id),
-      { headers: utils.getAuthorizedHeader() })
+    axios.get(utils.composeUrl(this.$store.state.serverUrl, '/notes/' + this.id))
       .then((res) => {
         if (res.data.title.length > 10) { this.noteTitle = res.data.title.substring(0, 9) + '......' } else { this.noteTitle = res.data.title }
         if (res.data.content.length > 49) { this.noteMd = res.data.content.substring(0, 49) + '......' } else { this.noteMd = res.data.content }

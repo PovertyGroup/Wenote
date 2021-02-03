@@ -28,8 +28,8 @@
         MarkdownCard.note(:mdSource="this.noteMd")
       NoSuchNoteCard(v-if="this.noSuchNote").not-such-note-card
     .buttons
-      el-button(v-if="showLikeButton" type="primary" :plain="likeNote" round icon="far fa-thumbs-up like-icon" @click="alterLike").like {{ this.likeNote ? ' 已': ' ' }}点赞
-      el-button(v-if="showStarButton" type="success" :plain="starNote" round icon="far fa-star star-icon" @click="alterStar").star {{ this.likeNote ? ' 已': ' ' }}收藏
+      el-button(v-if="showActionButtons" type="primary" :plain="likeNote" round icon="far fa-thumbs-up like-icon" @click="alterLike").like {{ this.likeNote ? ' 已': ' ' }}点赞
+      el-button(v-if="showActionButtons" type="success" :plain="starNote" round icon="far fa-star star-icon" @click="alterStar").star {{ this.starNote ? ' 已': ' ' }}收藏
     template(v-slot:footer)
       Footer
 </template>
@@ -78,11 +78,8 @@ export default {
     updateTime () {
       return format(this.noteAuthor.updatedAt, 'zh_CN')
     },
-    showLikeButton () {
-      return !this.likeNote && !this.noSuchNote
-    },
-    showStarButton () {
-      return !this.starNote && !this.noSuchNote
+    showActionButtons () {
+      return !this.noSuchNote
     }
   },
   created () {
@@ -103,19 +100,19 @@ export default {
         this.likeNum = res.data.likers.length
         this.starNum = res.data.starers.length
         this.noteTags = res.data.tags ? res.data.tags : []
-        if (this.noteAuthor.followers && this.noteAuthor.followers.includes(utils.store.info)) {
+        if (this.noteAuthor.followers && this.noteAuthor.followers.includes(this.$auth.user.id)) {
           this.followed = true
         }
-        if (this.noteLikers && this.noteLikers.includes(utils.store.info)) {
+        if (this.noteLikers && this.noteLikers.includes(this.$auth.user.id)) {
           this.likeNote = true
         }
-        if (this.noteStarers && this.noteStarers.includes(utils.store.info)) {
+        if (this.noteStarers && this.noteStarers.includes(this.$auth.user.id)) {
           this.starNote = true
         }
         // if(this.noteTags && this.noteTags.length == 0){
         //   this.Tags = false;
         // }
-        if (res.data.author.id === utils.store.info) {
+        if (res.data.author.id === this.$auth.user.id) {
           this.isAuthor = true
         }
       })
@@ -123,13 +120,9 @@ export default {
         this.noSuchNote = true
       })
   },
-  mounted () {
-  },
   methods: {
     follow () {
-      axios.post(utils.composeUrl(this.$store.state.serverUrl, '/users/follow/' + this.noteAuthor.id), {}, {
-        headers: utils.getAuthorizedHeader()
-      })
+      axios.post(utils.composeUrl(this.$store.state.serverUrl, '/users/follow/' + this.noteAuthor.id), {})
         .then(() => {
           this.$message.success('已成功关注该作者~')
           this.followed = true
@@ -145,9 +138,7 @@ export default {
         })
     },
     unfollow () {
-      axios.post(utils.composeUrl(this.$store.state.serverUrl, '/users/unfollow/' + this.noteAuthor.id), {}, {
-        headers: utils.getAuthorizedHeader()
-      })
+      axios.post(utils.composeUrl(this.$store.state.serverUrl, '/users/unfollow/' + this.noteAuthor.id), {})
         .then(() => {
           this.$message.warning('取消关注对方了呢，哭唧唧~')
           this.followed = false
@@ -160,9 +151,7 @@ export default {
     },
     alterLike () {
       if (!this.likeNote) {
-        axios.post(utils.composeUrl(this.$store.state.serverUrl, '/notes/like/' + this.noteId), {}, {
-          headers: utils.getAuthorizedHeader()
-        })
+        axios.post(utils.composeUrl(this.$store.state.serverUrl, '/notes/like/' + this.noteId))
           .then(() => {
             this.$message.success('点赞成功~')
             this.likeNote = true
@@ -174,9 +163,7 @@ export default {
             }
           })
       } else {
-        axios.post(utils.composeUrl(this.$store.state.serverUrl, '/notes/unlike/' + this.noteId), {}, {
-          headers: utils.getAuthorizedHeader()
-        }).then(() => {
+        axios.post(utils.composeUrl(this.$store.state.serverUrl, '/notes/unlike/' + this.noteId)).then(() => {
           this.$message.warning('取消对这篇文章点赞了呢')
           this.likeNote = false
           this.likeNum = this.likeNum > 0 ? this.likeNum - 1 : 0
@@ -184,10 +171,8 @@ export default {
       }
     },
     alterStar () {
-      if (!this.likeNote) {
-        axios.post(utils.composeUrl(this.$store.state.serverUrl, '/notes/star/' + this.noteId), {}, {
-          headers: utils.getAuthorizedHeader()
-        })
+      if (!this.starNote) {
+        axios.post(utils.composeUrl(this.$store.state.serverUrl, '/notes/star/' + this.noteId))
           .then(() => {
             this.$message.success('收藏成功~')
             this.starNote = true
@@ -199,9 +184,7 @@ export default {
             }
           })
       } else {
-        axios.post(utils.composeUrl(this.$store.state.serverUrl, '/notes/unstar/' + this.noteId), {}, {
-          headers: utils.getAuthorizedHeader()
-        })
+        axios.post(utils.composeUrl(this.$store.state.serverUrl, '/notes/unstar/' + this.noteId))
           .then(() => {
             this.$message.warning('取消收藏了')
             this.starNote = false
@@ -226,7 +209,7 @@ export default {
     width: 100%;
     bottom: 0;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: flex-start;
 }
 
 .note-title-wrap{

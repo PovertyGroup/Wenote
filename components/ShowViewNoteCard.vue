@@ -11,12 +11,13 @@ el-card.home-note(:class="cardExpanded ? 'expanded' : 'folded'")
       div.info-item
         i.fas.fa-user
         span {{ noteAuthor }}
-  link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css")
-  link(rel="stylesheet" href="https://cdn.jsdelivr.net/github-markdown-css/2.2.1/github-markdown.css")
+    link(rel="stylesheet" :href="katexCss")
+    link(rel="stylesheet" :href="githubMarkdownCss")
   div(v-html="cardExpanded ? renderedMd : stripedMd" :class="cardExpanded ? 'markdown-body' : 'markdown-body-minimized'")
 </template>
 
 <script>
+import config from '@/config'
 import axios from 'axios'
 import remark from 'remark'
 import strip from 'strip-markdown'
@@ -25,7 +26,7 @@ import { format } from 'timeago.js'
 import utils from '../util/utils'
 
 const md = mavonEditor.getMarkdownIt()
-const mk = require('markdown-it-katex')
+const mk = require('@iktakahiro/markdown-it-katex')
 
 md.use(mk)
 
@@ -45,7 +46,9 @@ export default {
       noteMd: '',
       noteAuthor: '',
       stripedMd: '',
-      cardExpanded: false
+      cardExpanded: false,
+      githubMarkdownCss: config.mavonEditorExternalLink.markdown_css(),
+      katexCss: config.mavonEditorExternalLink.katex_css()
     }
   },
   computed: {
@@ -57,9 +60,7 @@ export default {
     }
   },
   created () {
-    axios.get(utils.composeUrl(this.$store.state.serverUrl, '/notes/' + this.id), {
-      headers: utils.getAuthorizedHeader()
-    })
+    axios.get(utils.composeUrl(this.$store.state.serverUrl, '/notes/' + this.id))
       .then((res) => {
         this.noteTitle = res.data.title
         // this.noteMd = res.data.content.substring(0, 50) + '......'

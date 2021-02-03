@@ -33,8 +33,7 @@ export default {
     }
   },
   created () {
-    axios.get(utils.composeUrl(this.$store.state.serverUrl, '/users/' + this.feid),
-      { headers: utils.getAuthorizedHeader() })
+    axios.get(utils.composeUrl(this.$store.state.serverUrl, '/users/' + this.feid))
       .then((res) => {
         this.username = res.data.username
         this.bio = res.data.bio
@@ -49,8 +48,7 @@ export default {
   },
   methods: {
     unfollow () {
-      axios.post(utils.composeUrl(this.$store.state.serverUrl, '/users/unfollow/' + this.feid), {},
-        { headers: utils.getAuthorizedHeader() })
+      axios.post(utils.composeUrl(this.$store.state.serverUrl, '/users/unfollow/' + this.feid), {})
         .then(() => {
           this.$message.warning('取消关注对方了呢，哭唧唧~,你还会再来的对吧？')
           this.followed = false

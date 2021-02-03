@@ -29,29 +29,31 @@ export default {
         name: '',
         avatar: ''
       },
-      isLogedIn: false
+      isLogedIn: this.$auth.loggedIn
     }
   },
   mounted () {
-    this.updateLoginStatus()
-    axios.get(utils.composeUrl(this.$store.state.serverUrl, '/users/me'), { headers: utils.getAuthorizedHeader() })
-      .then((res) => {
-        this.$set(this.user, 'name', res.data.username)
-        if (res.data.avatar) { this.$set(this.user, 'avatar', utils.composeUrl(this.$store.state.serverUrl, res.data.avatar.url)) } else { this.$set(this.user, 'avatar', 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png') }
-      })
-      .catch(() => {
-      // 失败
-      })
+    if (this.$auth.loggedIn) {
+      this.$set(this.user, 'name', this.$auth.user.username)
+      if (this.$auth.user.avatar) { this.$set(this.user, 'avatar', utils.composeUrl(this.$store.state.serverUrl, this.$auth.user.avatar.url)) } else { this.$set(this.user, 'avatar', 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png') }
+    }
+    // axios.get(utils.composeUrl(this.$store.state.serverUrl, '/users/me'), { headers: utils.getAuthorizedHeader() })
+    //   .then((res) => {
+    //     this.$set(this.user, 'name', res.data.username)
+    //     if (res.data.avatar) { this.$set(this.user, 'avatar', utils.composeUrl(this.$store.state.serverUrl, res.data.avatar.url)) } else { this.$set(this.user, 'avatar', 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png') }
+    //   })
+    //   .catch(() => {
+    //   // 失败
+    //   })
   },
   methods: {
     handleCommand (command) {
       if (command === 'logout') {
-        localStorage.removeItem('jwt')
-        localStorage.removeItem('id')
-        this.$router.push('/login')
+        this.$auth.logout()
+        this.$router.push('/home')
       }
       if (command === 'info') {
-        this.$router.push(`/info/${utils.store.info}/notes`)
+        this.$router.push(`/info/${this.$auth.user.id}/notes`)
       }
       if (command === 'creat-note') {
         // this.$message.error("dnmd把接口给我！")
@@ -67,11 +69,6 @@ export default {
             // console.log(err.data)
             throw err
           })
-      }
-    },
-    updateLoginStatus () {
-      if (utils.store.jwt) {
-        this.isLogedIn = true
       }
     }
   }

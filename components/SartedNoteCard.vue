@@ -12,8 +12,6 @@ el-container().main-container
 import ShowNoteCard from '@/components/ShowNoteCard'
 import ShowViewNoteCard from '@/components/ShowViewNoteCard'
 import NothingCard from '@/components/NothingCard'
-import axios from 'axios'
-import utils from '../util/utils'
 
 export default {
   name: 'SartedNoteCard',
@@ -41,16 +39,18 @@ export default {
     }
   },
   created () {
-    axios.get(utils.composeUrl(this.$store.state.serverUrl, '/users/me'), {
-      headers: utils.getAuthorizedHeader()
-    })
-      .then((res) => {
-        if (res.data.stared_notes.length === 0) { this.val = false }
-        this.stared_notes = res.data.stared_notes
-      })
-      .catch(() => {
-      // 失败 TODO
-      })
+    if (this.$auth.user.stared_notes.length === 0) { this.val = false }
+    this.stared_notes = this.$auth.user.stared_notes
+    // axios.get(utils.composeUrl(this.$store.state.serverUrl, '/users/me'), {
+    //   headers: utils.getAuthorizedHeader()
+    // })
+    //   .then((res) => {
+    //     if (res.data.stared_notes.length === 0) { this.val = false }
+    //     this.stared_notes = res.data.stared_notes
+    //   })
+    //   .catch(() => {
+    //   // 失败 TODO
+    //   })
   }
 }
 </script>

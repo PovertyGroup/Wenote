@@ -38,14 +38,13 @@ export default {
     }
   },
   created () {
-    axios.get(utils.composeUrl(this.$store.state.serverUrl, '/users/' + this.frid),
-      { headers: utils.getAuthorizedHeader() })
+    axios.get(utils.composeUrl(this.$store.state.serverUrl, '/users/' + this.frid))
       .then((res) => {
         this.username = res.data.username
         this.bio = res.data.bio
         if (res.data.avatar) { this.avatar = utils.composeUrl(this.$store.state.serverUrl, res.data.avatar.url) } else { this.avatar = 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png' }
         for (let fri = 0; fri < res.data.followers.length; fri++) {
-          if (res.data.followers[fri] === utils.store.info) {
+          if (res.data.followers[fri] === this.$auth.user.id) {
             this.followed = true
             break
           }
@@ -54,8 +53,7 @@ export default {
   },
   methods: {
     follow () {
-      axios.post(utils.composeUrl(this.$store.state.serverUrl, '/users/follow/' + this.frid), {},
-        { headers: utils.getAuthorizedHeader() })
+      axios.post(utils.composeUrl(this.$store.state.serverUrl, '/users/follow/' + this.frid))
         .then(() => {
           this.$message.success('已成功互粉~')
           this.followed = true
@@ -65,8 +63,7 @@ export default {
         })
     },
     unfollow () {
-      axios.post(utils.composeUrl(this.$store.state.serverUrl, '/users/unfollow/' + this.frid), {},
-        { headers: utils.getAuthorizedHeader() })
+      axios.post(utils.composeUrl(this.$store.state.serverUrl, '/users/unfollow/' + this.frid), {})
         .then(() => {
           this.$message.info('取消关注对方了呢，哭唧唧~')
           this.followed = false
