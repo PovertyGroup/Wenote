@@ -16,7 +16,7 @@ header {
 .el-main{
     min-height: calc(100% - 100px);
     bottom: 0;
-    margin: 10px; 
+    margin: 10px;
     display: flex;
 }
 .el-footer{
