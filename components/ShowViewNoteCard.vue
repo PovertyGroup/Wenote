@@ -6,7 +6,7 @@ el-card.home-note(:class="cardExpanded ? 'expanded' : 'folded'")
       span.note-title {{ noteTitle }}
 
     .info-wrap
-      el-button.expand-btn(@click="expandMd" size="mini") {{ cardExpanded ? '收起' : '展开'}}
+      el-button.expand-btn(@click="alterExpandState" size="mini") {{ cardExpanded ? '收起' : '展开'}}
       div.info-item
         i.fas.fa-calendar-alt
         span {{ dateFormatted }}
