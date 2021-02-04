@@ -6,9 +6,7 @@ el-card.home-note(:class="cardExpanded ? 'expanded' : 'folded'")
       span.note-title {{ noteTitle }}
 
     .info-wrap
-      el-button.expand-btn(@click="expandMd" size="mini")
-        div(v-if="cardExpanded===false") 展开
-        div(v-if="cardExpanded===true") 收起
+      el-button.expand-btn(@click="expandMd" size="mini") {{ cardExpanded ? '收起' : '展开'}}
       div.info-item
         i.fas.fa-calendar-alt
         span {{ dateFormatted }}
@@ -96,7 +94,7 @@ export default {
         })
     },
     alterExpandState () {
-      this.cardExpanded ? this.cardExpanded = false : this.cardExpanded = true
+      this.cardExpanded = !this.cardExpanded
     },
     takeFirstNLines (txt, l) {
       let ret = ''
@@ -155,6 +153,10 @@ export default {
   margin: auto 10px;
 }
 
+.expand-btn{
+  margin: auto 10px auto 10px;
+}
+
 @media screen and (max-width: 610px) {
   .info-item * {
     width: fit-content;
@@ -170,9 +172,5 @@ export default {
 <style>
 .home-note .markdown-body-minimized p {
   margin: 0;
-}
-
-.expand-btn{
-  margin: auto 10px auto 10px;
 }
 </style>
