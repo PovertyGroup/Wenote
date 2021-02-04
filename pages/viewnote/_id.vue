@@ -24,7 +24,7 @@
             el-button.edit-note(v-if="this.isAuthor" type="primary" size="mini"
                                 icon="el-icon-edit-outline" @click="editnote()") 编辑
             i.far.fa-calendar-alt
-            p.note-update-time 发布于{{ this.updateTime }}
+            p.note-update-time 发布于 {{ this.updateTime }}
         MarkdownCard.note(:mdSource="this.noteMd")
       NoSuchNoteCard(v-if="this.noSuchNote").not-such-note-card
     .buttons
@@ -61,6 +61,7 @@ export default {
       noteAuthor: '',
       noteAvatar: '',
       noteId: '',
+      updateDate: '',
       likeNum: '',
       starNum: '',
       noteTags: [],
@@ -76,7 +77,7 @@ export default {
   },
   computed: {
     updateTime () {
-      return format(this.noteAuthor.updatedAt, 'zh_CN')
+      return format(Date.parse(this.updateDate), 'zh_CN')
     },
     showActionButtons () {
       return !this.noSuchNote
@@ -85,6 +86,7 @@ export default {
   created () {
     axios.get(utils.composeUrl(this.$store.state.serverUrl, '/notes/' + this.$route.params.id))
       .then((res) => {
+        this.updateDate = res.data.updatedAt
         this.noteTitle = res.data.title
         this.noteMd = res.data.content
         this.noteAuthor = res.data.author
@@ -100,20 +102,22 @@ export default {
         this.likeNum = res.data.likers.length
         this.starNum = res.data.starers.length
         this.noteTags = res.data.tags ? res.data.tags : []
-        if (this.noteAuthor.followers && this.noteAuthor.followers.includes(this.$auth.user.id)) {
-          this.followed = true
-        }
-        if (this.noteLikers && this.noteLikers.includes(this.$auth.user.id)) {
-          this.likeNote = true
-        }
-        if (this.noteStarers && this.noteStarers.includes(this.$auth.user.id)) {
-          this.starNote = true
-        }
-        // if(this.noteTags && this.noteTags.length == 0){
-        //   this.Tags = false;
-        // }
-        if (res.data.author.id === this.$auth.user.id) {
-          this.isAuthor = true
+        if (this.$auth.loggedIn) {
+          if (this.noteAuthor.followers && this.noteAuthor.followers.includes(this.$auth.user.id)) {
+            this.followed = true
+          }
+          if (this.noteLikers && this.noteLikers.includes(this.$auth.user.id)) {
+            this.likeNote = true
+          }
+          if (this.noteStarers && this.noteStarers.includes(this.$auth.user.id)) {
+            this.starNote = true
+          }
+          // if(this.noteTags && this.noteTags.length == 0){
+          //   this.Tags = false;
+          // }
+          if (res.data.author.id === this.$auth.user.id) {
+            this.isAuthor = true
+          }
         }
       })
       .catch(() => {

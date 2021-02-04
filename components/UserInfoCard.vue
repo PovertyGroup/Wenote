@@ -13,9 +13,9 @@ div.user-info-card
   .not-logged-in(v-else)
     ul.action
       li.action-item.login
-        el-link(:underline="false", href="/login") 登录
+        NuxtLink.nuxtlink.black-link(to="/login") 登录
       li.action-item.register
-        el-link(:underline="false", href="/register") 注册
+        NuxtLink.nuxtlink.black-link(to="/register") 注册
 </template>
 
 <script scoped>
@@ -37,19 +37,12 @@ export default {
       this.$set(this.user, 'name', this.$auth.user.username)
       if (this.$auth.user.avatar) { this.$set(this.user, 'avatar', utils.composeUrl(this.$store.state.serverUrl, this.$auth.user.avatar.url)) } else { this.$set(this.user, 'avatar', 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png') }
     }
-    // axios.get(utils.composeUrl(this.$store.state.serverUrl, '/users/me'), { headers: utils.getAuthorizedHeader() })
-    //   .then((res) => {
-    //     this.$set(this.user, 'name', res.data.username)
-    //     if (res.data.avatar) { this.$set(this.user, 'avatar', utils.composeUrl(this.$store.state.serverUrl, res.data.avatar.url)) } else { this.$set(this.user, 'avatar', 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png') }
-    //   })
-    //   .catch(() => {
-    //   // 失败
-    //   })
   },
   methods: {
     handleCommand (command) {
       if (command === 'logout') {
         this.$auth.logout()
+        this.isLogedIn = false
         this.$router.push('/home')
       }
       if (command === 'info') {
@@ -57,7 +50,7 @@ export default {
       }
       if (command === 'creat-note') {
         // this.$message.error("dnmd把接口给我！")
-        axios.post(utils.composeUrl(this.$store.state.serverUrl, '/notes'), { title: '新笔记', content: '# ~~请在这儿输入你的笔记内容~~' }, { headers: utils.getAuthorizedHeader() })
+        axios.post(utils.composeUrl(this.$store.state.serverUrl, '/notes'), { title: '新笔记', content: '# ~~请在这儿输入你的笔记内容~~' })
           .then((res) => {
             this.$message.success('创建新笔记成功')
             setTimeout(() => {

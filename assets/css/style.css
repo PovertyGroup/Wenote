@@ -27,3 +27,42 @@ body {
 .el-scrollbar__thumb {
   background-color: rgba(144,147,153,.7) !important;
 }
+
+.el-link {
+  transition: 0.3s;
+}
+
+.nuxtlink {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    position: relative;
+    text-decoration: none;
+    outline: 0;
+    padding: 0;
+    color: #409EFF;
+    font-weight: 500;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.nuxtlink:hover {
+    color: #66b1ff;
+}
+
+.black-link {
+  color: #3e3e3e;
+}
+
+.black-link:hover {
+  color: #818181;
+}
+
+@media screen and (max-width: 800px) {
+  .el-main {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+}
