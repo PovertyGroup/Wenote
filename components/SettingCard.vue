@@ -103,8 +103,8 @@ export default {
   justify-content: center;
   overflow: hidden;
   cursor: pointer;
-  width: 250px; 
-  height: 250px; 
+  width: 250px;
+  height: 250px;
   margin: auto auto auto 9%
 }
 .hidden-form{

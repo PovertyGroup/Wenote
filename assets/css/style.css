@@ -60,6 +60,10 @@ body {
   color: #818181;
 }
 
+.katex-block {
+  overflow-x: auto;
+}
+
 @media screen and (max-width: 800px) {
   .el-main {
     padding: 0 !important;

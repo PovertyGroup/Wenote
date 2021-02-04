@@ -112,6 +112,15 @@ export default {
   font-size: 17px;
 }
 
+@media screen and (max-width: 450px) {
+  .name {
+    display: none;
+  }
+  .avatar {
+    margin: 0;
+  }
+}
+
 @media screen and (max-width: 610px) {
   .register{
     display: none;
