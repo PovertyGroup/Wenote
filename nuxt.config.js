@@ -58,6 +58,7 @@ export default {
   },
 
   auth: {
+    cookie: false,
     redirect: false,
     // redirect: {
     //   login: '/login',
