@@ -61,7 +61,7 @@ body {
 }
 
 .katex-block {
-  overflow: scroll;
+  overflow-x: auto;
 }
 
 @media screen and (max-width: 800px) {

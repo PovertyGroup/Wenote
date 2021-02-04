@@ -109,10 +109,6 @@ export default {
 </script>
 
 <style scoped>
-.home-note {
-  width: 100%;
-}
-
 .home-note.folded{
   height: 225px;
 }
