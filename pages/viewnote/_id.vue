@@ -15,11 +15,14 @@
             el-button.button(v-if="this.followed" icon="el-icon-check"
                             size="mini" @click="unfollow()") 已关注
             i.far.fa-thumbs-up.like-icon
-            p.like-num 点赞 {{likeNum}}
+            span.like-tooltip 点赞
+            span.like-num {{likeNum}}
             i.far.fa-star.star-icon
-            p.like-num 收藏 {{starNum}}
-            i.el-icon-collection-tag.tag-icon(v-if="Tags")
-            el-tag.tags(v-for="tag in noteTags" :key="tag" type="info" effect="dark" size="mini") {{tag}}
+            span.star-tooltip 收藏
+            p.like-num {{starNum}}
+            .tags-wrap
+              i.el-icon-collection-tag.tag-icon(v-if="Tags")
+              el-tag.tags(v-for="tag in noteTags" :key="tag" type="info" effect="dark" size="mini") {{tag}}
           .update-time
             el-button.edit-note(v-if="this.isAuthor" type="primary" size="mini"
                                 icon="el-icon-edit-outline" @click="editnote()") 编辑
@@ -370,6 +373,14 @@ export default {
   margin: 5px 15px 5px 15px;
 }
 
+.like-tooltip, .star-tooltip{
+  margin: auto 0 auto 5px;
+}
+
+.tags-wrap {
+  display: inline-block;
+}
+
 @media screen and (max-width: 1300px) {
   .md-card{
     width: 80%;
@@ -387,6 +398,9 @@ export default {
 }
 
 @media screen and (max-width: 750px) {
+  .like-tooltip, .star-tooltip, .update-time, .tags-wrap{
+    display: none;
+  }
   .buttons {
     left: 80%;
   }
@@ -396,10 +410,23 @@ export default {
   .buttons {
     left: 75%;
   }
+  .note {
+    padding: 10px;
+  }
 }
+
 @media screen and (max-width: 380px) {
+  .noteinfo {
+    padding: 0 0 0 5px;
+  }
   .buttons {
     left: 70%;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .buttons {
+    left: 60%;
   }
 }
 </style>
