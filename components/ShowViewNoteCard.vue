@@ -1,14 +1,14 @@
 <template lang="pug">
-el-card.home-note(:class="cardState ? 'expanded' : 'folded'")
+el-card.home-note(:class="cardExpanded ? 'expanded' : 'folded'")
   div(slot="header").note-info
     el-link(:underline="false" @click="ClicknoteUrl()")
       i.note-title.el-icon-notebook-2
       span.note-title {{ noteTitle }}
 
     .info-wrap
-      el-button.expand(@click="expandMd()")
-        div(v-if="cardState===false") 展开
-        div(v-if="cardState===true") 收起
+      el-button.expand-btn(@click="expandMd" size="mini")
+        div(v-if="cardExpanded===false") 展开
+        div(v-if="cardExpanded===true") 收起
       div.info-item
         i.fas.fa-calendar-alt
         span {{ dateFormatted }}
@@ -17,7 +17,7 @@ el-card.home-note(:class="cardState ? 'expanded' : 'folded'")
         span {{ noteAuthor }}
     link(rel="stylesheet" :href="katexCss")
     link(rel="stylesheet" :href="githubMarkdownCss")
-  div(v-html="cardState ? renderedMd : stripedMd" :class="cardState ? 'markdown-body' : 'markdown-body-minimized'")
+  div(v-html="cardExpanded ? renderedMd : stripedMd" :class="cardExpanded ? 'markdown-body' : 'markdown-body-minimized'")
 </template>
 
 <script>
@@ -50,8 +50,7 @@ export default {
       noteMd: '',
       noteAuthor: '',
       stripedMd: '',
-      cardState: false,
-
+      cardExpanded: false,
       githubMarkdownCss: config.mavonEditorExternalLink.markdown_css(),
       katexCss: config.mavonEditorExternalLink.katex_css()
     }
@@ -96,8 +95,8 @@ export default {
           component.stripedMd = md.render(component.takeFirstNLines(file.contents, 10))
         })
     },
-    expandMd () {
-      this.cardState ? this.cardState = false : this.cardState = true
+    alterExpandState () {
+      this.cardExpanded ? this.cardExpanded = false : this.cardExpanded = true
     },
     takeFirstNLines (txt, l) {
       let ret = ''
@@ -173,7 +172,7 @@ export default {
   margin: 0;
 }
 
-.expand{
+.expand-btn{
   margin: auto 10px auto 10px;
 }
 </style>
