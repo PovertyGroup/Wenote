@@ -4,7 +4,7 @@ el-card.home-note(:class="cardState ? 'expanded' : 'folded'")
     el-link(:underline="false" @click="ClicknoteUrl()")
       i.note-title.el-icon-notebook-2
       span.note-title {{ noteTitle }}
-    
+
     .info-wrap
       el-button.expand(@click="expandMd()")
         div(v-if="cardState===false") 展开
@@ -90,7 +90,7 @@ export default {
       const component = this
       remark()
         .use(strip)
-        .process(this.noteMd) 
+        .process(this.noteMd)
         .then((file, err) => {
           if (err) { throw err }
           component.stripedMd = md.render(component.takeFirstNLines(file.contents, 10))
