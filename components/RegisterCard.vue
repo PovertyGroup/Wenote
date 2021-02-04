@@ -1,5 +1,5 @@
 <template lang="pug">
-.register-card
+el-card.register-card
   el-form(:model="form", label-width="80px", :rules="rules", ref="ruleForm")
     .register-title 加入 Wenote
     el-form-item(label="用户名", prop="username")
@@ -11,7 +11,7 @@
     el-form-item(label="确认密码", prop="passwordagain")
       el-input.input(v-model="form.passwordagain" placeholder="请再次输入密码" :show-password="true")
     el-button.register-button(type="primary" :underline = "false" @click="notifySubmit()") 注册
-  el-link.login-link(type="primary", :underline="false", href="/login") 已有账号？前往登录
+    el-link.login-link(type="primary", :underline="false", href="/login") 已有账号？前往登录
 </template>
 
 <script>
@@ -80,8 +80,7 @@ export default {
 .register-button{
   max-width: 60%;
   width: 200px;
-  margin: 10px 15px auto 25px;
-  float: center;
+  margin: auto 25% auto 25%;
 }
 .register-card{
   max-width: 400px;
@@ -105,6 +104,6 @@ export default {
 }
 
 .login-link {
-  margin-top: 10px;
+  margin: 15px auto auto 33%;
 }
 </style>

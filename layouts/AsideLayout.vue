@@ -8,8 +8,6 @@
             el-container()
                 el-main
                     slot(name="main")
-                el-footer
-                    slot(name="footer")
 </template>
 
 <style scoped>

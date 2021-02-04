@@ -1,7 +1,7 @@
 <template lang="pug">
 div.setting
-    el-card(show="hover" style = "width : 350px").avatar-card
-      img.avatar(:src="user.avatar", style="width: 250px; height: 250px" @click="handleAvatarSelect()")
+    el-card(show="hover" style = "width : 350px; height : 350px" ).avatar-card
+      img.avatar(:src="user.avatar" @click="handleAvatarSelect()")
       form(ref="avatar-form" @submit="uploadAvatar()").hidden-form
         input(type="text" name="ref" value="user")
         input(type="text" name="refId" :value="this.id")
@@ -11,17 +11,19 @@ div.setting
       el-form(label-width="80px")
         el-form-item(label="用户名", prop="user.name")
           el-input(v-model="user.name" @input="")
+        el-form-item(label="ID", prop="id")
+          el-input(v-model="id" :disabled="true")
         el-form-item(label="个人简介" prop="user.bio")
           el-input(v-model="user.bio" @input="")
         el-form-item(label="性别" prop="user.gender")
-          el-select(v-model="user.gender")
-            el-option(label="小哥哥" value="boy")
-            el-option(label="小姐姐" value="girl")
-            el-option(label="隐藏" value="unknown")
+          el-select(v-model="user.gender" )
+              el-option(label="小哥哥" value="boy")
+              el-option(label="小姐姐" value="girl")
+              el-option(label="隐藏" value="unknown" style="height: 48px")
     el-button.save(
       type="button",
       @click="saveinfo()",
-      style="width: 100px; height: 50px; background: #8fbbfd3a"
+      style="width: 100px; height: 50px; background: #8fbbfd3a; margin: 50px auto auto 35%"
     ) 保存
 </template>
 
@@ -106,17 +108,17 @@ export default {
 }
 
 .avatar{
-  margin: 5px;
   padding: 2px;
   border-radius: 50%;
-  width: 36px;
-  height: 36px;
   vertical-align:middle;
   display: inline-block;
   align-items: center;
   justify-content: center;
   overflow: hidden;
   cursor: pointer;
+  width: 250px; 
+  height: 250px; 
+  margin: auto auto auto 9%
 }
 .hidden-form{
   visibility: hidden;
