@@ -40,14 +40,16 @@ export default {
         gender: '',
         bio: ''
       },
-      id: this.$auth.user.id
+      id: this.$auth.loggedIn ? this.$auth.user.id : ''
     }
   },
   created () {
-    this.user.bio = this.$auth.user.bio
-    this.user.name = this.$auth.user.username
-    this.user.gender = this.$auth.user.gender
-    if (this.$auth.user.avatar) { this.user.avatar = utils.composeUrl(this.$store.state.serverUrl, this.$auth.user.avatar.url) } else { this.user.avatar = this.$store.state.defaultAvatar }
+    if (this.$auth.loggedIn) {
+      this.user.bio = this.$auth.user.bio
+      this.user.name = this.$auth.user.username
+      this.user.gender = this.$auth.user.gender
+      if (this.$auth.user.avatar) { this.user.avatar = utils.composeUrl(this.$store.state.serverUrl, this.$auth.user.avatar.url) } else { this.user.avatar = this.$store.state.defaultAvatar }
+    }
   },
   methods: {
     saveinfo () {

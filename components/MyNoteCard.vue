@@ -25,8 +25,10 @@ export default {
     }
   },
   created () {
-    if (this.$auth.user.notes.length === 0) { this.val = false }
-    this.notes = this.$auth.user.notes
+    if (this.$auth.loggedIn) {
+      if (this.$auth.user.notes.length === 0) { this.val = false }
+      this.notes = this.$auth.user.notes
+    }
   }
 }
 </script>

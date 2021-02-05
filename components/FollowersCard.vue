@@ -26,12 +26,9 @@ export default {
     }
   },
   created () {
-    try {
-      // TO BE VERIFY
+    if (this.$auth.loggedIn) {
       if (this.$auth.user.followers.length === 0) { this.val = false }
       this.followers = this.$auth.user.followers
-    } catch (e) {
-      // 失败
     }
   }
 }

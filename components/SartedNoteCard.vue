@@ -39,8 +39,10 @@ export default {
     }
   },
   created () {
-    if (this.$auth.user.stared_notes.length === 0) { this.val = false }
-    this.stared_notes = this.$auth.user.stared_notes
+    if (this.$auth.loggedIn) {
+      if (this.$auth.user.stared_notes.length === 0) { this.val = false }
+      this.stared_notes = this.$auth.user.stared_notes
+    }
   }
 }
 </script>

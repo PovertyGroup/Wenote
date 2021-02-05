@@ -32,12 +32,9 @@ export default {
     }
   },
   created () {
-    try {
-      // TO BE VERIFY
+    if (this.$auth.loggedIn) {
       if (this.$auth.user.followees.length === 0) { this.val = false }
       this.followees = this.$auth.user.followees
-    } catch (e) {
-      // 失败
     }
   }
 }
