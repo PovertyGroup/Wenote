@@ -24,18 +24,12 @@ div.info
             i.el-icon-setting
             span() 设置
     template(slot="main")
-      div(v-if="this.$route.params.tab=='notes'")
-        MyNoteCard
-      div(v-else-if="this.$route.params.tab=='starednotes'")
-        SartedNoteCard
-      div(v-else-if="this.$route.params.tab=='follewers'")
-        FollowersCard
-      div(v-else-if="this.$route.params.tab=='followees'")
-        FolloweesCard
-      div(v-else-if="this.$route.params.tab=='settings'").setting
-        SettingCard
-      div(v-else)
-        MyNoteCard
+      MyNoteCard(v-if="this.$route.params.tab=='notes'")
+      SartedNoteCard(v-else-if="this.$route.params.tab=='starednotes'")
+      FollowersCard(v-else-if="this.$route.params.tab=='follewers'")
+      FolloweesCard(v-else-if="this.$route.params.tab=='followees'")
+      SettingCard(v-else-if="this.$route.params.tab=='settings'")
+      MyNoteCard(v-else)
     template(slot="footer")
       Footer
 </template>
@@ -90,8 +84,5 @@ export default {
 
 .el-menu{
   width: 100%;
-}
-.setting{
-  margin: auto;
 }
 </style>
