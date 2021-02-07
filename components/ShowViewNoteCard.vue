@@ -22,11 +22,10 @@ import config from '@/config'
 import axios from 'axios'
 import remark from 'remark'
 import strip from 'strip-markdown'
-import { mavonEditor } from 'mavon-editor'
 import { format } from 'timeago.js'
 import utils from '../util/utils'
 
-const md = mavonEditor.getMarkdownIt()
+const md = require('markdown-it')()
 const mk = require('@iktakahiro/markdown-it-katex')
 
 md.use(mk)

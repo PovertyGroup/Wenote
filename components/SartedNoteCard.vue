@@ -1,41 +1,25 @@
 <template lang="pug">
-el-container().main-container
-  el-container.home
-    div(v-for="note in stared_notes" :key="note.id")
-      div(v-if="val")
-        ShowViewNoteCard(:id="note.id")
-    div(v-if="!val")
-      NothingCard
+.stared-notes-wrap
+  div(v-if="val" v-for="note in stared_notes" :key="note.id").note-card
+    ShowViewNoteCard(:id="note.id")
+  div(v-else)
+    NothingCard
 </template>
 
 <script>
-import ShowNoteCard from '@/components/ShowNoteCard'
 import ShowViewNoteCard from '@/components/ShowViewNoteCard'
 import NothingCard from '@/components/NothingCard'
 
 export default {
   name: 'SartedNoteCard',
   components: {
-    ShowNoteCard,
     ShowViewNoteCard,
     NothingCard
-  },
-  props: {
-    id: {
-      type: String,
-      default: '',
-      required: true
-    },
-    noteTitle: {
-      type: String,
-      default: '',
-      required: true
-    }
   },
   data () {
     return {
       val: true,
-      stared_notes: ''
+      stared_notes: []
     }
   },
   created () {
@@ -48,20 +32,33 @@ export default {
 </script>
 
 <style scoped>
-.home{
+.stared-notes-wrap{
   margin: auto;
+  width: 70%;
+  align-content: center;
   display: flex;
-  flex-wrap:wrap;
-  width: fit-content;
-  max-width: 100%;
-  justify-content: center;
-  margin: auto 50px auto 50px;
+  flex-direction: column;
 }
+
 .note-card{
-  margin: 0 40px 30px 0;
+  margin: 0 0 30px 0;
 }
-.linknote{
-  font-size: 20px;
-  margin: auto;
+
+@media screen and (max-width: 1300px) {
+  .stared-notes-wrap{
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .stared-notes-wrap{
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .stared-notes-wrap{
+    width: 100%;
+  }
 }
 </style>

@@ -21,7 +21,7 @@ div.info
               el-menu-item(index="2-1" @click="() => switchTo('followees')") 关注
               el-menu-item(index="2-2" @click="() => switchTo('follewers')") 粉丝
           el-menu-item(index = "3" @click="() => switchTo('settings')")
-            i(class = "el-icon-setting")
+            i.el-icon-setting
             span() 设置
     template(slot="main")
       div(v-if="this.$route.params.tab=='notes'")
@@ -50,7 +50,6 @@ import SettingCard from '@/components/SettingCard'
 import SartedNoteCard from '@/components/SartedNoteCard'
 import FollowersCard from '@/components/FollowersCard'
 import FolloweesCard from '@/components/FolloweesCard'
-// import Vue from "vue";
 
 export default {
   name: 'Info',
@@ -80,6 +79,7 @@ export default {
 
 <style  scoped>
 .side{
+  height: 100%;
   width: 100%;
   display: flex;
 }

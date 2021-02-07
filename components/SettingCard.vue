@@ -1,18 +1,17 @@
 <template lang="pug">
 div.setting
     el-card(show="hover" style = "width : 350px; height : 350px" ).avatar-card
-      img.avatar(:src="user.avatar" @click="handleAvatarSelect()")
-      form(ref="avatar-form" @submit="uploadAvatar()").hidden-form
-        input(type="text" name="ref" value="user")
-        input(type="text" name="refId" :value="this.id")
-        input(type="text" name="field" value="avatar")
-        input(type="file" name="files" ref="file-selector")
+      img.avatar(:src="user.avatar" @click="handleAvatarSelect")
+      form(ref="avatar-form" @submit="uploadAvatar").hidden-form
+        input(name="ref" value="user")
+        input(name="field" value="avatar")
+        input(type="file" name="files" accept="image/png,image/webp,image/jpeg" ref="file-selector")
     el-card(show="hover" style = "width : 350px").info-card
       el-form(label-width="80px")
         el-form-item(label="用户名", prop="user.name")
           el-input(v-model="user.name" @input="")
         el-form-item(label="ID", prop="id")
-          el-input(v-model="id" :disabled="true")
+          el-input(v-model="user.id" :disabled="true")
         el-form-item(label="个人简介" prop="user.bio")
           el-input(v-model="user.bio" @input="")
         el-form-item(label="性别" prop="user.gender")
@@ -38,9 +37,9 @@ export default {
       user: {
         name: '',
         gender: '',
-        bio: ''
-      },
-      id: this.$auth.loggedIn ? this.$auth.user.id : ''
+        bio: '',
+        id: ''
+      }
     }
   },
   created () {
@@ -48,12 +47,12 @@ export default {
       this.user.bio = this.$auth.user.bio
       this.user.name = this.$auth.user.username
       this.user.gender = this.$auth.user.gender
+      this.user.id = this.$auth.user.id
       if (this.$auth.user.avatar) { this.user.avatar = utils.composeUrl(this.$store.state.serverUrl, this.$auth.user.avatar.url) } else { this.user.avatar = this.$store.state.defaultAvatar }
     }
   },
   methods: {
     saveinfo () {
-      this.uploadAvatar()
       axios.put(utils.composeUrl(this.$store.state.serverUrl, '/users/' + this.$auth.user.id), {
         username: this.user.name,
         bio: this.user.bio,
@@ -75,14 +74,15 @@ export default {
     },
     handleAvatarSelect () {
       this.$refs['file-selector'].click()
-      // if(this.$refs['file-selector'].value)
-      //   this.$refs['avatar-form'].submit();
+      this.uploadAvatar()
     },
     uploadAvatar () {
       const request = new XMLHttpRequest()
-      request.open('PUT', '/upload')
+      request.open('POST', utils.composeUrl(this.$store.state.serverUrl, '/upload'))
       request.setRequestHeader('Authorization', this.$auth.strategy.token.get())
-      request.send(new FormData(this.$refs['avatar-form']))
+      const data = new FormData(this.$refs['avatar-form'])
+      data.append('refId', this.user.id)
+      request.send(data)
     }
   }
 }
@@ -110,6 +110,6 @@ export default {
   margin: auto auto auto 9%
 }
 .hidden-form{
-  visibility: hidden;
+  display: none;
 }
 </style>

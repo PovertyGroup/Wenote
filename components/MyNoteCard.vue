@@ -1,21 +1,19 @@
 <template lang="pug">
-el-container().main-container
-  el-container.home
-    div(v-for="note in notes" :key="note").note-card
-      div(v-if="val")
-        ShowNoteCard(:id="note")
-    div(v-if="!val")
-      NothingCard
+.owned-notes-wrap
+  div(v-if="val" v-for="note in notes" :key="note").note-card
+    ShowViewNoteCard(:id="note")
+  div(v-else)
+    NothingCard
 </template>
 
 <script>
-import ShowNoteCard from '@/components/ShowNoteCard'
+import ShowViewNoteCard from '@/components/ShowViewNoteCard'
 import NothingCard from '@/components/NothingCard'
 
 export default {
   name: 'MyNoteCard',
   components: {
-    ShowNoteCard,
+    ShowViewNoteCard,
     NothingCard
   },
   data () {
@@ -34,17 +32,33 @@ export default {
 </script>
 
 <style scoped>
-.home{
+.owned-notes-wrap{
   margin: auto;
+  width: 70%;
+  align-content: center;
   display: flex;
-  flex-wrap:wrap;
-  width: fit-content;
-  max-width: 100%;
-  justify-content: center;
-  margin: auto 50px auto 50px;
+  flex-direction: column;
 }
 
 .note-card{
-  margin: 0 40px 30px 0;
+  margin: 0 0 30px 0;
+}
+
+@media screen and (max-width: 1300px) {
+  .owned-notes-wrap{
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .owned-notes-wrap{
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .owned-notes-wrap{
+    width: 100%;
+  }
 }
 </style>

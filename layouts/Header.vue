@@ -110,7 +110,7 @@ export default {
 }
 
 .action-item:first-child{
-  margin-right: 30px;
+  margin-right: 20px;
 }
 
 .sitename {

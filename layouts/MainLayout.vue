@@ -9,6 +9,21 @@ el-scrollbar
             slot(name="footer")
 </template>
 
+<script>
+export default {
+  asyncData ({ $auth }) {
+    if ($auth.loggedIn) {
+      $auth.fetchUser()
+    }
+  },
+  mounted () {
+    if (this.$auth.loggedIn) {
+      this.$auth.fetchUser()
+    }
+  }
+}
+</script>
+
 <style scoped>
 header {
     padding-bottom: 20px;

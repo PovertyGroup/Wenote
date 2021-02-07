@@ -19,12 +19,6 @@ export default {
     ShowFolloweesCard,
     NothingCard
   },
-  props: {
-    id: {
-      type: String,
-      required: true
-    }
-  },
   data () {
     return {
       followees: '',

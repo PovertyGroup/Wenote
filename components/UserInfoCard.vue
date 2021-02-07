@@ -98,7 +98,6 @@ export default {
 .name{
   margin: 0 5px 0 10px;
   padding-bottom: 5px;
-  font-size: 20px;
   vertical-align:middle;
   display: inline-block;
 }
