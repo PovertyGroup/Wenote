@@ -24,6 +24,7 @@ export default {
   },
   created () {
     if (this.$auth.loggedIn) {
+      this.$auth.fetchUser()
       if (this.$auth.user.notes.length === 0) { this.val = false }
       this.notes = this.$auth.user.notes
     }

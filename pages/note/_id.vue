@@ -29,17 +29,17 @@
                     )
                     el-button(v-else size="small" @click="showInput").tags + 添加新标签
                 .public-switch-wrap
-                    p.setting-title 公开
+                    span.setting-title 公开
                     el-switch.public-switch(v-model="notePublic" @change="updatePublic")
             .note-info-wrap
                 .note-info-item
                     i.far.fa-user
-                    p.note-author-name {{ this.noteAuthor.username }}
+                    span.note-author-name {{ this.noteAuthor.username }}
                 .note-info-item
                     i.far.fa-calendar-alt
-                    p.note-pudate-time {{ this.updateTime }}
+                    span.note-pudate-time {{ this.updateTime }}
         div.editor-wrap(v-if="!this.noSuchNote")
-          mavon-editor(v-model="noteMd" language="zh-CN" :toolbars="toolbars" @save="saveNote" :externalLink="externalLink")
+          mavon-editor(v-model="noteMd" language="zh-CN" :toolbars="toolbars" @save="saveNote" @imgAdd="uploadImage" :externalLink="externalLink" ref="mavon")
                 template(slot="left-toolbar-after")
                     el-button.op-icon.fa.fa-trash(type="button" aria-hidden="true"
                             :title="`真的要删除吗`" @click="delnote()"
@@ -270,6 +270,24 @@ export default {
             type: 'error'
           })
         })
+    },
+    uploadImage (filename, file) {
+      const request = new XMLHttpRequest()
+      const vue = this
+      request.open('POST', utils.composeUrl(this.$store.state.serverUrl, '/upload'))
+      request.setRequestHeader('Authorization', this.$auth.strategy.token.get())
+      const data = new FormData()
+      data.append('files', file)
+
+      request.onreadystatechange = () => {
+        if (request.readyState === 4) {
+          const res = JSON.parse(request.response)
+          const imgUrl = utils.composeUrl(vue.$store.state.serverUrl, res[0].url)
+          this.$refs.mavon.$img2Url(filename, imgUrl)
+        }
+      }
+
+      request.send(data)
     }
   }
 }
