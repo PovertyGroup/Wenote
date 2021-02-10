@@ -1,5 +1,7 @@
 # Wenote
-![](https://travis-ci.com/PovertyGroup/Wenote.svg?token=GFM6sTp39YCuBsvXoEK4&branch=nuxt)
+
+[![Build Status](https://travis-ci.com/PovertyGroup/Wenote.svg?token=GFM6sTp39YCuBsvXoEK4&branch=nuxt)](https://travis-ci.com/PovertyGroup/Wenote)
+
 ## Build Setup
 
 ```bash
