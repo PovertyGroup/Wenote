@@ -1,15 +1,29 @@
 <template lang="pug">
+//- el-container.con
+//-   el-aside
+//-     slot(name="aside")
+//-   el-container
+//-     el-scrollbar(style="height: 100vh; width: 100%")
+//-       el-header(style="z-index: 10")
+//-         slot(name="header")
+//-       el-main
+//-           slot(name="main")
+//-       el-footer(style="z-index: 10")
+//-         slot(name="footer")
+
 el-container.con
-  el-aside
-    slot(name="aside")
+  el-header(style="z-index: 10")
+    slot(name="header")
   el-container
-    el-scrollbar(style="height: 100vh; width: 100%")
-      el-header(style="z-index: 10")
-        slot(name="header")
-      el-main
+    el-aside(width="200px")
+      slot(name="aside")
+    el-container
+      el-scrollbar(style="height: 100vh; width: 100%")
+        el-main
           slot(name="main")
-      el-footer(style="z-index: 10")
-        slot(name="footer")
+        el-footer(style="z-index: 10")
+          slot(name="footer")
+
 </template>
 
 <script>
