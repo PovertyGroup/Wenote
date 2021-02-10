@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import ShowViewNoteCard from '@/components/ShowViewNoteCard'
+import ShowViewNoteCard from '@/components/SettingNoteCard'
 import NothingCard from '@/components/NothingCard'
 
 export default {
