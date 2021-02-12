@@ -4,7 +4,7 @@
     img(src="/icon.png" style="height: 48px; width: 48px;")
     .texts
       h1 Wenote
-      p.contrib Created by sheey & T-Fate & Codgi with ❤️
+      p.contrib Crafted by sheey & T-Fate & Codgi with ❤️
 </template>
 
 <style scoped>
