@@ -18,7 +18,8 @@ el-container.con
     el-aside(width="200px")
       slot(name="aside")
     el-container
-      el-scrollbar(style="height: 100vh; width: 100%")
+      //- 60px is the height of header
+      el-scrollbar(style="height: calc(100vh - 60px); width: 100%")
         el-main
           slot(name="main")
         el-footer(style="z-index: 10")
@@ -52,7 +53,7 @@ header {
 }
 
 .el-main {
-  min-height: calc(100vh - 188px);
+  min-height: calc(100vh - 60px);
 }
 .el-footer {
   min-height: 30px;

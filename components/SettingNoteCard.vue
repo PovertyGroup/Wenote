@@ -14,7 +14,7 @@ el-card.home-note(:class="'folded'")
         span {{ noteAuthor }}
     link(rel="stylesheet" :href="katexCss")
     link(rel="stylesheet" :href="githubMarkdownCss")
-  div(v-html="stripedMd" :class="markdown-body-minimized")
+  div.markdown-body-minimized(v-html="stripedMd")
 </template>
 
 <script>
