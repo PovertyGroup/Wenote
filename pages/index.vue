@@ -74,23 +74,22 @@ NoHeaderLayout
             div(style="margin: 20px 0")
               mavon-editor(:autofocus = "false" v-model="markdown" language="zh-CN" style="height: 400px")
       .simple.clearfix
-        .wrap
-          .simple-content
-            h3 Wenote 可以用来做什么？
-            ul
-              li.clearfix
-                img(src='../assets/icon1.svg' height='32' width='32')
-                span 个人知识管理
-              li.clearfix
-                img(src='../assets/icon3.svg' height='32' width='32')
-                span 说明手册
-              li.clearfix
-                img(src='../assets/icon4.svg' height='32' width='32')
-                span 教程书籍
-              li.clearfix
-                span ……
-          .simple-img
-            img(src='../assets/example.png')
+        .simple-img
+          img(src='../assets/screenshot.png')
+        .simple-content
+          h3 Wenote 可以用来做什么？
+          ul
+            li.clearfix
+              img(src='../assets/icon1.svg' height='32' width='32')
+              span 个人知识管理
+            li.clearfix
+              img(src='../assets/icon3.svg' height='32' width='32')
+              span 说明手册
+            li.clearfix
+              img(src='../assets/icon4.svg' height='32' width='32')
+              span 教程书籍
+            li.clearfix
+              span ……
       .newsletter.clearfix
         .wrap
           .deploy-title 遇到问题
@@ -180,6 +179,10 @@ img {
 }
 .simple.clearfix {
   height: 500px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 body {
@@ -407,8 +410,6 @@ header .buttons-wrapper .button-stripe {
 }
 
 .simple-content {
-  float: right;
-  padding-top: 37px;
   width: 420px;
 }
 
@@ -441,15 +442,13 @@ header .buttons-wrapper .button-stripe {
 }
 
 .simple-img {
-  float: left;
-  max-width: 587px;
-  width: 53%;
-  padding-top: 37px;
+  height: 100%;
+  width: fit-content;
 }
 
 .simple-img img {
-  display: block;
-  margin: 0 auto;
+  max-height: 100%;
+  margin: auto;
 }
 
 .comments {
