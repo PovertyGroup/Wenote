@@ -1,11 +1,15 @@
 <template lang="pug">
 el-card(shadow="never")
     h3(style="margin-top: 0") 发表评论
-    el-input(type="textarea" :autosize="{ minRows: 5, maxRows: 7}" v-model="commentContent" maxlength="500" show-word-limit placeholder="说点儿什么吧")
-    .logged-in-user-info(v-if="this.$auth.loggedIn")
-      el-avatar(:src="userAvatar" size="small")
-      span {{ this.$auth.loggedIn ? this.$auth.user.username : '' }}
-    el-button.submit-button(type="primary" size="small" :disabled="commentContent.length < 15" :loading="isSubmiting" @click="submitComment") 发表
+    .logged-in(v-if="this.$auth.loggedIn")
+      el-input(type="textarea" :autosize="{ minRows: 5, maxRows: 7}" v-model="commentContent" maxlength="500" show-word-limit placeholder="说点儿什么吧" :disabled="!this.$auth.loggedIn")
+      .user-info
+        el-avatar(:src="userAvatar" size="small")
+        span {{ this.$auth.loggedIn ? this.$auth.user.username : '' }}
+      el-button.submit-button(type="primary" size="small" :disabled="!this.$auth.loggedIn || commentContent.length < 15" :loading="isSubmiting" @click="submitComment") 发表
+    .not-logged-in(v-else)
+      span 登录后才能发表评论。
+      NuxtLink.nuxtlink(to="/login") 前去登陆
 </template>
 
 <script>
@@ -69,14 +73,14 @@ export default {
   border-bottom: 1px solid #EBEEF5;
 }
 
-.logged-in-user-info{
+.user-info{
   line-height: 28px;
   font-family: sans-serif;
   margin: 10px;
   float: left;
 }
 
-.logged-in-user-info > *{
+.user-info > *{
   vertical-align: middle;
   margin-right: 10px;
 }
@@ -86,6 +90,17 @@ export default {
   float: right;
   margin-bottom: 20px;
   width: 150px;
+}
+
+.not-logged-in {
+  font-size: 14px;
+  font-family: sans-serif;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.not-logged-in > * {
+  vertical-align: middle;
 }
 
 @media screen and (max-width: 420px) {
