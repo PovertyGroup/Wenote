@@ -2,7 +2,7 @@
 div.user-info-card
   .logged-in(v-if="isLogedIn")
     div.userinfo
-      p.name {{user.name}}
+      span.name {{ user.name }}
       el-dropdown(trigger="click" @command="handleCommand")
           span.el-dropdown-link
             img.avatar(:src="user.avatar")
@@ -29,10 +29,11 @@ export default {
         name: '',
         avatar: ''
       },
-      isLogedIn: this.$auth.loggedIn
+      isLogedIn: false
     }
   },
   mounted () {
+    this.isLogedIn = this.$auth.loggedIn
     if (this.$auth.loggedIn) {
       this.$set(this.user, 'name', this.$auth.user.username)
       if (this.$auth.user.avatar) { this.$set(this.user, 'avatar', utils.composeUrl(this.$store.state.serverUrl, this.$auth.user.avatar.url)) } else { this.$set(this.user, 'avatar', 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png') }

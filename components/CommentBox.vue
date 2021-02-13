@@ -1,12 +1,12 @@
 <template lang="pug">
 el-card(shadow="never")
     h3(style="margin-top: 0") 发表评论
-    .logged-in(v-if="this.$auth.loggedIn")
-      el-input(type="textarea" :autosize="{ minRows: 5, maxRows: 7}" v-model="commentContent" maxlength="500" show-word-limit placeholder="说点儿什么吧" :disabled="!this.$auth.loggedIn")
+    .logged-in(v-if="userLoggedIn")
+      el-input(type="textarea" :autosize="{ minRows: 5, maxRows: 7}" v-model="commentContent" maxlength="500" show-word-limit placeholder="说点儿什么吧")
       .user-info
         el-avatar(:src="userAvatar" size="small")
-        span {{ this.$auth.loggedIn ? this.$auth.user.username : '' }}
-      el-button.submit-button(type="primary" size="small" :disabled="!this.$auth.loggedIn || commentContent.length < 15" :loading="isSubmiting" @click="submitComment") 发表
+        span {{ userLoggedIn ? this.$auth.user.username : '' }}
+      el-button.submit-button(type="primary" size="small" :disabled="commentContent.length < 15" :loading="isSubmiting" @click="submitComment") 发表
     .not-logged-in(v-else)
       span 登录后才能发表评论。
       NuxtLink.nuxtlink(to="/login") 前去登陆
@@ -30,7 +30,8 @@ export default {
   data () {
     return {
       commentContent: '',
-      isSubmiting: false
+      isSubmiting: false,
+      userLoggedIn: false // always assume user is not logged in
     }
   },
   computed: {
@@ -40,6 +41,9 @@ export default {
       }
       return ''
     }
+  },
+  mounted () {
+    this.userLoggedIn = this.$auth.loggedIn
   },
   methods: {
     submitComment () {
