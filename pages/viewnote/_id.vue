@@ -5,7 +5,7 @@
     .note-wrap
       .note-title-wrap(v-if="!this.noSuchNote")
           h1.note-title {{ this.noteTitle }}
-      .md-card(v-if="!this.noSuchNote")
+      .md-card.responsive-width(v-if="!this.noSuchNote")
         .noteinfo
           .author-info
             img.avatar(:src="this.noteAvatar")
@@ -29,6 +29,7 @@
             i.far.fa-calendar-alt
             p.note-update-time 发布于 {{ this.updateTime }}
         MarkdownCard.note(:mdSource="this.noteMd")
+      CommentsCard.responsive-width.comments(:noteId="noteId")
       NoSuchNoteCard(v-if="this.noSuchNote").not-such-note-card
     .buttons
       el-button(v-if="showActionButtons" type="primary" :plain="likeNote" round icon="far fa-thumbs-up like-icon" @click="alterLike").like {{ this.likeNote ? ' 已': ' ' }}点赞
@@ -40,6 +41,7 @@
 <script >
 import axios from 'axios'
 import Header from '@/layouts/Header'
+import CommentsCard from '@/components/CommentsCard'
 import MainLayout from '@/layouts/MainLayout'
 import MarkdownCard from '@/components/MarkdownCard.vue'
 import NoSuchNoteCard from '@/components/NoSuchNoteCard.vue'
@@ -55,7 +57,8 @@ export default {
     NoSuchNoteCard,
     MainLayout,
     Header,
-    Footer
+    Footer,
+    CommentsCard
   },
   data () {
     return {
@@ -254,9 +257,13 @@ export default {
   background: rgb(255, 255, 255);
   box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 12px 0px;
   margin: 20px auto 0 auto;
-  width: 60%;
   position: relative;
 }
+
+.responsive-width{
+  width: 60%;
+}
+
 .note{
   min-height: 150px;
   padding: 20px 10%;
@@ -381,8 +388,12 @@ export default {
   display: inline-block;
 }
 
+.comments{
+  margin: 20px auto;
+}
+
 @media screen and (max-width: 1300px) {
-  .md-card{
+  .responsive-width {
     width: 80%;
   }
   .buttons {
@@ -392,7 +403,7 @@ export default {
 }
 
 @media screen and (max-width: 1000px) {
-  .md-card{
+  .responsive-width {
     width: 100%;
   }
 }
