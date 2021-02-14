@@ -3,8 +3,8 @@
   h1(style="margin-left: 20px") 评论
   el-card(shadow="never").comments-wrap
     CommentBox(:noteId="noteId" @onSubmit="refreshComments")
-    Comment(v-for="comment in comments" :key="comment._id" :id="comment._id" :date="comment.createdAt"
-      :content="comment.content" :likes="comment.points" :author="comment.authorUser")
+    Comment(v-for="comment in comments" :key="comment._id" :id="comment._id" :date="comment.createdAt" :noteId="noteId" @onDelete="refreshComments"
+      :content="comment.content" :likes="comment.points" :author="comment.authorUser" :isDeleted="comment.deleted ? true : false")
     .comment-tips {{ comments.length === 0 ? '暂无评论' : '到底啦' }}
 </template>
 

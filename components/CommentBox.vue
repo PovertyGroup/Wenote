@@ -58,6 +58,7 @@ export default {
               message: '发表成功',
               type: 'success'
             })
+            this.commentContent = ''
           })
           .catch(() => {
             this.$message.error('发表失败')
