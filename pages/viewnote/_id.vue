@@ -29,7 +29,7 @@
             i.far.fa-calendar-alt
             p.note-update-time 发布于 {{ this.updateTime }}
         MarkdownCard.note(:mdSource="this.noteMd")
-      CommentsCard.responsive-width.comments(:noteId="noteId")
+      CommentsCard(v-if="!this.noSuchNote" :noteId="noteId").responsive-width.comments
       NoSuchNoteCard(v-if="this.noSuchNote").not-such-note-card
     .buttons
       el-button(v-if="showActionButtons" type="primary" :plain="likeNote" round icon="far fa-thumbs-up like-icon" @click="alterLike").like {{ this.likeNote ? ' 已': ' ' }}点赞

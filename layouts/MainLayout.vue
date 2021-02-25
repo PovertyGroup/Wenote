@@ -5,7 +5,7 @@ el-scrollbar
             slot(name="header")
         el-main
             slot
-        el-footer
+        el-footer(style="min-height: 0")
             slot(name="footer")
 </template>
 

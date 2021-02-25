@@ -5,7 +5,10 @@
       NuxtLink.nuxtlink.sitename.black-link(to="/home") Wenote
     li.nav-item.about
       NuxtLink.nuxtlink.black-link(to="/about") 关于
+    li.nav-item.tou
       NuxtLink.nuxtlink.termlink.black-link(to="/terms-of-use") 用户协议
+    li.nav-item.client-download
+      NuxtLink.nuxtlink.termlink.black-link(to="/downloads") 客户端下载
   ul.action
     li.action-item
       el-autocomplete.search-input(placeholder="搜索笔记" v-model="searchText" suffix-icon="el-icon-search" :class="searchBoxFocused ? 'focused' : ''"
