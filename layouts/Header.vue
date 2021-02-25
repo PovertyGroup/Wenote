@@ -131,6 +131,18 @@ export default {
   width: 200px;
 }
 
+@media screen and (max-width: 650px) {
+  .tou {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 570px) {
+  .client-download {
+    display: none;
+  }
+}
+
 @media screen and (max-width: 520px) {
   .sitename {
     font-size: 20px;
@@ -148,9 +160,5 @@ export default {
   .about{
     display: none;
   }
-}
-
-.termlink{
-  margin-left: 5px;
 }
 </style>
