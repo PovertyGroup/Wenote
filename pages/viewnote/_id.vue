@@ -415,6 +415,9 @@ export default {
   .buttons {
     left: 80%;
   }
+  .note-title {
+    font-size: 40px;
+  }
 }
 
 @media screen and (max-width: 500px) {
@@ -423,6 +426,9 @@ export default {
   }
   .note {
     padding: 10px;
+  }
+  .note-title {
+    font-size: 30px;
   }
 }
 
@@ -433,11 +439,21 @@ export default {
   .buttons {
     left: 70%;
   }
-}
-
-@media screen and (max-width: 350px) {
-  .buttons {
-    left: 60%;
+  .note-title {
+    font-size: 30px;
   }
 }
+
+@media screen and (max-width: 360px) {
+  .buttons {
+    left: 65%;
+  }
+  .noteinfo {
+    padding: 0 0 0 3px;
+  }
+  .note-title {
+    font-size: 26px;
+  }
+}
+
 </style>
