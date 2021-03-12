@@ -80,8 +80,12 @@ export default {
 .header {
   line-height: 60px;
   height: 60px;
-  background: #ffffff;
+  background: #ffffffb5;
   box-shadow: 0 2px 2px 0 rgb(0 0 0 / 20%);
+  position:absolute;
+  width: 100vw;
+  z-index: 100;
+  backdrop-filter: blur(10px);
 }
 
 .nav {

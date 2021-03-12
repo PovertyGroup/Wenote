@@ -114,6 +114,7 @@ export default {
 <style scoped>
 .home-note.folded{
   height: 225px;
+  margin-bottom: 10px;
 }
 
 .home-note.expanded{

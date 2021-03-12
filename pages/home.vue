@@ -51,6 +51,7 @@ export default {
   display: flex;
   flex: 0.5;
   flex-direction: column;
+  padding-top: 50px;
 }
 
 @media screen and (max-width: 1400px) {
