@@ -57,7 +57,7 @@ export default {
       window.open('https://gitee.com/codgi/Wenote-desktop/releases/V0.0.1')
     },
     navigateAndroid () {
-      window.open('https://gitee.com/codgi/wenote-android/releases/V0.0.1')
+      window.open('https://gitee.com/codgi/wenote-android/releases/V0.0.2')
     }
   }
 }
