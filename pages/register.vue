@@ -33,7 +33,7 @@ export default {
   },
   created () {
     if (this.$auth.loggedIn) {
-      this.$router.push('/home')
+      this.$router.push(`/info/${this.$auth.user.id}/`)
     }
   },
   methods: {
