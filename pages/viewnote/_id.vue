@@ -215,6 +215,7 @@ export default {
 }
 
 .note-wrap{
+    margin-top: 60px;
     display: flex;
     width: 100%;
     bottom: 0;

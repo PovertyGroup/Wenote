@@ -12,13 +12,13 @@ MainLayout
       i.fab.fa-apple(style="font-size: 100px")
       p macOS
       el-button(type="primary" :disabled="true").download-button 敬请期待
-      el-button(:disabled="true" style="margin-left:8px;").download-button 预留M1版本
+      el-button(:disabled="true").download-button M1版本
     el-card.download-card.mobile
       i.fas.fa-mobile(style="font-size: 100px")
       p 移动设备
-      el-button(type="primary" @click="navigateAndroid").download-button 点击下载
+      el-button(type="primary" @click="navigateAndroid" ).download-button 点击下载
       el-popover(placement="bottom" title="Progressive Web App" width="200" trigger="click" content="Chrome 点击右上角的菜单 -> 安装应用")
-        el-button(slot="reference" style="margin-left:8px;").download-button 安装 PWA
+        el-button(slot="reference").download-button 安装 PWA
 </template>
 
 <script>
@@ -82,6 +82,6 @@ export default {
 }
 
 .download-button {
-  margin-top: 30px;
+  margin: 30px 8px 0 0 !important;
 }
 </style>
