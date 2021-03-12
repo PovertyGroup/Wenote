@@ -7,19 +7,18 @@ MainLayout
       i.fab.fa-windows(style="font-size: 100px")
       p Windows
       el-button(type="primary" @click="navigateWindows").download-button Github下载
-      div
-        el-button(type="primary" @click="navigateWindows_gitee").download-button 国内源下载
+      el-button(@click="navigateWindows_gitee").download-button 国内源下载
     el-card.download-card.macos
       i.fab.fa-apple(style="font-size: 100px")
       p macOS
       el-button(type="primary" :disabled="true").download-button 敬请期待
+      el-button(:disabled="true" style="margin-left:8px;").download-button 预留M1版本
     el-card.download-card.mobile
       i.fas.fa-mobile(style="font-size: 100px")
       p 移动设备
+      el-button(type="primary" @click="navigateAndroid").download-button 点击下载
       el-popover(placement="bottom" title="Progressive Web App" width="200" trigger="click" content="Chrome 点击右上角的菜单 -> 安装应用")
-        el-button(type="primary" slot="reference").download-button 安装 PWA
-      div
-        el-button(type="primary" :disabled="true").download-button App即将推出
+        el-button(slot="reference" style="margin-left:8px;").download-button 安装 PWA
 </template>
 
 <script>
@@ -31,24 +30,24 @@ export default {
     Header
   },
   mounted () {
-    let threeScript = document.createElement('script')
-    threeScript.setAttribute('src', 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js')
-    document.head.appendChild(threeScript)
+    // let threeScript = document.createElement('script')
+    // threeScript.setAttribute('src', 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js')
+    // document.head.appendChild(threeScript)
 
-    let vantaScript = document.createElement('script')
-    vantaScript.setAttribute('src', 'https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.birds.min.js')
-    document.head.appendChild(vantaScript)
+    // let vantaScript = document.createElement('script')
+    // vantaScript.setAttribute('src', 'https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.birds.min.js')
+    // document.head.appendChild(vantaScript)
 
-    window.VANTA.BIRDS({
-      el: 'section.el-container.is-vertical',
-      mouseControls: true,
-      touchControls: true,
-      gyroControls: false,
-      minHeight: 200.00,
-      minWidth: 200.00,
-      scale: 1.00,
-      scaleMobile: 1.00
-    })
+    // window.VANTA.BIRDS({
+    //   el: 'section.el-container.is-vertical',
+    //   mouseControls: true,
+    //   touchControls: true,
+    //   gyroControls: false,
+    //   minHeight: 200.00,
+    //   minWidth: 200.00,
+    //   scale: 1.00,
+    //   scaleMobile: 1.00
+    // })
   },
   methods: {
     navigateWindows () {
@@ -56,6 +55,9 @@ export default {
     },
     navigateWindows_gitee () {
       window.open('https://gitee.com/codgi/Wenote-desktop/releases/V0.0.1')
+    },
+    navigateAndroid () {
+      window.open('https://gitee.com/codgi/wenote-android/releases/V0.0.1')
     }
   }
 }
