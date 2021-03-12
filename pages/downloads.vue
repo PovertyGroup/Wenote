@@ -1,8 +1,6 @@
 <template lang="pug">
 MainLayout
   template(v-slot:header)
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.birds.min.js"></script>
     Header
   .download-wrap
     el-card.download-card.windows
@@ -16,7 +14,7 @@ MainLayout
     el-card.download-card.mobile
       i.fas.fa-mobile(style="font-size: 100px")
       p 移动设备
-      el-popover(placement="bottom" title="Progressive Web App" width="200" trigger="click" content="点击右上角的菜单 -> 添加到桌面")
+      el-popover(placement="bottom" title="Progressive Web App" width="200" trigger="click" content="Chrome 点击右上角的菜单 -> 安装应用")
         el-button(type="primary" slot="reference").download-button 安装 PWA
 </template>
 
@@ -29,6 +27,14 @@ export default {
     Header
   },
   mounted () {
+    let threeScript = document.createElement('script')
+    threeScript.setAttribute('src', 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js')
+    document.head.appendChild(threeScript)
+
+    let vantaScript = document.createElement('script')
+    vantaScript.setAttribute('src', 'https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.birds.min.js')
+    document.head.appendChild(vantaScript)
+
     window.VANTA.BIRDS({
       el: 'section.el-container.is-vertical',
       mouseControls: true,
