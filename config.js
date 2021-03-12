@@ -1,6 +1,6 @@
 export default {
-  serverUrl: 'http://8.131.62.225:443/',
-  siteUrl: 'http://8.131.62.225/',
+  serverUrl: 'https://api.wenote.site/',
+  siteUrl: 'https://wenote.site/',
   mavonEditorExternalLink: {
     markdown_css () {
       return 'https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css'
