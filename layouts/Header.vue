@@ -9,6 +9,8 @@
       NuxtLink.nuxtlink.termlink.black-link(to="/terms-of-use") 用户协议
     li.nav-item.client-download
       NuxtLink.nuxtlink.termlink.black-link(to="/downloads") 客户端下载
+    li.nav-item.backend
+      a.nuxtlink.termlink.black-link(href="https://api.wenote.site/admin" target="_blank") 后台管理
   ul.action
     li.action-item
       el-autocomplete.search-input(placeholder="搜索笔记" v-model="searchText" suffix-icon="el-icon-search" :class="searchBoxFocused ? 'focused' : ''"
@@ -157,6 +159,12 @@ export default {
   }
   .search-input.focused {
     width: 150px;
+  }
+}
+
+@media screen and (max-width: 460px) {
+  .backend{
+    display: none;
   }
 }
 
