@@ -137,6 +137,12 @@ export default {
   width: 200px;
 }
 
+@media screen and (max-width: 815px) {
+  .backend{
+    display: none;
+  }
+}
+
 @media screen and (max-width: 650px) {
   .tou {
     display: none;
@@ -159,12 +165,6 @@ export default {
   }
   .search-input.focused {
     width: 150px;
-  }
-}
-
-@media screen and (max-width: 460px) {
-  .backend{
-    display: none;
   }
 }
 

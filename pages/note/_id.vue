@@ -310,6 +310,7 @@ export default {
 }
 
 .note-wrap{
+  margin-top: 60px;
     width: 100%;
     bottom: 0;
     display: flex;
