@@ -51,7 +51,7 @@ export default {
         password: [
           { type: 'string', required: true, message: '请输入密码', trigger: 'change' },
           { type: 'string', required: true, message: '密码长度为 6-16 位', trigger: 'change', pattern: /.{6,16}/ },
-          { type: 'string', message: '至少包含一个字母、数字和特殊符号', pattern: /^(?![a-zA-z]+$)(?!\d+$)(?![!@#$%^&*]+$)(?![a-zA-z\d]+$)(?![a-zA-z!@#$%^&*]+$)(?![\d!@#$%^&*]+$)[a-zA-Z\d!@#$%^&*]+$/ }
+          { type: 'string', message: '至少包含一个字母、数字和特殊符号中的两种', pattern: /^(?![A-Za-z]+$)(?!\d+$)(?![\W_]+$)\S{6,16}$/ }
         ],
         passwordagain: [
           { required: true, message: '请再次输入密码', trigger: 'change' },
