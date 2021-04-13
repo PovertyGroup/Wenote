@@ -9,7 +9,8 @@
         .noteinfo
           .author-info
             img.avatar(:src="this.noteAvatar")
-            p.note-author-name {{ this.noteAuthor.username }}
+            el-link(:underline="false" @click="ClickUserUrl()")
+              p.note-author-name {{ this.noteAuthor.username }}
             el-button.button(v-if="!this.followed" type="primary"
                             icon="el-icon-plus" size="mini" @click="follow()") 关注
             el-button.button(v-if="this.followed" icon="el-icon-check"
@@ -131,6 +132,9 @@ export default {
       })
   },
   methods: {
+    ClickUserUrl () {
+      this.$router.push('/people/' + this.noteAuthor.id)
+    },
     follow () {
       axios.post(utils.composeUrl(this.$store.state.serverUrl, '/users/follow/' + this.noteAuthor.id), {})
         .then(() => {

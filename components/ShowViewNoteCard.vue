@@ -10,8 +10,9 @@ el-card.home-note(:class="cardExpanded ? 'expanded' : 'folded'")
         i.fas.fa-calendar-alt
         span {{ dateFormatted }}
       div.info-item
-        i.fas.fa-user
-        span {{ noteAuthor }}
+        el-link(:underline="false" @click="ClickUserUrl()")
+          i.fas.fa-user
+          span {{ noteAuthor }}
     link(rel="stylesheet" :href="katexCss")
     link(rel="stylesheet" :href="githubMarkdownCss")
   div(v-html="cardExpanded ? renderedMd : stripedMd" :class="cardExpanded ? 'markdown-body' : 'markdown-body-minimized'")
@@ -45,6 +46,7 @@ export default {
       noteDate: '',
       noteMd: '',
       noteAuthor: '',
+      noteAuthorID: '',
       stripedMd: '',
       cardExpanded: false,
       githubMarkdownCss: config.mavonEditorExternalLink.markdown_css(),
@@ -69,6 +71,7 @@ export default {
         this.stripeMd()
         this.noteDate = res.data.createdAt
         this.noteAuthor = res.data.author.username
+        this.noteAuthorID = res.data.author.id
         if (this.noteTitle.length > 14) {
           this.noteTitle = this.noteTitle.substring(0, 12) + '......'
         }
@@ -80,6 +83,9 @@ export default {
   methods: {
     ClicknoteUrl () {
       this.$router.push('/viewnote/' + this.id)
+    },
+    ClickUserUrl () {
+      this.$router.push('/people/' + this.noteAuthorID)
     },
     stripeMd () {
       const component = this
