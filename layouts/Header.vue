@@ -1,5 +1,5 @@
 <template lang="pug">
-.header
+.header.visible
   ul.nav
     li.nav-item
       NuxtLink.nuxtlink.sitename.black-link(to="/home") Wenote
@@ -83,7 +83,7 @@ export default {
   line-height: 60px;
   height: 60px;
   background: #ffffffb5;
-  box-shadow: 0 2px 2px 0 rgb(0 0 0 / 20%);
+  box-shadow: 0 1px 5px 0 rgb(0 0 0 / 10%);
   position:absolute;
   width: 100vw;
   z-index: 100;
@@ -135,6 +135,10 @@ export default {
 
 .search-input.focused {
   width: 200px;
+}
+
+.nuxtlink {
+  vertical-align: unset;
 }
 
 @media screen and (max-width: 815px) {

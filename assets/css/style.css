@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC&display=swap');
+
 html {
   height: fit-content;
   min-height: 100%;
@@ -8,9 +10,11 @@ body {
   min-height: 100%;
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, PingFang SC, Microsoft YaHei, Source Han Sans SC, Noto Sans CJK SC, WenQuanYi Micro Hei, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans SC', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-smooth: always;
+  -webkit-font-smoothing: always;
   color: #2c3e50;
   min-height: 100%;
 }
@@ -20,7 +24,7 @@ body {
   width: 100vw;
   overflow: hidden;
 }
-.el-scrollbar .el-scrollbar__wrap {
+body > #__nuxt > #__layout > .el-scrollbar > .el-scrollbar__wrap {
   overflow-x: hidden;
 }
 
