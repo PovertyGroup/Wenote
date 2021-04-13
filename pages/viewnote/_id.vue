@@ -328,7 +328,6 @@ export default {
 }
 
 .like-num{
-  vertical-align: middle;
   display: inline-block;
   margin: auto 0 auto 5px;
   font-size: 15px;

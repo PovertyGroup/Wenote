@@ -1,0 +1,8 @@
+.header {
+    top: -63px;
+    transition: 0.2s ease-out;
+}
+
+.header.visible {
+    top: 0px;
+}
