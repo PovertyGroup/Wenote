@@ -48,10 +48,10 @@ export default {
         this.followers = res.data.followers
         this.followees = res.data.followees
         this.notes = res.data.notes
-        if(this.gender === "unknown")
+        if (this.gender === 'unknown') {
           this.gender = '未公开'
+        }
         this.avatar = utils.composeUrl(this.$store.state.serverUrl, this.avatar)
-        console.log(res)
       })
       .catch((e) => {
       })
